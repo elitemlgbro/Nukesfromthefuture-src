@@ -431,6 +431,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(POTATO_nuke, POTATO_nuke.getUnlocalizedName().substring(5));
 		PacketDispatcher.registerPackets();
 		GameRegistry.registerItem(deathinum_sword, deathinum_sword.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(deathinum_pick, deathinum_pick.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(radioactive_cake, radioactive_cake.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(the_flood, the_flood.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(radioactive_pizza, radioactive_pizza.getUnlocalizedName().substring(5));

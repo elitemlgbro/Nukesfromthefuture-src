@@ -1,0 +1,6 @@
+{
+    "nukes.trol": {"category": "ambient", "sounds": ["nukes/trol"]},
+	"pizzacreep.say": {"category": "master", "sounds": ["entity/pizza-creep-say"]},
+	"pizza.hurt": {"category": "master", "sounds": ["entity/pizzaHurt"]},
+	"pizza.die": {"category": "master", "sounds": ["entity/pizza-death1", "entity/pizza-death2"]}
+}

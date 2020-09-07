@@ -1,0 +1,16 @@
+[
+{
+  "modid": "nff",
+  "name": "elite_mlgbro's nukes from the future mod",
+  "description": "All da nukes and reactors say I'm from da future and then you faint. That will be true because the nukes from the future mod has really cool weapons, reactors, and nukes.",
+  "version": "1.7.10A1",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Elite_mlgbro"],
+  "credits": "Elite_mlgbro as solo developer, sour as POTATO,HBM nuclear tech and rival Rebels mod as inspiration to make this mod",
+  "logoFile": "assets/nff/textures/gui/NffLogo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

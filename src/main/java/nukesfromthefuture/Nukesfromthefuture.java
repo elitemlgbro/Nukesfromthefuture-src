@@ -209,6 +209,7 @@ public class Nukesfromthefuture{
 	public static Item deathinum_sword;
 	public static int Boystrength;
 	public static int beta_strength;
+	public static Item deathinum_pick;
 	public static Item fire;
 	public static int Volcano_strength;
 	public static int Boyspeed;
@@ -269,6 +270,7 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		deathinum_pick = new PickDeathinum(deathinumTools).setUnlocalizedName("deathinum_pickaxe").setCreativeTab(nffreee).setTextureName("nff:deathinum_pick");
 		deathinum_sword = new DeathinumSword(deathinumTools).setUnlocalizedName("Deathinum_sword").setCreativeTab(nffreee).setTextureName("nff:deathinum_sword");
 		deathinum_ingot = new Item().setUnlocalizedName("deathinum_ingot").setCreativeTab(resources).setTextureName("nff:deathinum");
 		uranium_atom = new Item().setUnlocalizedName("uranium-atom").setCreativeTab(resources).setTextureName("nff:atom");
@@ -445,10 +447,10 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(skinny_man, skinny_man.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(sushi_pizza, sushi_pizza.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(real_radioactive_pizza, real_radioactive_pizza.getUnlocalizedName().substring(5));
-		if(Nukesfromthefuture.coverExposed == true) {
+		if(Nukesfromthefuture.coverExposed) {
 			GameRegistry.registerBlock(craterCoverer, BlockLore.class, craterCoverer.getUnlocalizedName().substring(5));
 		}
-		if(Nukesfromthefuture.skeppy_enabled == true) {
+		if(Nukesfromthefuture.skeppy_enabled) {
 		EntityRegistry.registerGlobalEntityID(Skeppy.class, "skepp", EntityRegistry.findGlobalUniqueEntityId(), 0xFF0004, 0xFFE100);
 		}
 		GameRegistry.registerBlock(solidifier, solidifier.getUnlocalizedName().substring(5));

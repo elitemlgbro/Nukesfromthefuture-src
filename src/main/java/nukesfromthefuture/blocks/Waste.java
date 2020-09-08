@@ -17,8 +17,8 @@ public class Waste extends Block {
 	public Waste(Material mat, boolean tick) {
 		super(mat);
 	    this.setTickRandomly(tick);
-	    setHardness(10);
-	    setResistance(1000);
+	    setHardness(0.5F);
+	    setResistance(1.0F);
 	}
 	public void onEntityWalking(World p_149724_1_, int p_149724_2_, int p_149724_3_, int p_149724_4_, Entity entity)
     {

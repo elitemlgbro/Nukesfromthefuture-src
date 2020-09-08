@@ -299,12 +299,12 @@ public class Nukesfromthefuture{
 		lightning = new Lightning().setBlockName("Lightning_summoner").setCreativeTab(machines).setBlockTextureName("nff:lightlol");
 		creep_cape = new ArmorModel(ArmorMaterial.DIAMOND, 3, 1).setUnlocalizedName("creep_cape").setCreativeTab(uselessStuff).setTextureName("nff:v");
 		waste = new Waste(Material.grass, true).setBlockName("waste").setCreativeTab(resources);
-		tut_block = new TutBlock(Material.clay).setBlockName("tut_block").setCreativeTab(bloks).setHardness(5.0F);
+		tut_block = new TutBlock(Material.clay).setBlockName("Wtut_block").setCreativeTab(bloks).setHardness(5.0F);
 		coord_transporteer = new CoordTrans(Material.iron).setBlockName("Coord_transporter").setBlockTextureName("nff:coord_transport").setCreativeTab(machines);
 		obese_man = new Itemobese_man().setUnlocalizedName("obese_man").setTextureName("nff:obese_man").setCreativeTab(uselessStuff);
 		trololo = new BlockTrololo().setBlockName("trololo").setBlockTextureName("nff:trololo").setCreativeTab(uselessStuff);
 		test_blok = new Testblok().setBlockName("TestBlock").setCreativeTab(uselessStuff);
-		Deathinum_ore = new Deathinum(Material.iron).setBlockName("deathinum_Ore").setCreativeTab(resources).setHardness(30F).setBlockTextureName("nff:deathinum");
+		Deathinum_ore = new Deathinum(Material.iron).setBlockName("deathinum_Ore").setCreativeTab(resources).setHardness(30F).setBlockTextureName("nff:deathinum").setHardness(2.5F).setResistance(1.0F).setStepSound(Block.soundTypeGrass);
 		curse_portal = new CursePort().setBlockName("cuss_portal").setBlockUnbreakable();
 		lightning_summon = new LightningSummon().setUnlocalizedName("summon_light").setTextureName("nff:lightning").setCreativeTab(nffreee);
 		clickable_bomb = new ClickBob(Material.tnt).setBlockName("clickable_bomb").setCreativeTab(nffreee);

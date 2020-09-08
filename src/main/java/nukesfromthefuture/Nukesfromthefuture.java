@@ -196,6 +196,7 @@ public class Nukesfromthefuture{
 	public static boolean elevation = true;
 	public static int colliderStrength;
 	public static int colliderSpeed;
+	public static Block waste_wood;
 	public static int antitimebuff;
 	public static int flood_strength;
 	public static int antitimespeed;
@@ -270,6 +271,7 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		waste_wood = new Waste(Material.wood, true).setBlockName("waste_wood").setCreativeTab(bloks).setHardness(0.8F).setResistance(1.0F).setStepSound(Block.soundTypeWood);
 		deathinum_pick = new PickDeathinum(deathinumTools).setUnlocalizedName("deathinum_pickaxe").setCreativeTab(nffreee).setTextureName("nff:deathinum_pick");
 		deathinum_sword = new DeathinumSword(deathinumTools).setUnlocalizedName("Deathinum_sword").setCreativeTab(nffreee).setTextureName("nff:deathinum_sword");
 		deathinum_ingot = new Item().setUnlocalizedName("deathinum_ingot").setCreativeTab(resources).setTextureName("nff:deathinum");
@@ -427,6 +429,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(agri_essor, agri_essor.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(transmutator, transmutator.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(waste, waste.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(waste_wood, waste_wood.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fire_gun, fire_gun.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(POTATO_nuke, POTATO_nuke.getUnlocalizedName().substring(5));
 		PacketDispatcher.registerPackets();

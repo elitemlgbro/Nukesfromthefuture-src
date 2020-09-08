@@ -36,10 +36,17 @@ public class Waste extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
-		this.top = register.registerIcon("nff:grass_top");
-		this.sideo = register.registerIcon("nff:grass_side");
-		this.bottom = register.registerIcon("nff:dirt");
-		this.blockIcon = register.registerIcon("nff:grass_side");
+	    if(this == Nukesfromthefuture.waste) {
+            this.top = register.registerIcon("nff:grass_top");
+            this.sideo = register.registerIcon("nff:grass_side");
+            this.bottom = register.registerIcon("nff:dirt");
+            this.blockIcon = register.registerIcon("nff:grass_side");
+        }if(this == Nukesfromthefuture.waste_wood){
+	        this.top = register.registerIcon("nff:waste_trunk_top");
+	        this.bottom = register.registerIcon("nff:waste_trunk_top");
+	        this.sideo = register.registerIcon("nff:waste_trunk");
+	        this.blockIcon = register.registerIcon("nff:waste_trunk");
+        }
 	}
 	@Override
 	@SideOnly(Side.CLIENT)

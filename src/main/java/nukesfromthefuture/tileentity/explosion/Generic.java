@@ -358,7 +358,7 @@ public class Generic{
 			}
 
 			else if (b == Blocks.log || b == Blocks.log2) {
-				world.setBlock(x, y, z, Nukesfromthefuture.waste);
+				world.setBlock(x, y, z, Nukesfromthefuture.waste_wood);
 			}
 
 			else if (b == Blocks.brown_mushroom_block) {
@@ -458,7 +458,7 @@ public class Generic{
 			}
 
 			else if (world.getBlock(x, y, z) == Blocks.log || world.getBlock(x, y, z) == Blocks.log2) {
-				world.setBlock(x, y, z, Nukesfromthefuture.waste);
+				world.setBlock(x, y, z, Nukesfromthefuture.waste_wood);
 			}
 
 			else if (world.getBlock(x, y, z) == Blocks.planks) {

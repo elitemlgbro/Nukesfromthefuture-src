@@ -13,11 +13,14 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.command.ICommandManager;
+import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Items;
@@ -25,6 +28,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemReed;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.AchievementPage;
@@ -35,6 +39,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import nukesfromthefuture.blocks.*;
 import nukesfromthefuture.boime.BiomeRegistry;
+import nukesfromthefuture.command.Test;
 import nukesfromthefuture.container.FluidContainer;
 import nukesfromthefuture.container.FluidContainerRegistry;
 import nukesfromthefuture.creativeTabs.Food;
@@ -454,7 +459,16 @@ public class Nukesfromthefuture{
 		EntityRegistry.registerGlobalEntityID(EntityRadioCreeper.class, "radioactive_pizza_creeper", EntityRegistry.findGlobalUniqueEntityId(), 0x1000FF, 0x00FF19);
 		EntityRegistry.registerModEntity(FireUwU.class, "fire", EntityRegistry.findGlobalUniqueEntityId(), this, 100000, 100, true);
 	}
-
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event)
+	{
+		ICommandManager commandManager = MinecraftServer.getServer().getCommandManager();
+		ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
+		addCommands(serverCommandManager);
+	}
+	public void addCommands(ServerCommandManager register){
+		register.registerCommand(new Test());
+	}
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
 		proxy.registerRenders();

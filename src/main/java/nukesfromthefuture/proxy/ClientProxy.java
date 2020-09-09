@@ -37,20 +37,7 @@ import nukesfromthefuture.entity.RadioactiveSpider;
 import nukesfromthefuture.entity.RenderSpiderRad;
 import nukesfromthefuture.entity.Skeppy;
 import nukesfromthefuture.handler.Guihandle;
-import nukesfromthefuture.tileentity.TileAgriessor;
-import nukesfromthefuture.tileentity.TileBeta;
-import nukesfromthefuture.tileentity.TileBigBoy;
-import nukesfromthefuture.tileentity.TileCoord;
-import nukesfromthefuture.tileentity.TileEntityCraterCoverer;
-import nukesfromthefuture.tileentity.TileEntityEgo_nuke;
-import nukesfromthefuture.tileentity.TileEntitySingularityNuke;
-import nukesfromthefuture.tileentity.TileEntitySkinnyMan;
-import nukesfromthefuture.tileentity.TileEntityUnrefinery;
-import nukesfromthefuture.tileentity.TilePOTATO;
-import nukesfromthefuture.tileentity.TileReactor;
-import nukesfromthefuture.tileentity.TileSolidifier;
-import nukesfromthefuture.tileentity.TileTrol;
-import nukesfromthefuture.tileentity.TileVolcano;
+import nukesfromthefuture.tileentity.*;
 import nukesfromthefuture.tileentity.explosion.TileAntitime;
 
 public class ClientProxy extends CommonProxy{
@@ -78,6 +65,7 @@ public class ClientProxy extends CommonProxy{
 		if(Nukesfromthefuture.old_ego == true) {
 			ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEgo_nuke.class, new RenderOlNook());
 		}
+		GameRegistry.registerTileEntity(TileNReactor.class, "tileReact");
 		RenderingRegistry.registerEntityRenderingHandler(RadioactiveSpider.class, new RenderSpiderRad());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAntitime.class, new RenderAntitime());
         GameRegistry.registerTileEntity(TileBigBoy.class, "TileBigBoy");

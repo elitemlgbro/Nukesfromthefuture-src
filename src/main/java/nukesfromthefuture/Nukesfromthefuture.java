@@ -133,6 +133,7 @@ public class Nukesfromthefuture{
 	public static Block coord_transporteer;
 	public static Block ego_block;
 	public static Item my_cape;
+	public static Item detonator;
 	public static Item real_radioactive_pizza;
 	public static Block test_blok;
 	public static Block transmutator;
@@ -239,6 +240,7 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");
 		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockTextureName("nff:nrc2").setBlockUnbreakable();
 		red_obsidian = new RedObsidian(Material.iron).setCreativeTab(bloks).setBlockName("red_obsidian").setBlockTextureName("nff:glowingobsidian").setStepSound(Block.soundTypeMetal).setBlockUnbreakable();
         nether_reactor = new NetherReact(Material.iron).setCreativeTab(machines).setBlockName("nether_reactor").setBlockTextureName("nff:nrc1").setHardness(1.0F);
@@ -435,6 +437,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(solidifier, solidifier.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(plutonium_ore, plutonium_ore.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(manual_detonator, manual_detonator.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(detonator, detonator.getUnlocalizedName().substring(5));
 		EntityRegistry.registerModEntity(EntityPOTATO.class, "EPOTATO", 0 , this, 100000, 1, true);
 
 		EntityRegistry.addSpawn(EntityPizzaCreeper.class, 100, 1, 15, EnumCreatureType.monster, BiomeGenBase.plains, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills,

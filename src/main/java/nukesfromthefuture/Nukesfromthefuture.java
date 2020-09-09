@@ -75,6 +75,7 @@ public class Nukesfromthefuture{
 	public static Block ego_ore;
 	public static Item ego_ingot;
 	public static Block waste;
+	public static Block nether_reactor2;
 	public static Block the_flood;
 	public static Block ego_furnace;
 	public static Block time_fissures;
@@ -164,6 +165,7 @@ public class Nukesfromthefuture{
 	public static int colliderSpeed;
 	public static Block waste_wood;
 	public static int antitimebuff;
+	public static Block red_obsidian;
 	public static int flood_strength;
 	public static int antitimespeed;
 	public static int coverStrength;
@@ -237,7 +239,9 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
-        nether_reactor = new NetherReact(Material.iron).setCreativeTab(machines).setBlockTextureName("nether_reacter").setBlockTextureName("nff:nrc1").setHardness(1.0F);
+		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockTextureName("nff:nrc2").setBlockUnbreakable();
+		red_obsidian = new RedObsidian(Material.iron).setCreativeTab(bloks).setBlockName("red_obsidian").setBlockTextureName("nff:glowingobsidian").setStepSound(Block.soundTypeMetal).setBlockUnbreakable();
+        nether_reactor = new NetherReact(Material.iron).setCreativeTab(machines).setBlockName("nether_reactor").setBlockTextureName("nff:nrc1").setHardness(1.0F);
 		waste_wood = new Waste(Material.wood, true).setBlockName("waste_wood").setCreativeTab(bloks).setHardness(0.8F).setResistance(1.0F).setStepSound(Block.soundTypeWood);
 		deathinum_pick = new PickDeathinum(deathinumTools).setUnlocalizedName("deathinum_pickaxe").setCreativeTab(nffreee).setTextureName("nff:deathinum_pick");
 		deathinum_sword = new DeathinumSword(deathinumTools).setUnlocalizedName("Deathinum_sword").setCreativeTab(nffreee).setTextureName("nff:deathinum_sword");
@@ -343,9 +347,11 @@ public class Nukesfromthefuture{
 		BiomeRegistry.register();
 		GameRegistry.registerItem(mentos_fo_lava, mentos_fo_lava.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(componetTeleporter, componetTeleporter.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(red_obsidian, red_obsidian.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(Cooked_POTATO, Cooked_POTATO.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(ego_nuke, ItemEgo_nukeBlock.class, ego_nuke.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(ego_ore, ego_ore.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(nether_reactor2, nether_reactor2.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(antiTime, BlockLore.class, antiTime.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(uranium_atom, uranium_atom.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(copper_ore, copper_ore.getUnlocalizedName().substring(5));

@@ -185,6 +185,7 @@ public class Nukesfromthefuture{
 	public static int Boystrength;
 	public static int beta_strength;
 	public static Item deathinum_pick;
+	public static Block reactor_burnt_out;
 	public static Item fire;
 	public static int Volcano_strength;
 	public static int Boyspeed;
@@ -245,10 +246,11 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+        reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
 		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");
-		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockTextureName("nff:nrc2").setBlockUnbreakable();
+		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockUnbreakable().setBlockTextureName("nff:nrc2");
 		red_obsidian = new RedObsidian(Material.iron).setCreativeTab(bloks).setBlockName("red_obsidian").setBlockTextureName("nff:glowingobsidian").setStepSound(Block.soundTypeMetal).setBlockUnbreakable();
-        nether_reactor = new NetherReact(Material.iron).setCreativeTab(machines).setBlockName("nether_reactor").setBlockTextureName("nff:nrc1").setHardness(1.0F);
+        nether_reactor = new NetherReact(Material.iron).setCreativeTab(machines).setBlockName("nether_reactor").setHardness(1.0F).setBlockTextureName("nff:nrc1");
 		waste_wood = new Waste(Material.wood, true).setBlockName("waste_wood").setCreativeTab(bloks).setHardness(0.8F).setResistance(1.0F).setStepSound(Block.soundTypeWood);
 		deathinum_pick = new PickDeathinum(deathinumTools).setUnlocalizedName("deathinum_pickaxe").setCreativeTab(nffreee).setTextureName("nff:deathinum_pick");
 		deathinum_sword = new DeathinumSword(deathinumTools).setUnlocalizedName("Deathinum_sword").setCreativeTab(nffreee).setTextureName("nff:deathinum_sword");
@@ -397,6 +399,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(light, light.getUnlocalizedName());
 		GameRegistry.registerBlock(curse_portal, curse_portal.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(nether_reactor, nether_reactor.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(reactor_burnt_out, reactor_burnt_out.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(clickable_bomb, clickable_bomb.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(POTATOblock, POTATOblock.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(ego_block, ego_block.getUnlocalizedName().substring(5));

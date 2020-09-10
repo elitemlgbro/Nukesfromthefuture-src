@@ -97,40 +97,61 @@ public class Generic{
 	}
 
 	public static void dealDamage(World world, int x, int y, int z, int bombStartStrength) {
-		float f = bombStartStrength;
-		int i;
-		int j;
-		int k;
-		double d5;
-		double d6;
-		double d7;
-		double wat = bombStartStrength/** 2 */
-		;
+        float f = bombStartStrength;
+        int i;
+        int j;
+        int k;
+        double d5;
+        double d6;
+        double d7;
+        double wat = bombStartStrength/** 2 */
+                ;
 
-		// bombStartStrength *= 2.0F;
-		i = MathHelper.floor_double(x - wat - 1.0D);
-		j = MathHelper.floor_double(x + wat + 1.0D);
-		k = MathHelper.floor_double(y - wat - 1.0D);
-		int i2 = MathHelper.floor_double(y + wat + 1.0D);
-		int l = MathHelper.floor_double(z - wat - 1.0D);
-		int j2 = MathHelper.floor_double(z + wat + 1.0D);
-		List list = world.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(i, k, l, j, i2, j2));
+        // bombStartStrength *= 2.0F;
+        i = MathHelper.floor_double(x - wat - 1.0D);
+        j = MathHelper.floor_double(x + wat + 1.0D);
+        k = MathHelper.floor_double(y - wat - 1.0D);
+        int i2 = MathHelper.floor_double(y + wat + 1.0D);
+        int l = MathHelper.floor_double(z - wat - 1.0D);
+        int j2 = MathHelper.floor_double(z + wat + 1.0D);
+        List list = world.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(i, k, l, j, i2, j2));
 
-		for (int i1 = 0; i1 < list.size(); ++i1) {
-			Entity entity = (Entity) list.get(i1);
-			double d4 = entity.getDistance(x, y, z) / bombStartStrength;
+        for (int i1 = 0; i1 < list.size(); ++i1) {
+            Entity entity = (Entity) list.get(i1);
+            double d4 = entity.getDistance(x, y, z) / bombStartStrength;
 
-			if (d4 <= 1.0D) {
-				d5 = entity.posX - x;
-				d6 = entity.posY + entity.getEyeHeight() - y;
-				d7 = entity.posZ - z;
-				double d9 = MathHelper.sqrt_double(d5 * d5 + d6 * d6 + d7 * d7);
-				if(!Lib.isObstructed(world, x, y, z, entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ));
-				
-			}
-		}
+            if (d4 <= 1.0D) {
+                d5 = entity.posX - x;
+                d6 = entity.posY + entity.getEyeHeight() - y;
+                d7 = entity.posZ - z;
+                double d9 = MathHelper.sqrt_double(d5 * d5 + d6 * d6 + d7 * d7);
+                if(!Lib.isObstructed(world, x, y, z, entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ))
+                    if (d9 < wat && !(entity instanceof EntityOcelot)) {
+                        d5 /= d9;
+                        d6 /= d9;
+                        d7 /= d9;
+                        // double d10 = (double)world.getBlockDensity(vec3,
+                        // entity.boundingBox);
+                        // if(d10 > 0) isOccupied = true;
+                        double d11 = (1.0D - d4);// * d10;
+                        if (!(entity instanceof EntityPlayerMP) || (entity instanceof EntityPlayerMP
+                                && ((EntityPlayerMP) entity).theItemInWorldManager.getGameType() != GameType.CREATIVE)) {
+                            // entity.attackEntityFrom(DamageSource.generic,
+                            // ((int)((d11 * d11 + d11) / 2.0D * 8.0D *
+                            // bombStartStrength + 1.0D)));
+                            double damage = entity.getDistance(x, y, z) / bombStartStrength * 250;
+                            entity.attackEntityFrom(NffDamageSource.nuclearblast, (float)damage);
+                            entity.setFire(5);
+                            double d8 = EnchantmentProtection.func_92092_a(entity, d11);
+                            entity.motionX += d5 * d8 * 0.2D;
+                            entity.motionY += d6 * d8 * 0.2D;
+                            entity.motionZ += d7 * d8 * 0.2D;
+                        }
+                    }
+            }
+        }
 
-		bombStartStrength = (int) f;
+        bombStartStrength = (int) f;
 	}
 
 	public static void succ(World world, int x, int y, int z, int radius) {
@@ -181,49 +202,57 @@ public class Generic{
 	}
 
 	public static boolean dedify(World world, int x, int y, int z, int radius) {
-		int i;
-		int j;
-		int k;
-		double d5;
-		double d6;
-		double d7;
-		double wat = radius/** 2 */
-		;
+        int i;
+        int j;
+        int k;
+        double d5;
+        double d6;
+        double d7;
+        double wat = radius/** 2 */
+                ;
 
-		// bombStartStrength *= 2.0F;
-		i = MathHelper.floor_double(x - wat - 1.0D);
-		j = MathHelper.floor_double(x + wat + 1.0D);
-		k = MathHelper.floor_double(y - wat - 1.0D);
-		int i2 = MathHelper.floor_double(y + wat + 1.0D);
-		int l = MathHelper.floor_double(z - wat - 1.0D);
-		int j2 = MathHelper.floor_double(z + wat + 1.0D);
-		List list = world.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(i, k, l, j, i2, j2));
+        // bombStartStrength *= 2.0F;
+        i = MathHelper.floor_double(x - wat - 1.0D);
+        j = MathHelper.floor_double(x + wat + 1.0D);
+        k = MathHelper.floor_double(y - wat - 1.0D);
+        int i2 = MathHelper.floor_double(y + wat + 1.0D);
+        int l = MathHelper.floor_double(z - wat - 1.0D);
+        int j2 = MathHelper.floor_double(z + wat + 1.0D);
+        List list = world.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(i, k, l, j, i2, j2));
 
-		for (int i1 = 0; i1 < list.size(); ++i1) {
-			Entity entity = (Entity) list.get(i1);
-			double d4 = entity.getDistance(x, y, z) / radius;
+        for (int i1 = 0; i1 < list.size(); ++i1) {
+            Entity entity = (Entity) list.get(i1);
+            double d4 = entity.getDistance(x, y, z) / radius;
 
-			if (d4 <= 1.0D) {
-				d5 = entity.posX - x;
-				d6 = entity.posY + entity.getEyeHeight() - y;
-				d7 = entity.posZ - z;
-				double d9 = MathHelper.sqrt_double(d5 * d5 + d6 * d6 + d7 * d7);
-				
-					// double d10 = (double)world.getBlockDensity(vec3,
-					// entity.boundingBox);
-					// if(d10 > 0) isOccupied = true;
+            if (d4 <= 1.0D) {
+                d5 = entity.posX - x;
+                d6 = entity.posY + entity.getEyeHeight() - y;
+                d7 = entity.posZ - z;
+                double d9 = MathHelper.sqrt_double(d5 * d5 + d6 * d6 + d7 * d7);
+                if (d9 < wat && !(entity instanceof EntityPlayer)) {
+                    d5 /= d9;
+                    d6 /= d9;
+                    d7 /= d9;
+                    // double d10 = (double)world.getBlockDensity(vec3,
+                    // entity.boundingBox);
+                    // if(d10 > 0) isOccupied = true;
 
-					
-						
-					
-					
-					
-				}
-			}
-		
-		
-		return false;
-	}
+
+
+                    if (!(entity instanceof EntityPlayerMP
+                            && ((EntityPlayerMP) entity).theItemInWorldManager.getGameType() == GameType.CREATIVE)) {
+                        entity.attackEntityFrom(NffDamageSource.nuclearblast, 1000F);
+                    }
+
+
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 
 	public static void vapor(World world, int x, int y, int z, int bombStartStrength) {
 		int r = bombStartStrength * 2;
@@ -256,6 +285,14 @@ public class Generic{
 				
 			}else{//oherwise, kill the block!
 				world.setBlock(x, y, z, Blocks.air,0, 2);
+
+			}if(b == Blocks.bedrock){
+				for(int i = 1; i < 6; i++) {
+					world.setBlockToAir(x, y + i, z);
+				}
+
+			}if(b == Blocks.obsidian){
+				world.setBlockToAir(x, y, z);
 			}
 		}
 		return 0;

@@ -1,13 +1,17 @@
 package nukesfromthefuture.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.blocks.NetherReact;
 
 public class TileNReactor extends TileEntity{
+    public int age = 0;
     public boolean isValid(){
         if(worldObj.getBlock(xCoord, yCoord - 1, zCoord) == Blocks.cobblestone &&
                 worldObj.getBlock(xCoord + 1, yCoord - 1, zCoord) == Blocks.cobblestone &&
@@ -31,171 +35,14 @@ public class TileNReactor extends TileEntity{
     }
 
     public void buildSpire(World world, int x, int y, int z) {
-        for (int i = 0; i < 20; i++) {
-            world.setBlock(x + i, y - 2, z + 20, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 19, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 18, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 17, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 16, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 15, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 14, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 13, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 12, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 11, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 10, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 9, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 8, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 7, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 6, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 5, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 4, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 3, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 2, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z + 1, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 20, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 19, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 18, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 17, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 16, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 15, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 14, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 13, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 12, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 11, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 10, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 9, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 8, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 7, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 6, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 5, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 4, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 3, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 2, Blocks.netherrack);
-            world.setBlock(x + i, y - 2, z - 1, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 20, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 19, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 18, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 17, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 16, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 15, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 14, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 13, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 12, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 11, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 10, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 9, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 8, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 7, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 6, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 5, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 4, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 3, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 2, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z + 1, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 20, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 19, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 18, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 17, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 16, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 15, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 14, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 13, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 12, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 11, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 10, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 9, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 8, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 7, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 6, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 5, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 4, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 3, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 2, Blocks.netherrack);
-            world.setBlock(x - i, y - 2, z - 1, Blocks.netherrack);
-            world.setBlock(x, y - 2, z, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 20, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 19, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 18, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 17, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 16, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 15, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 14, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 13, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 12, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 11, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 10, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 9, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 8, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 7, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 6, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 5, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 4, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 3, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 2, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z + 1, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 20, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 19, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 18, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 17, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 16, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 15, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 14, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 13, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 12, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 11, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 10, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 9, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 8, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 7, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 6, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 5, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 4, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 3, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 2, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z - 1, Blocks.netherrack);
-            world.setBlock(x + 20, (y - 2) + i, z, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 20, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 19, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 18, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 17, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 16, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 15, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 14, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 13, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 12, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 11, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 10, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 9, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 8, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 7, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 6, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 5, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 4, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 3, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 2, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z + 1, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 20, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 19, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 18, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 17, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 16, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 15, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 14, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 13, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 12, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 11, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 10, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 9, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 8, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 7, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 6, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 5, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 4, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 3, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 2, Blocks.netherrack);
-            world.setBlock(x - 20, (y - 2) + i, z - 1, Blocks.netherrack);
-
+        for(int j = 0; j < 11; j++){
+            for (int i = 0; i < 11; i++){
+                world.setBlock((x - 5) + i, y - 2, (z - 5) + j, Blocks.netherrack);
+                world.setBlock(x + 6, (y - 2) + i, (z - 5) + j, Blocks.netherrack);
+                world.setBlock(x - 6, (y - 2) + i, (z - 5) + j, Blocks.netherrack);
+                world.setBlock((x - 5) + j, (y - 2) + i, z + 6, Blocks.netherrack);
+                world.setBlock((x - 5) + j, (y - 2) + i, z - 6, Blocks.netherrack);
+            }
         }
 
     }
@@ -215,23 +62,68 @@ public class TileNReactor extends TileEntity{
         world.spawnEntityInWorld(new EntityPigZombie(world));world.spawnEntityInWorld(new EntityPigZombie(world));
 
     }
+    @SideOnly(Side.CLIENT)
     public void replaceBlocks(World world, int x, int y, int z){
-        world.setBlock(x, y - 1, z, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x + 1, y - 1, z, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x - 1, y - 1, z, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x, y - 1, z + 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x, y - 1, z - 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x + 1, y, z + 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x + 1, y, z - 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x - 1, y, z + 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x - 1, y, z - 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x, y + 1, z, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x + 1, y + 1, z, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x - 1, y + 1, z, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x, y + 1, z + 1, Nukesfromthefuture.red_obsidian);
-        world.setBlock(x, y + 1, z - 1, Nukesfromthefuture.red_obsidian);
-        world.setBlockToAir(x, y, z);
-        world.setBlock(x, y, z, Nukesfromthefuture.nether_reactor2);
+            world.setBlock(x, y - 1, z, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x + 1, y - 1, z, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x - 1, y - 1, z, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x, y - 1, z + 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x, y - 1, z - 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x + 1, y, z + 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x + 1, y, z - 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x - 1, y, z + 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x - 1, y, z - 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x, y + 1, z, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x + 1, y + 1, z, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x - 1, y + 1, z, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x, y + 1, z + 1, Nukesfromthefuture.red_obsidian);
+            world.setBlock(x, y + 1, z - 1, Nukesfromthefuture.red_obsidian);
+            world.setBlockToAir(x, y, z);
+            world.setBlock(x, y, z, Nukesfromthefuture.nether_reactor2);
 
+    }
+    public boolean Activated(){
+        if(worldObj.getBlock(xCoord, yCoord, zCoord) == Nukesfromthefuture.nether_reactor2) return true;
+        return false;
+    }
+
+    @Override
+    public void updateEntity() {
+
+
+        if(this.Activated()) {
+            age ++;
+            if (age == 1000) {
+                worldObj.setBlock(xCoord, yCoord - 1, zCoord, Blocks.obsidian);
+                worldObj.setBlock(xCoord + 1, yCoord - 1, zCoord, Blocks.obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord - 1, zCoord, Blocks.obsidian);
+                worldObj.setBlock(xCoord, yCoord - 1, zCoord + 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord, yCoord - 1, zCoord - 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord + 1, yCoord, zCoord + 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord + 1, yCoord, zCoord - 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord, zCoord + 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord, zCoord - 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.obsidian);
+                worldObj.setBlock(xCoord + 1, yCoord + 1, zCoord, Blocks.obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord + 1, zCoord, Blocks.obsidian);
+                worldObj.setBlock(xCoord, yCoord + 1, zCoord + 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord, yCoord + 1, zCoord - 1, Blocks.obsidian);
+
+            }
+
+            if(age == 200){
+                worldObj.setBlock(xCoord + 1, yCoord - 1, zCoord + 1, Nukesfromthefuture.red_obsidian);
+                worldObj.setBlock(xCoord + 1, yCoord - 1, zCoord - 1, Nukesfromthefuture.red_obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord - 1, zCoord + 1, Nukesfromthefuture.red_obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord - 1, zCoord - 1, Nukesfromthefuture.red_obsidian);
+            }
+            if(age == 1100){
+                worldObj.setBlock(xCoord + 1, yCoord - 1, zCoord + 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord + 1, yCoord - 1, zCoord - 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord - 1, zCoord + 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord - 1, yCoord - 1, zCoord - 1, Blocks.obsidian);
+                worldObj.setBlock(xCoord, yCoord, zCoord, Nukesfromthefuture.reactor_burnt_out);
+            }
+        }
     }
 }

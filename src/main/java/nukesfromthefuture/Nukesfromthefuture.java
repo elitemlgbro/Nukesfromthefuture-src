@@ -18,6 +18,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockReed;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -249,7 +250,7 @@ public class Nukesfromthefuture{
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
 		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");
 		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockUnbreakable().setBlockTextureName("nff:nrc2");
-		red_obsidian = new RedObsidian(Material.iron).setCreativeTab(bloks).setBlockName("red_obsidian").setBlockTextureName("nff:glowingobsidian").setStepSound(Block.soundTypeMetal).setBlockUnbreakable();
+		red_obsidian = new RedObsidian(Material.iron).setCreativeTab(bloks).setBlockName("red_obsidian").setBlockTextureName("nff:glowingobsidian").setStepSound(Block.soundTypeMetal).setBlockUnbreakable().setLightLevel(1.0F);
         nether_reactor = new NetherReact(Material.iron).setCreativeTab(machines).setBlockName("nether_reactor").setHardness(1.0F).setBlockTextureName("nff:nrc1");
 		waste_wood = new Waste(Material.wood, true).setBlockName("waste_wood").setCreativeTab(bloks).setHardness(0.8F).setResistance(1.0F).setStepSound(Block.soundTypeWood);
 		deathinum_pick = new PickDeathinum(deathinumTools).setUnlocalizedName("deathinum_pickaxe").setCreativeTab(nffreee).setTextureName("nff:deathinum_pick");

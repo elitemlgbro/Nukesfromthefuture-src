@@ -12,7 +12,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
 
-public class BombBalls extends EntityThrowable {
+public class
+BombBalls extends EntityThrowable {
 	public EntityPlayer player;
 	public BombBalls(World p_i1776_1_) {
 		super(p_i1776_1_);
@@ -35,6 +36,9 @@ public class BombBalls extends EntityThrowable {
 
 		
 		worldObj.createExplosion(player, posX, posY, posZ, 10F, true);
+		if(!worldObj.isRemote){
+			this.setDead();
+		}
 	}
 	public static void registr() {
 		EntityRegistry.registerModEntity(BombBalls.class, "bomb balls", EntityRegistry.findGlobalUniqueEntityId(), Nukesfromthefuture.instance, 1000000000, 100, true);

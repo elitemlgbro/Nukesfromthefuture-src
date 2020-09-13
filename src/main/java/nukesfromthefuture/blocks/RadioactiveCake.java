@@ -5,6 +5,7 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockReed;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,13 +17,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
 
-public class RadioactiveCake extends Block {
-	@SideOnly(Side.CLIENT)
+public class RadioactiveCake extends Block{
+    @SideOnly(Side.CLIENT)
     private IIcon field_150038_a;
     @SideOnly(Side.CLIENT)
     private IIcon field_150037_b;
     @SideOnly(Side.CLIENT)
     private IIcon field_150039_M;
+    private static final String __OBFID = "CL_00000211";
 
     public RadioactiveCake()
     {

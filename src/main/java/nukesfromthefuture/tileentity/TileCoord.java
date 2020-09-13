@@ -26,6 +26,7 @@ public class TileCoord extends TileEntity {
 		}
 		return null;
 	}
+
 	public void deleteEntry(int i) {
 		if(i < teleports.size()) {
 			teleports.remove(i);

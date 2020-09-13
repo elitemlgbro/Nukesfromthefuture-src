@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
@@ -19,7 +20,11 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import nukesfromthefuture.boime.BiomeRegistry;
+import nukesfromthefuture.boime.CursedBiome;
 import nukesfromthefuture.entity.EntityPizzaCreeper;
 
 public class ChunkProviderCursed implements IChunkProvider{
@@ -29,7 +34,8 @@ public class ChunkProviderCursed implements IChunkProvider{
     double[] field_147427_d;
     double[] field_147428_e;
     double[] field_147425_f;
-    double[] field_147426_g;
+	private double[] stoneNoise = new double[256];
+	double[] field_147426_g;
     int[][] field_73219_j = new int[32][32];
 	private BiomeGenBase[] biomesForGeneration;
 	private NoiseGeneratorOctaves field_147431_j;
@@ -62,7 +68,7 @@ public class ChunkProviderCursed implements IChunkProvider{
         this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 10);
         this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_147434_q = new double[825];
-
+		this.biomesForGeneration = new BiomeGenBase[]{BiomeRegistry.cursedBiome};
         for (int j = -2; j <= 2; ++j)
         {
             for (int k = -2; k <= 2; ++k)
@@ -83,6 +89,9 @@ public class ChunkProviderCursed implements IChunkProvider{
         this.noiseGen5 = (NoiseGeneratorOctaves)noiseGens[4];
         this.noiseGen6 = (NoiseGeneratorOctaves)noiseGens[5];
     }
+
+
+
 	@Override
 	public Chunk provideChunk(int p_73154_1_, int p_73154_2_) {
 		// TODO Auto-generated method stub
@@ -91,16 +100,17 @@ public class ChunkProviderCursed implements IChunkProvider{
         byte[] abyte = new byte[65536];
         this.func_147424_a(p_73154_1_, p_73154_2_, ablock);
         this.biomesForGeneration = this.world.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, p_73154_1_ * 16, p_73154_2_ * 16, 16, 16);
+		this.replaceBlocksForBiome(p_73154_1_, p_73154_2_, ablock, abyte, this.biomesForGeneration);
 
 
-        
 
-        Chunk chunk = new Chunk(this.world, ablock, abyte, p_73154_1_, p_73154_2_);
+
+		Chunk chunk = new Chunk(this.world, ablock, abyte, p_73154_1_, p_73154_2_);
         byte[] abyte1 = chunk.getBiomeArray();
 
         for (int k = 0; k < abyte1.length; ++k)
         {
-            abyte1[k] = (byte)this.biomesForGeneration[k].biomeID;
+            abyte1[k] = (byte)this.biomesForGeneration[BiomeRegistry.cursedBiome.biomeID].biomeID;
         }
 
         chunk.generateSkylightMap();
@@ -134,6 +144,24 @@ public class ChunkProviderCursed implements IChunkProvider{
 	public boolean canSave() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	public void replaceBlocksForBiome(int p_147422_1_, int p_147422_2_, Block[] p_147422_3_, byte[] p_147422_4_, BiomeGenBase[] p_147422_5_)
+	{
+		ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, p_147422_1_, p_147422_2_, p_147422_3_, p_147422_4_, p_147422_5_, this.world);
+		MinecraftForge.EVENT_BUS.post(event);
+		if (event.getResult() == Event.Result.DENY) return;
+
+		double d0 = 0.03125D;
+		this.stoneNoise = this.field_147430_m.func_151599_a(this.stoneNoise, (double)(p_147422_1_ * 16), (double)(p_147422_2_ * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+
+		for (int k = 0; k < 16; ++k)
+		{
+			for (int l = 0; l < 16; ++l)
+			{
+				BiomeGenBase biomegenbase = p_147422_5_[l + k * 16];
+				biomegenbase.genTerrainBlocks(this.world, this.rand, p_147422_3_, p_147422_4_, p_147422_1_ * 16 + k, p_147422_2_ * 16 + l, this.stoneNoise[l + k * 16]);
+			}
+		}
 	}
 	public void func_147424_a(int p_147419_1_, int p_147419_2_, Block[] p_147419_3_)
     {
@@ -345,8 +373,7 @@ public class ChunkProviderCursed implements IChunkProvider{
 	@Override
 	public List getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_) {
 		// TODO Auto-generated method stub
-		uhhhh_idk.add(new EntityPizzaCreeper(world));
-		return uhhhh_idk;
+		return null;
 	}
 
 	@Override

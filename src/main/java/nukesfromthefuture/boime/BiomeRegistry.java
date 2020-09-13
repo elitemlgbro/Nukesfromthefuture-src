@@ -2,6 +2,10 @@ package nukesfromthefuture.boime;
 
 
 
+import net.minecraft.init.Blocks;
+import net.minecraft.world.WorldManager;
+import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
@@ -19,5 +23,6 @@ public class BiomeRegistry {
 	public static void register() {
 	BiomeDictionary.registerBiomeType(cursedBiome, Type.FOREST);
 	BiomeManager.addSpawnBiome(cursedBiome);
+	BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(cursedBiome, 1));
 	}
 }

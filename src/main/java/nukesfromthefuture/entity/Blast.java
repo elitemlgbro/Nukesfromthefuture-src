@@ -121,7 +121,18 @@ public class Blast extends Entity{
         	Generic.dealDamage(this.worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, this.destructionRange * 2);
         } else {
 			if (!did2 && waste) {
-				
+
+					FalloutRain fallout = new FalloutRain(this.worldObj, (int)(this.destructionRange * 1.8) * 10);
+					fallout.posX = this.posX;
+					fallout.posY = this.posY;
+					fallout.posZ = this.posZ;
+					fallout.setScale((int)(this.destructionRange * 1.8));
+
+					this.worldObj.spawnEntityInWorld(fallout);
+					//this.worldObj.getWorldInfo().setRaining(true);
+
+					did2 = true;
+
 
 				
 				//this.worldObj.getWorldInfo().setRaining(true);

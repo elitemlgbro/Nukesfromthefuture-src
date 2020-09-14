@@ -104,6 +104,7 @@ public class RadioactiveCake extends Block{
     public boolean renderAsNormalBlock()
     {
         return false;
+
     }
 
     /**
@@ -113,6 +114,7 @@ public class RadioactiveCake extends Block{
     public boolean isOpaqueCube()
     {
         return false;
+
     }
 
     /**

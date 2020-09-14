@@ -180,6 +180,7 @@ public class Nukesfromthefuture{
 	public static Item fluid_barrel_full;
 	public static Item coord_cache;
 	public static Item lighter;
+	public static int fogRad;
 	public static int trol_speed;
 	public static Item antimatter;
 	public static Item deathinum_sword;
@@ -194,6 +195,7 @@ public class Nukesfromthefuture{
 	public static Item mentos_fo_lava;
 	public static boolean POTATOtofries;
 	public static int Manbuff;
+	public static boolean enableRad;
 	public static int POTATOSTRENGTH;
 	public static int POTATOSPEED;
 	public static int Manspeed;
@@ -217,6 +219,8 @@ public class Nukesfromthefuture{
 		config.load();
 		
 		FMLCommonHandler.instance().bus().register(this);
+		enableRad = config.get("explosionsize", "enableRad", true).getBoolean();
+		fogRad = config.get("explosionsize", "fogRad", 200).getInt();
 		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false).getBoolean(false);
 		flood_strength = config.get("explosionsize", "flood_Strength", 100).getInt();
 		beta_strength = config.get("explosionsize", "betastrength", 230).getInt();

@@ -12,6 +12,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.potion.NftfPotion;
 
 public class Waste extends Block {
 	public Waste(Material mat, boolean tick) {
@@ -24,7 +25,7 @@ public class Waste extends Block {
     {
     	if (entity instanceof EntityLivingBase && this == Nukesfromthefuture.waste) {
 
-    		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.poison.id, 15 * 20, 0));
+    		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(NftfPotion.contamination.id, 15 * 20, 5));
     	}
     	
     	

@@ -60,7 +60,7 @@ public class ItemFluidTank extends Item{
 
        
         if(this == Nukesfromthefuture.fluid_barrel_full)
-        	this.overlayIcon = p_94581_1_.registerIcon("nff:fluid_barrel_overlay");
+        	this.overlayIcon = p_94581_1_.registerIcon("nff:new_overlay");
     }
     
     @Override

@@ -25,7 +25,7 @@ public class Waste extends Block {
     {
     	if (entity instanceof EntityLivingBase && this == Nukesfromthefuture.waste) {
 
-    		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(NftfPotion.contamination.id, 15 * 20, 5));
+    		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.wither.id, 15 * 20, 5));
     	}
     	
     	

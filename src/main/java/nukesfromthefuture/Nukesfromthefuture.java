@@ -27,6 +27,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemReed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -192,6 +193,7 @@ public class Nukesfromthefuture{
 	public static int Volcano_strength;
 	public static int Boyspeed;
 	public static Item fluid_icon;
+	public static Item donut;
 	public static Item mentos_fo_lava;
 	public static boolean POTATOtofries;
 	public static int Manbuff;
@@ -251,6 +253,7 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		donut = new ItemFood(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
 		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");
 		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockUnbreakable().setBlockTextureName("nff:nrc2");
@@ -373,6 +376,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(anti_time_ingot, anti_time_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(atom_knife, atom_knife.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(deathinum_ingot, deathinum_ingot.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(donut, donut.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_identifier, fluid_identifier.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(time_fissure_log, time_fissure_log.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(liquifier, liquifier.getUnlocalizedName().substring(5));

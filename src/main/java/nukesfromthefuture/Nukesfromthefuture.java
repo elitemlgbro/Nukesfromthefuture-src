@@ -169,6 +169,7 @@ public class Nukesfromthefuture{
 	public static int egoNukeSpeed;
 	public static boolean elevation = true;
 	public static Block nether_reactor;
+	public static Item battery;
 	public static int colliderStrength;
 	public static int colliderSpeed;
 	public static Block waste_wood;
@@ -179,6 +180,7 @@ public class Nukesfromthefuture{
 	public static int coverStrength;
 	public static Item fluid_barrel_empty;
 	public static Item fluid_barrel_full;
+	public static Item infinite_battery;
 	public static Item coord_cache;
 	public static Item lighter;
 	public static int fogRad;
@@ -253,6 +255,8 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1);
+		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines);
 		donut = new ItemFood(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
 		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");
@@ -382,6 +386,8 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(liquifier, liquifier.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(schrabidium_cape, schrabidium_cape.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(trololo_nuke, trololo_nuke.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(battery, battery.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(infinite_battery, infinite_battery.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ego_ingot, ego_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(unrefinary, unrefinary.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coppa, coppa.getUnlocalizedName().substring(5));

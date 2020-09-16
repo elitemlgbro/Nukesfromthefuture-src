@@ -15,6 +15,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import nukesfromthefuture.handler.FluidTypeHandler.FluidType;
+import nukesfromthefuture.interfaces.IBatteryItem;
 import nukesfromthefuture.interfaces.IFluidAcceptor;
 import nukesfromthefuture.interfaces.IFluidSource;
 import nukesfromthefuture.tileentity.TileEntitySingularityNuke;
@@ -75,7 +76,31 @@ public class Lib {
 		
 		return false;
 	}
-	
+	public static long chargeTEFromItems(ItemStack[] slots, int index, long power, long maxPower) {
+
+		if(slots[index] != null && slots[index].getItem() == Nukesfromthefuture.infinite_battery)
+		{
+			return maxPower;
+		}
+
+
+
+		if(slots[index] != null && slots[index].getItem() instanceof IBatteryItem) {
+
+			IBatteryItem battery = (IBatteryItem) slots[index].getItem();
+
+			long batCharge = battery.getCharge(slots[index]);
+			long batRate = battery.getDischargeRate();
+
+			//in hHe
+			long toDischarge = Math.min(Math.min((maxPower - power), batRate), batCharge);
+
+			battery.dischargeBattery(slots[index], toDischarge);
+			power += toDischarge;
+		}
+
+		return power;
+	}
 	public static void damageSuit(EntityPlayer player, int slot, int amount) {
 		
 		if(player.inventory.armorInventory[slot] == null)
@@ -139,7 +164,28 @@ public class Lib {
 		
 		return false;
 	}
-	
+	public static long chargeItemsFromTE(ItemStack[] slots, int index, long power, long maxPower) {
+
+		if(slots[index] != null && slots[index].getItem() instanceof IBatteryItem) {
+
+			IBatteryItem battery = (IBatteryItem) slots[index].getItem();
+
+			long batMax = battery.getMaxCharge();
+			long batCharge = battery.getCharge(slots[index]);
+			long batRate = battery.getChargeRate();
+
+			//in hHE
+			long toCharge = Math.min(Math.min(power, batRate), batMax - batCharge);
+
+			power -= toCharge;
+
+			battery.chargeBattery(slots[index], toCharge);
+
+
+		}
+
+		return power;
+	}
 	public static final String[] metals = new String[] {
 			"chainmail",
 			"iron",

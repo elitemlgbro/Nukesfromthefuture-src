@@ -55,6 +55,7 @@ public class ClientProxy extends CommonProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySingularityNuke.class, new RenderSingularityNuke());
         RenderingRegistry.registerEntityRenderingHandler(EntityPOTATO.class, new RenderSnowball(Nukesfromthefuture.POTATO));
         GameRegistry.registerTileEntity(TileEntityCraterCoverer.class, "tileCraterCov");
+        GameRegistry.registerTileEntity(TileTransMutate.class, "tileMutate");
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCraterCoverer.class, new RenderCraterCoverer());
         RenderingRegistry.registerEntityRenderingHandler(NukeMushroom.class, new RenderNukeMushroom());
         GameRegistry.registerTileEntity(TileReactor.class, "tileRee");

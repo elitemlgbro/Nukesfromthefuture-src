@@ -4,6 +4,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import nukesfromthefuture.Reference;
+import nukesfromthefuture.interfaces.AuxElectricityPacket;
 
 public class PacketDispatcher {
 	//Mark 1 Packet Sending Device
@@ -14,5 +15,6 @@ public class PacketDispatcher {
 			int i = 0;
 			wrapper.registerMessage(TEFluidPacket.Handler.class, TEFluidPacket.class, i++, Side.CLIENT);
 			wrapper.registerMessage(AuxParticlePacket.Handler.class, AuxParticlePacket.class, i++, Side.CLIENT);
+			wrapper.registerMessage(AuxElectricityPacket.Handler.class, AuxElectricityPacket.class, i++, Side.CLIENT);
 		}
 }

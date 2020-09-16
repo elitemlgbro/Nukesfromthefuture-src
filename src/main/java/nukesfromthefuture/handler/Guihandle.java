@@ -84,6 +84,11 @@ if(entity != null ) {
 			return new BoyContainer(player.inventory, (TileBigBoy) entity);
 		}
 		return null;
+	}case 11:{
+		if(entity instanceof TileTransMutate){
+			return new TransmutateContainer(player.inventory, (TileTransMutate) entity);
+		}
+		return null;
 	}
 		
 
@@ -170,6 +175,11 @@ if(entity != null ) {
 			}case 10:{
 				if(entity instanceof TileBigBoy){
 					return new BoyGui(player.inventory, (TileBigBoy) entity);
+				}
+				return null;
+			}case 11:{
+				if(entity instanceof TileTransMutate){
+					return new TransmutantGui(player.inventory, (TileTransMutate) entity);
 				}
 				return null;
 			}

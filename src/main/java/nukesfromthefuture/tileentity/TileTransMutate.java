@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import nukesfromthefuture.Lib;
+import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.interfaces.AuxElectricityPacket;
 import nukesfromthefuture.interfaces.IConsumer;
 import nukesfromthefuture.packet.PacketDispatcher;
@@ -19,6 +20,8 @@ import java.util.List;
 public class TileTransMutate extends TileEntity implements ISidedInventory, IConsumer{
     public ItemStack slots[];
     public long power;
+    public int process = 0;
+    public static final int processSpeed = 1000;
     List<IConsumer> list = new ArrayList();
     public static final long maxPowa = 10000L;
     public TileTransMutate(){
@@ -51,13 +54,19 @@ public class TileTransMutate extends TileEntity implements ISidedInventory, ICon
     @Override
     public void updateEntity() {
         power = Lib.chargeTEFromItems(slots, 1, power, maxPowa);
-
+        if(isReady()){
+            process();
+        }else{
+            process = 0;
+        }
         if(!worldObj.isRemote){
             PacketDispatcher.wrapper.sendToAllAround(new AuxElectricityPacket(xCoord, yCoord, zCoord, power), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 50));
 
         }
     }
-
+    public int getProgressScaled(int i) {
+        return (process * i) / processSpeed;
+    }
     @Override
     public ItemStack decrStackSize(int i, int j) {
         if(slots[i] != null)
@@ -100,10 +109,34 @@ public class TileTransMutate extends TileEntity implements ISidedInventory, ICon
             itemStack.stackSize = getInventoryStackLimit();
         }
     }
+    public boolean isReady(){
+        if(slots[0] != null && slots[0].getItem() == Nukesfromthefuture.ego_ingot && power >= 5000) return true;
+        return false;
+    }
+    public void process(){
+        process ++;
+
+        if(process >= processSpeed){
+            process = 0;
+            power = 0;
+            slots[0].stackSize --;
+            if(slots[0].stackSize <= 0)
+                slots[0] = null;
+
+            if(slots[2] == null){
+                slots[2] = new ItemStack(Nukesfromthefuture.deathinum_ingot);
+            }else{
+                slots[2].stackSize ++;
+            }
+        worldObj.playSoundEffect(xCoord, yCoord, zCoord, "mob.ghast.scream", 10000F, 0.8F + this.worldObj.rand.nextFloat() * 0.2F);
+        }
+    }
+
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        process = nbt.getInteger("pro");
         NBTTagList list = nbt.getTagList("items", 10);
         power = nbt.getLong("power");
 
@@ -119,11 +152,16 @@ public class TileTransMutate extends TileEntity implements ISidedInventory, ICon
             }
         }
     }
+    public boolean isProssesing(){
+        if(process > 0) return true;
+        return false;
+    }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         NBTTagList list = new NBTTagList();
+        nbt.setInteger("pro", process);
         nbt.setLong("power", power);
         for(int i = 0; i < slots.length; i++)
         {
@@ -210,4 +248,5 @@ public class TileTransMutate extends TileEntity implements ISidedInventory, ICon
     public long getMaxPower() {
         return maxPowa;
     }
+
 }

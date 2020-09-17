@@ -38,6 +38,7 @@ public class Detonator extends Item{
                 player.addChatMessage(new ChatComponentText("Position set!"));
 
             }
+            world.playSoundAtEntity(player, "nff:famous.tech.boop", 2.0F, 1.0F);
             return true;
         }
         return false;
@@ -46,7 +47,7 @@ public class Detonator extends Item{
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if(stack.stackTagCompound == null){
-            player.addChatComponentMessage(new ChatComponentText("ERR: 404 position not found"));
+            player.addChatComponentMessage(new ChatComponentText("ERR: 404 U FORGOT TO SET THE POSITION"));
         }else
             {int x = stack.stackTagCompound.getInteger("x");
             int y = stack.stackTagCompound.getInteger("y");
@@ -54,7 +55,7 @@ public class Detonator extends Item{
 
             if(world.getBlock(x, y, z) instanceof IBomb)
             {
-
+                world.playSoundAtEntity(player, "nff:famous.tech.beep", 2.0F, 1.0F);
                 if(!world.isRemote)
                 {
                     ((IBomb)world.getBlock(x, y, z)).explode(world, x, y, z);

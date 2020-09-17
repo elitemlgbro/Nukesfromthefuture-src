@@ -2,6 +2,7 @@ package nukesfromthefuture.guiLoader;
 
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import nukesfromthefuture.container.TransmutateContainer;
@@ -35,5 +36,9 @@ public class TransmutantGui extends GuiInfoContainer{
         int k = (int)stuff.getPowerScaled(51);
 
         this.drawTexturedModalRect(guiLeft + 10, guiTop + 59 - k, 194, 97 - k, 16, k);
+        if(stuff.isProssesing()){
+            int j = stuff.getProgressScaled(64);
+            this.drawTexturedModalRect(guiLeft + 60, guiTop + 42, 183, 16, j, 27);
+        }
     }
 }

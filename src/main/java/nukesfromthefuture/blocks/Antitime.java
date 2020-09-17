@@ -1,5 +1,6 @@
 package nukesfromthefuture.blocks;
 
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -40,7 +41,9 @@ public class Antitime extends BlockContainer implements IBomb {
 		return -1;
 	}
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int w, float px, float py, float pz) {
-		if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.manual_detonator) {
+		if(world.isRemote){
+			return true;
+		}else if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.manual_detonator) {
 			TileAntitime entity = (TileAntitime) world.getTileEntity(x, y, z);
 			if(entity.isReady()) {
 				this.onBlockDestroyedByPlayer(world, x, y, z, 1);
@@ -48,11 +51,13 @@ public class Antitime extends BlockContainer implements IBomb {
 				world.setBlockToAir(x, y, z);
 				
 			}
+		return true;
+		}else if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.componetTeleporter) {
+			FMLNetworkHandler.openGui(player, Nukesfromthefuture.instance, 6, world, x, y, z);
+			return true;
+		}else{
+			return false;
 		}
-		if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.componetTeleporter) {
-			player.openGui(Nukesfromthefuture.instance, 6, world, x, y, z);
-		}
-		return super.onBlockActivated(world, x, y, z, player, w, px, py, pz);
 	}
 	public boolean igniteBomb(World world, int x, int y, int z, int rad) {
 		if (!world.isRemote)

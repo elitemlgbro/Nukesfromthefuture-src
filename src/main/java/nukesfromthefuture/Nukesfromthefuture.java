@@ -172,6 +172,8 @@ public class Nukesfromthefuture{
 	public static Item battery;
 	public static int colliderStrength;
 	public static int colliderSpeed;
+	public static Item lead_tank;
+	public static Item liquid_radiation;
 	public static Block waste_wood;
 	public static int antitimebuff;
 	public static Block red_obsidian;
@@ -255,8 +257,8 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
-		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1);
-		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines);
+		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1).setTextureName("nff:batinf");
+		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines).setTextureName("nff:batr");
 		donut = new ItemFood(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
 		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");

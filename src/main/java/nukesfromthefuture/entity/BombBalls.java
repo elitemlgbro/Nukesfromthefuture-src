@@ -20,7 +20,7 @@ BombBalls extends EntityThrowable {
 		// TODO Auto-generated constructor stub
 	}
 	public BombBalls(World p_77660_1_, EntityLivingBase p_77660_2_) {
-		super(p_77660_1_, p_77660_2_); 
+		super(p_77660_1_, p_77660_2_);
 	}
 
 	public BombBalls(World p_i1781_1_, double p_i1781_2_, double p_i1781_4_, double p_i1781_6_) {
@@ -34,9 +34,10 @@ BombBalls extends EntityThrowable {
             Uwu.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 5.0F);
         }
 
-		
-		worldObj.createExplosion(player, posX, posY, posZ, 10F, true);
-		if(!worldObj.isRemote){
+		if(worldObj.isRemote) {
+			worldObj.createExplosion(player, posX, posY, posZ, 10F, true);
+		}
+		if(worldObj.isRemote){
 			this.setDead();
 		}
 	}

@@ -41,9 +41,7 @@ import nukesfromthefuture.tileentity.*;
 import nukesfromthefuture.tileentity.explosion.TileAntitime;
 
 public class ClientProxy extends CommonProxy{
-    /*
-    *client stuff*
-     */
+    /**bunch of rendering crap*/
 	public void registerRenders(){
 		GameRegistry.registerTileEntity(TileEntityEgo_nuke.class, "tileEgo_nuke");
 		if(Nukesfromthefuture.old_ego == false) {

@@ -1,5 +1,6 @@
 package nukesfromthefuture.blocks;
 
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -34,10 +35,14 @@ public class BlockUnrefinary extends BlockContainer {
         return false;
     }
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int w, float px, float py, float pz) {
-    	if(!player.isSneaking()) {
-    	player.openGui(Nukesfromthefuture.instance, 3, world, x, y, z);
-    	}
-    	return super.onBlockActivated(world, x, y, z, player, w, px, py, pz);
-    	
+	    if(world.isRemote){
+	        return true;
+        }else if(!player.isSneaking()) {
+    	FMLNetworkHandler.openGui(player, Nukesfromthefuture.instance, 3, world, x, y, z);
+    	return true;
+    	}else{
+	        return false;
+        }
+
     }
 }

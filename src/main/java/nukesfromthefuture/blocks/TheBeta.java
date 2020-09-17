@@ -41,6 +41,7 @@ public class TheBeta extends BlockContainer implements IBomb {
 			if(entity.isReady()) {
 		world.setBlockToAir(x, y, z);
 		this.IgniteBoob(x, y, z, world, Nukesfromthefuture.beta_strength);
+		this.onBlockDestroyedByPlayer(world, x, y, z, 1);
 			}
 		}else if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.componetTeleporter) {
 			player.openGui(Nukesfromthefuture.instance, 8, world, x, y, z);
@@ -64,9 +65,12 @@ public class TheBeta extends BlockContainer implements IBomb {
 	}
 	@Override
 	public void explode(World world, int x, int y, int z) {
-		// TODO Auto-generated method stub
-		this.IgniteBoob(x, y, z, world, Nukesfromthefuture.beta_strength);
-		world.setBlockToAir(x, y, z);
+		//TODO Auto-generated method stub
+		TileBeta entity = (TileBeta) world.getTileEntity(x, y, z);
+		if(entity.isReady()) {
+			this.IgniteBoob(x, y, z, world, Nukesfromthefuture.beta_strength);
+			world.setBlockToAir(x, y, z);
+		}
 	}
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {

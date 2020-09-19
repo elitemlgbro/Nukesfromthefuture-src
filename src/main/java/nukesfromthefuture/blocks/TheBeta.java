@@ -11,6 +11,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.entity.Blast;
+import nukesfromthefuture.entity.Mk3Explosion;
 import nukesfromthefuture.entity.NukeMushroom;
 import nukesfromthefuture.entity.TrolBlast;
 import nukesfromthefuture.interfaces.IBomb;
@@ -52,14 +53,13 @@ public class TheBeta extends BlockContainer implements IBomb {
 	public boolean IgniteBoob(int posX, int posY, int posZ, World world, int re) {
 		if (!world.isRemote)
 		{
-		 Blast entity = new Blast(world);
+			Mk3Explosion entity = new Mk3Explosion(world);
+			entity.destructionRange = re;
 			entity.posX = posX;
 			entity.posY = posY;
 			entity.posZ = posZ;
-			entity.destructionRange = re;
-			entity.speed = Nukesfromthefuture.Boyspeed;
-			entity.coefficient = 1.0F;
-    		world.spawnEntityInWorld(entity);
+			entity.speed = Nukesfromthefuture.colliderSpeed;
+			world.spawnEntityInWorld(entity);
     	}
 		return false;	
 	}

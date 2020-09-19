@@ -14,6 +14,8 @@ import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.potion.NftfPotion;
 
+import java.util.Random;
+
 public class Waste extends Block {
 	public Waste(Material mat, boolean tick) {
 		super(mat);
@@ -25,7 +27,7 @@ public class Waste extends Block {
     {
     	if (entity instanceof EntityLivingBase && this == Nukesfromthefuture.waste) {
 
-    		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.wither.id, 15 * 20, 5));
+    		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(NftfPotion.contamination.id, 15 * 20, 0));
     	}
     	
     	
@@ -63,4 +65,17 @@ public class Waste extends Block {
 		
 		return null;
 	}
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+	{
+		super.randomDisplayTick(p_149734_1_, p_149734_2_, p_149734_3_, p_149734_4_, p_149734_5_);
+
+		if (this == Nukesfromthefuture.waste)
+		{
+			p_149734_1_.spawnParticle("townaura", p_149734_2_ + p_149734_5_.nextFloat(), p_149734_3_ + 1.1F, p_149734_4_ + p_149734_5_.nextFloat(), 0.0D, 0.0D, 0.0D);
+		}
+
+	}
+
 }

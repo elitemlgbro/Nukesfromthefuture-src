@@ -78,18 +78,12 @@ public class BlockSingularityNuke extends BlockContainer implements IBomb {
 	private boolean igniteBomb(World world, int x, int y, int z, int colliderStrength) {
 		if(!world.isRemote) {
 			/**REEEEEEEEEE*/
-			 Blast entity = new Blast(world);
-				entity.posX = x;
-				entity.posY = y;
-				entity.posZ = z;
-				entity.destructionRange = colliderStrength;
-				entity.speed = Nukesfromthefuture.Boyspeed;
-				entity.coefficient = 1.0F;
-	    		world.spawnEntityInWorld(entity);
-			
+
+			world.spawnEntityInWorld(Blast.statFac(world, Nukesfromthefuture.Boystrength, x, y, z));
 			NukeMushroom cloud = new NukeMushroom(world, colliderStrength);
 			cloud.posX = x;
 			cloud.posY = y;
+			cloud.scale = 1000;
 			cloud.posZ= z;
 			cloud.maxAge = colliderStrength;
 			world.spawnEntityInWorld(cloud);
@@ -100,13 +94,14 @@ public class BlockSingularityNuke extends BlockContainer implements IBomb {
 	@Override
 	public void explode(World world, int x, int y, int z) {
 		TileEntitySingularityNuke entity = (TileEntitySingularityNuke) world.getTileEntity(x, y, z);
-		if(entity.dna()) {
-			this.onBlockDestroyedByPlayer(world, x, y, z, 1);
-			world.setBlockToAir(x, y, z);
-			igniteBomb(world, x, y, z, Nukesfromthefuture.colliderStrength);
-			
-			
-		}
+            if (entity.dna()) {
+                this.onBlockDestroyedByPlayer(world, x, y, z, 1);
+                world.setBlockToAir(x, y, z);
+                igniteBomb(world, x, y, z, Nukesfromthefuture.colliderStrength);
+
+
+            }
+
 	}
 	@Override
 	public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)

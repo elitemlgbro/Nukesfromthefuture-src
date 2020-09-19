@@ -1,16 +1,19 @@
 package nukesfromthefuture;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+
+import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.packet.AuxParticlePacket;
+import nukesfromthefuture.packet.PacketDispatcher;
+
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.chunk.Chunk;
-import nukesfromthefuture.packet.AuxParticlePacket;
-import nukesfromthefuture.packet.PacketDispatcher;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RadiationSavedData extends WorldSavedData{
     public HashMap<ChunkCoordIntPair, Float> contamination = new HashMap();
@@ -58,7 +61,7 @@ public class RadiationSavedData extends WorldSavedData{
         HashMap<ChunkCoordIntPair, Float> tempList = new HashMap(contamination);
         contamination.clear();
 
-        for(Map.Entry<ChunkCoordIntPair, Float> struct : tempList.entrySet()) {
+        for(Entry<ChunkCoordIntPair, Float> struct : tempList.entrySet()) {
 
             if(struct.getValue() != 0) {
 
@@ -72,13 +75,13 @@ public class RadiationSavedData extends WorldSavedData{
                     rad = 0;
                 }
 
-                if(rad > Nukesfromthefuture.fogRad && worldObj != null && worldObj.rand.nextInt(Nukesfromthefuture.fogRad) == 0 && worldObj.getChunkFromChunkCoords(struct.getKey().chunkXPos, struct.getKey().chunkZPos).isChunkLoaded) {
+                if(rad > Nukesfromthefuture.fogRad && worldObj != null && worldObj.rand.nextInt(10) == 0 && worldObj.getChunkFromChunkCoords(struct.getKey().chunkXPos, struct.getKey().chunkZPos).isChunkLoaded) {
 
                     int x = struct.getKey().chunkXPos * 16 + worldObj.rand.nextInt(16);
                     int z = struct.getKey().chunkZPos * 16 + worldObj.rand.nextInt(16);
                     int y = worldObj.getHeightValue(x, z) + worldObj.rand.nextInt(5);
 
-                    PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacket(x, y, z, 3), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 100));
+                    PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacket(x, y, z, 3), new TargetPoint(worldObj.provider.dimensionId, x, y, z, 100));
                 }
 
                 if(rad > 1) {
@@ -149,7 +152,7 @@ public class RadiationSavedData extends WorldSavedData{
 
         int i = 0;
 
-        for(Map.Entry<ChunkCoordIntPair, Float> struct : contamination.entrySet()) {
+        for(Entry<ChunkCoordIntPair, Float> struct : contamination.entrySet()) {
             nbt.setInteger("cposX" + i, struct.getKey().chunkXPos);
             nbt.setInteger("cposZ" + i, struct.getKey().chunkZPos);
             nbt.setFloat("crad" + i, struct.getValue());

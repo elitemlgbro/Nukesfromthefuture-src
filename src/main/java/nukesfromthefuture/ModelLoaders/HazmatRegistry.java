@@ -58,8 +58,7 @@ public class HazmatRegistry {
             res += getResistance(player.inventory.armorInventory[i]);
         }
 
-        if(player.isPotionActive(NftfPotion.contamination))
-            res += 0.4F;
+
 
         return res;
 

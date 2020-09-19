@@ -12,6 +12,11 @@ import nukesfromthefuture.RadiationSavedData;
 import nukesfromthefuture.potion.NftfPotion;
 
 public class RadUtil {
+    /**
+     * Calculates how much radiation can be applied to this entity by calculating resistance
+     * @param entity
+     * @return
+     */
     public static float calculateRadiationMod(EntityLivingBase entity) {
 
         if(entity.isPotionActive(NftfPotion.mutation))
@@ -45,7 +50,7 @@ public class RadUtil {
         if(!(e instanceof EntityLivingBase))
             return;
 
-        if(((EntityLivingBase)e).isPotionActive(NftfPotion.contamination))
+        if(((EntityLivingBase)e).isPotionActive(NftfPotion.mutation))
             return;
 
         float rad = e.getEntityData().getFloat("hfr_radiation");

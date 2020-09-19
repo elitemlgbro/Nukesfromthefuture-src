@@ -3,147 +3,177 @@ package nukesfromthefuture.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.RadiationSavedData;
 import nukesfromthefuture.tileentity.explosion.Advanced;
+import nukesfromthefuture.tileentity.explosion.ExplosionRay;
 import nukesfromthefuture.tileentity.explosion.Generic;
 
+import java.util.logging.Level;
+
 public class Blast extends Entity{
-	public int age = 0;
-	public int destructionRange = 0;
-	public Advanced exp;
-	public Advanced wst;
-	public Advanced vap;
-	public int speed = 1;
-	public float coefficient = 1;
-	public float coefficient2 = 1;
-	public boolean did = false;
-	public boolean did2 = false;
-	public boolean waste = true;
-	//Extended Type
-	public int extType = 0;
+	//Strength of the blast
+	public int strength;
+	//How many rays should be created
+	public int count;
+	//How many rays are calculated per tick
+	public int speed;
+	public int length;
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbt) {
-		age = nbt.getInteger("age");
-		destructionRange = nbt.getInteger("destructionRange");
-		speed = nbt.getInteger("speed");
-		coefficient = nbt.getFloat("coefficient");
-		coefficient2 = nbt.getFloat("coefficient2");
-		did = nbt.getBoolean("did");
-		did2 = nbt.getBoolean("did2");
-		waste = nbt.getBoolean("waste");
-		extType = nbt.getInteger("extType");
-		
-		long time = nbt.getLong("milliTime");
-		
-		
-    	if(this.waste)
-    	{
-        	exp = new Advanced((int)this.posX, (int)this.posY, (int)this.posZ, this.worldObj, this.destructionRange, this.coefficient, 0);
-			exp.readFromNbt(nbt, "exp_");
-    		wst = new Advanced((int)this.posX, (int)this.posY, (int)this.posZ, this.worldObj, (int)(this.destructionRange * 1.8), this.coefficient, 2);
-			wst.readFromNbt(nbt, "wst_");
-    		vap = new Advanced((int)this.posX, (int)this.posY, (int)this.posZ, this.worldObj, (int)(this.destructionRange * 2.5), this.coefficient, 1);
-			vap.readFromNbt(nbt, "vap_");
-    	} 
-    	
-    	this.did = true;
-		
-	}
+	public boolean fallout = true;
+	private int falloutAdd = 0;
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbt) {
-		nbt.setInteger("age", age);
-		nbt.setInteger("destructionRange", destructionRange);
-		nbt.setInteger("speed", speed);
-		nbt.setFloat("coefficient", coefficient);
-		nbt.setFloat("coefficient2", coefficient2);
-		nbt.setBoolean("did", did);
-		nbt.setBoolean("did2", did2);
-		nbt.setBoolean("waste", waste);
-		nbt.setInteger("extType", extType);
-		
-		nbt.setLong("milliTime", System.currentTimeMillis());
-    	
-		if(exp != null)
-			exp.saveToNbt(nbt, "exp_");
-		if(wst != null)
-			wst.saveToNbt(nbt, "wst_");
-		if(vap != null)
-			vap.saveToNbt(nbt, "vap_");
-		
-		
-	}
+	ExplosionRay explosion;
 
 	public Blast(World p_i1582_1_) {
 		super(p_i1582_1_);
 	}
 
-    @Override
-	public void onUpdate() {
-        super.onUpdate();
-        	
-        if(!this.did)
-        {
-    		
-    		
-        	if(this.waste)
-        	{
-            	exp = new Advanced((int)this.posX, (int)this.posY, (int)this.posZ, this.worldObj, this.destructionRange, this.coefficient, 0);
-        		wst = new Advanced((int)this.posX, (int)this.posY, (int)this.posZ, this.worldObj, (int)(this.destructionRange * 1.8), this.coefficient, 2);
-        		vap = new Advanced((int)this.posX, (int)this.posY, (int)this.posZ, this.worldObj, (int)(this.destructionRange * 2.5), this.coefficient, 1);
-        	}
-        	
-        	this.did = true;
-        }
-        
-        speed += 1;	//increase speed to keep up with expansion
-        
-        boolean flag = false;
-        boolean flag3 = false;
-        
-        for(int i = 0; i < this.speed; i++)
-        {
-        	if(waste) {
-        		flag = exp.update();
-        		wst.update();
-        		flag3 = vap.update();
-        		
-        		if(flag3) {
-        			this.setDead();
-        		}
-        	}
-        	
-        }
-        	
-        if(!flag)
-        {
-        	this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
-        	Generic.dealDamage(this.worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, this.destructionRange * 2);
-        } else {
-			if (!did2 && waste) {
-
-					FalloutRain fallout = new FalloutRain(this.worldObj, (int)(this.destructionRange * 1.8) * 10);
-					fallout.posX = this.posX;
-					fallout.posY = this.posY;
-					fallout.posZ = this.posZ;
-					fallout.setScale((int)(this.destructionRange * 1.8));
-
-					this.worldObj.spawnEntityInWorld(fallout);
-					//this.worldObj.getWorldInfo().setRaining(true);
-
-					did2 = true;
-
-
-				
-				//this.worldObj.getWorldInfo().setRaining(true);
-				
-				did2 = true;
-        	}
-        }
-        
-        age++;
-    }
+	public Blast(World world, int strength, int count, int speed, int length) {
+		super(world);
+		this.strength = strength;
+		this.count = count;
+		this.speed = speed;
+		this.length = length;
+	}
 
 	@Override
-	protected void entityInit() { }
+	public void onUpdate() {
+
+		if(strength == 0) {
+			this.setDead();
+			return;
+		}
+
+		if(!worldObj.isRemote && fallout && explosion != null) {
+			RadiationSavedData data = RadiationSavedData.getData(worldObj);
+
+			//float radMax = (float) (length / 2F * Math.pow(length, 2) / 35F);
+			float radMax = Math.min((float) (length / 2F * Math.pow(length, 1.5) / 35F), 15000);
+			//System.out.println(radMax);
+			float rad = radMax / 4F;
+			data.incrementRad(worldObj, (int)this.posX, (int)this.posZ, rad, radMax);
+		}
+
+		this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
+		if(rand.nextInt(5) == 0)
+			this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
+
+		Generic.dealDamage(this.worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, this.length * 2);
+
+		if(explosion == null) {
+			explosion = new ExplosionRay(worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, this.strength, this.count, this.speed, this.length);
+
+			//MainRegistry.logger.info("START: " + System.currentTimeMillis());
+
+			/*if(!worldObj.isRemote)
+				for(int x = (int) (posX - 1); x <= (int) (posX + 1); x++)
+					for(int y = (int) (posY - 1); y <= (int) (posY + 1); y++)
+						for(int z = (int) (posZ - 1); z <= (int) (posZ + 1); z++)
+							worldObj.setBlock(x, y, z, Blocks.air);*/
+		}
+
+		//if(explosion.getStoredSize() < count / length) {
+		if(!explosion.isAusf3Complete) {
+			//if(!worldObj.isRemote)
+			//MainRegistry.logger.info(explosion.getStoredSize() + " / " + count / length);
+			//explosion.collectTip(speed * 10);
+			explosion.collectTipMk4_5(speed * 10);
+		} else if(explosion.getStoredSize() > 0) {
+			//if(!worldObj.isRemote)
+			//MainRegistry.logger.info(explosion.getProgress() + " / " + count / length);
+			explosion.processTip(Nukesfromthefuture.mk4);
+		} else if(fallout) {
+
+			//MainRegistry.logger.info("STOP: " + System.currentTimeMillis());
+
+			FalloutRain fallout = new FalloutRain(this.worldObj);
+			fallout.posX = this.posX;
+			fallout.posY = this.posY;
+			fallout.posZ = this.posZ;
+			fallout.setScale((int)(this.length * 1.8 + falloutAdd) * 100 / 100);
+
+			this.worldObj.spawnEntityInWorld(fallout);
+
+			this.setDead();
+		} else {
+			this.setDead();
+		}
+	}
+
+	@Override
+	protected void entityInit() {
+
+	}
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound nbt) {
+
+		/*strength = nbt.getInteger("strength");
+		count = nbt.getInteger("count");
+		speed = nbt.getInteger("speed");
+		length = nbt.getInteger("length");
+		fallout = nbt.getBoolean("fallout");
+		falloutAdd = nbt.getInteger("falloutAdd");*/
+
+		//TODO: implement NBT functionality for MK4 explosion logic
+	}
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound nbt) { }
+
+	public static Blast statFac(World world, int r, double x, double y, double z) {
+
+
+		if(r == 0)
+			r = 25;
+
+		r *= 2;
+
+		Blast mk4 = new Blast(world);
+		mk4.strength = (int)(r);
+		mk4.count = (int)(4 * Math.PI * Math.pow(mk4.strength, 2) * 25);
+		mk4.speed = (int)Math.ceil(100000 / mk4.strength);
+		mk4.setPosition(x, y, z);
+		mk4.length = mk4.strength / 2;
+		return mk4;
+	}
+
+	public static Blast statFacExperimental(World world, int r, double x, double y, double z) {
+
+		if(!world.isRemote)
+			Nukesfromthefuture.logger.log(Level.INFO, "[NUKE] Initialized eX explosion at " + x + " / " + y + " / " + z + " with strength " + r + "!");
+
+		r *= 2;
+
+		Blast mk4 = new Blast(world);
+		mk4.strength = (int)(r);
+		mk4.count = (int)(4 * Math.PI * Math.pow(mk4.strength, 2) * 25);
+		mk4.speed = (int)Math.ceil(100000 / mk4.strength);
+		mk4.setPosition(x, y, z);
+		mk4.length = mk4.strength / 2;
+		return mk4;
+	}
+
+	public static Blast statFacNoRad(World world, int r, double x, double y, double z) {
+
+		if(!world.isRemote)
+			Nukesfromthefuture.logger.log(Level.INFO, "[NUKE] Initialized nR explosion at " + x + " / " + y + " / " + z + " with strength " + r + "!");
+
+		r *= 2;
+
+		Blast mk4 = new Blast(world);
+		mk4.strength = (int)(r);
+		mk4.count = (int)(4 * Math.PI * Math.pow(mk4.strength, 2) * 25);
+		mk4.speed = (int)Math.ceil(100000 / mk4.strength);
+		mk4.setPosition(x, y, z);
+		mk4.length = mk4.strength / 2;
+		mk4.fallout = false;
+		return mk4;
+	}
+
+	public Blast moreFallout(int fallout) {
+		falloutAdd = fallout;
+		return this;
+	}
 }

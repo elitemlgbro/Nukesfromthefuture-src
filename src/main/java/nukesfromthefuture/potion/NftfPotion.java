@@ -7,7 +7,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
+import nukesfromthefuture.NffDamageSource;
 import nukesfromthefuture.util.RadUtil;
 
 import java.lang.reflect.Field;
@@ -61,7 +63,17 @@ public class NftfPotion extends Potion {
     }
     public void performEffect(EntityLivingBase entity, int level){
         if(this == contamination){
-            RadUtil.applyRadData(entity, level);
+            RadUtil.applyRadData(entity, (float)(level + 1F) * 0.05F);
+            entity.attackEntityFrom(NffDamageSource.radiation_sickness, 1F);
+            //TODO: figure out how the fuck to apply the radiation data
         }
+    }
+
+    @Override
+    public boolean isReady(int i, int j) {
+        if(this == contamination){
+            return true;
+        }
+        return false;
     }
 }

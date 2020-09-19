@@ -3,6 +3,7 @@ package nukesfromthefuture;
 
 
 import java.io.File;
+import java.util.logging.Logger;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -10,6 +11,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -50,15 +52,7 @@ import nukesfromthefuture.creativeTabs.Resources;
 import nukesfromthefuture.creativeTabs.UselessStuff;
 import nukesfromthefuture.creativeTabs.WeaponsnReee;
 import nukesfromthefuture.dimensions.DimRegistry;
-import nukesfromthefuture.entity.BombBalls;
-import nukesfromthefuture.entity.EntityLight;
-import nukesfromthefuture.entity.EntityPOTATO;
-import nukesfromthefuture.entity.EntityPizzaCreeper;
-import nukesfromthefuture.entity.EntityRadioCreeper;
-import nukesfromthefuture.entity.FireUwU;
-import nukesfromthefuture.entity.NukeMushroom;
-import nukesfromthefuture.entity.RadioactiveSpider;
-import nukesfromthefuture.entity.Skeppy;
+import nukesfromthefuture.entity.*;
 import nukesfromthefuture.gen.NffOreGeneration;
 import nukesfromthefuture.handler.FluidTypeHandler.FluidType;
 import nukesfromthefuture.items.*;
@@ -184,8 +178,10 @@ public class Nukesfromthefuture{
 	public static Item fluid_barrel_full;
 	public static Item infinite_battery;
 	public static Item coord_cache;
+	public static int cont;
 	public static Item lighter;
 	public static int fogRad;
+	public static Achievement yay_rad;
 	public static int trol_speed;
 	public static Item antimatter;
 	public static Item deathinum_sword;
@@ -196,6 +192,7 @@ public class Nukesfromthefuture{
 	public static Item fire;
 	public static int Volcano_strength;
 	public static int Boyspeed;
+	public static float hellrad;
 	public static Item fluid_icon;
 	public static Item donut;
 	public static Item mentos_fo_lava;
@@ -205,6 +202,7 @@ public class Nukesfromthefuture{
 	public static int POTATOSTRENGTH;
 	public static int POTATOSPEED;
 	public static int Manspeed;
+	public static int rain;
 	public static int coverSpeed;
 	public static final int ee = 3;
 	public static boolean coverExposed;
@@ -217,14 +215,21 @@ public class Nukesfromthefuture{
 	
 	@SidedProxy(clientSide = Reference.Client_Proxy_Class, serverSide = Reference.Server_Proxy_Class)
 	public static CommonProxy proxy;
+
+	public static Logger logger;
 	@EventHandler
 
 	public void preInit(FMLPreInitializationEvent event) {
+		if(logger == null)
+			event.getModLog();
 		//-_- all that code for a config file
 		config = new Configuration(UmU);
 		config.load();
 		
-		FMLCommonHandler.instance().bus().register(this);
+		FMLCommonHandler.instance().bus().register(ModEventHandler.class);
+		rain = config.get("explosionsize", "aaaaa", 0).getInt();
+		hellrad = config.get("explosionsize", "hellrad", 10).getInt() * 0.1F;
+		cont = config.get("explosionsize", "cont", 0).getInt();
 		enableRad = config.get("explosionsize", "enableRad", true).getBoolean();
 		fogRad = config.get("explosionsize", "fogRad", 200).getInt();
 		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false).getBoolean(false);
@@ -368,6 +373,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(POTATO, POTATO.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(plutoniuml, plutoniuml.getUnlocalizedName());
 		BiomeRegistry.register();
+		EntityRegistry.registerModEntity(FalloutRain.class, "fallout", EntityRegistry.findGlobalUniqueEntityId(), this, 10000, 1000, true);
 		GameRegistry.registerItem(mentos_fo_lava, mentos_fo_lava.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(componetTeleporter, componetTeleporter.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(red_obsidian, red_obsidian.getUnlocalizedName().substring(5));

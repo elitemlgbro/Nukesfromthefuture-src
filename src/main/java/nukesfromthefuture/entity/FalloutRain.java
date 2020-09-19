@@ -32,7 +32,7 @@ public class FalloutRain extends Entity{
 
         if(!worldObj.isRemote) {
 
-            for(int i = 0; i < Nukesfromthefuture.colliderSpeed; i++) {
+            for(int i = 0; i < 256; i++) {
 
                 Vec3 vec = Vec3.createVectorHelper(radProgress * 0.5, 0, 0);
                 double circum = radProgress * 2 * Math.PI * 2;
@@ -71,13 +71,13 @@ public class FalloutRain extends Entity{
             }
 
             if(this.isDead) {
-
+                if(Nukesfromthefuture.rain > 0 && getScale() > 150) {
                     worldObj.getWorldInfo().setRaining(true);
                     worldObj.getWorldInfo().setThundering(true);
-                    worldObj.getWorldInfo().setRainTime(1);
-                    worldObj.getWorldInfo().setThunderTime(1);
-                    AuxSavedData.setThunder(worldObj, 1);
-
+                    worldObj.getWorldInfo().setRainTime(Nukesfromthefuture.rain);
+                    worldObj.getWorldInfo().setThunderTime(Nukesfromthefuture.rain);
+                    AuxSavedData.setThunder(worldObj, Nukesfromthefuture.rain);
+                }
             }
         }
     }
@@ -106,12 +106,10 @@ public class FalloutRain extends Entity{
             else if(b == Blocks.stone) {
 
                 depth++;
+                worldObj.setBlock(x, y, z, Nukesfromthefuture.UwU);
 
-
-
+                if(depth > 2)
                     return;
-
-
 
             }else if(b == Blocks.grass) {
                 worldObj.setBlock(x, y, z, Nukesfromthefuture.waste);
@@ -123,7 +121,7 @@ public class FalloutRain extends Entity{
             } else if(b == Blocks.sand) {
 
                 if(rand.nextInt(60) == 0)
-                    worldObj.setBlock(x, y, z, meta == 0 ? Nukesfromthefuture.waste : Nukesfromthefuture.waste);
+                    worldObj.setBlock(x, y, z, meta == 0 ? Nukesfromthefuture.waste : Nukesfromthefuture.waste_wood);
                 return;
             }
 
@@ -153,7 +151,7 @@ public class FalloutRain extends Entity{
 
             else if (b == Blocks.brown_mushroom_block || b == Blocks.red_mushroom_block) {
                 if (meta == 10) {
-                    worldObj.setBlock(x, y, z, Nukesfromthefuture.waste);
+                    worldObj.setBlock(x, y, z, Nukesfromthefuture.waste_wood);
                 } else {
                     worldObj.setBlock(x, y, z, Blocks.air,0,2);
                 }
@@ -162,10 +160,14 @@ public class FalloutRain extends Entity{
             else if (b.getMaterial() == Material.wood && b.isOpaqueCube() && b != Nukesfromthefuture.waste_wood) {
                 worldObj.setBlock(x, y, z, Nukesfromthefuture.waste);
             }
+            else if(b == Nukesfromthefuture.ego_ore){
+                int ran = rand.nextInt(200);
+                if(ran < 12)
+                    worldObj.setBlock(x, y, z, Nukesfromthefuture.Deathinum_ore);
+            }
 
 
-
-            else if(b.isNormalCube()) {
+           else if(b.isNormalCube()) {
 
                 return;
             }

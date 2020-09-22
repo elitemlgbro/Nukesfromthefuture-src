@@ -36,7 +36,9 @@ import java.util.List;
 public class ModEventHandler {
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event) {
-if(event.entity instanceof Entity && event.source == NffDamageSource.POTATOKill) {
+		event.entityLiving.getEntityData().setFloat("hfr_radiation", 0);
+
+		if(event.entity instanceof Entity && event.source == NffDamageSource.POTATOKill) {
 			
 			for(Object o : event.entity.worldObj.playerEntities) {
 				EntityPlayer player = (EntityPlayer)o;

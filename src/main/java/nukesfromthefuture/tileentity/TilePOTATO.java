@@ -138,7 +138,7 @@ public class TilePOTATO extends TileEntity implements ISidedInventory {
 	@Override
 	public boolean hasCustomInventoryName() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

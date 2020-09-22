@@ -1,5 +1,6 @@
 package nukesfromthefuture.blocks;
 
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -40,6 +41,7 @@ public class SkinnyMan extends BlockContainer implements IBomb{
 		return false;
 	}
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+
 		if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.manual_detonator) {
 			TileEntitySkinnyMan entity = (TileEntitySkinnyMan) world.getTileEntity(x, y, z);
 			if(entity.isReady()) {
@@ -47,6 +49,9 @@ public class SkinnyMan extends BlockContainer implements IBomb{
 				world.setBlockToAir(x, y, z);
 				igniteBomb(world, x, y, z, Nukesfromthefuture.Manbuff);
 			}
+
+		}else if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.componetTeleporter){
+			FMLNetworkHandler.openGui(player, Nukesfromthefuture.instance, 12, world, x, y, z);
 		}
 		return false;
 	}

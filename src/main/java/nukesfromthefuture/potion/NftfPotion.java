@@ -64,8 +64,6 @@ public class NftfPotion extends Potion {
     public void performEffect(EntityLivingBase entity, int level){
         if(this == contamination){
             RadUtil.applyRadData(entity, (float)(level + 1F) * 0.05F);
-            entity.attackEntityFrom(NffDamageSource.radiation_sickness, 1F);
-            //TODO: figure out how the fuck to apply the radiation data
         }
     }
 

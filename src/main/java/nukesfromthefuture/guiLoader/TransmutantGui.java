@@ -3,6 +3,7 @@ package nukesfromthefuture.guiLoader;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiFurnace;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import nukesfromthefuture.container.TransmutateContainer;
@@ -40,5 +41,12 @@ public class TransmutantGui extends GuiInfoContainer{
             int j = stuff.getProgressScaled(64);
             this.drawTexturedModalRect(guiLeft + 60, guiTop + 42, 183, 16, j, 27);
         }
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+        super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
+        String name = stuff.hasCustomInventoryName() ? stuff.getInventoryName() : I18n.format(stuff.getInventoryName());
+        this.fontRendererObj.drawString(name, xSize / 2 - fontRendererObj.getStringWidth(name) / 2, 7, 4210752);
     }
 }

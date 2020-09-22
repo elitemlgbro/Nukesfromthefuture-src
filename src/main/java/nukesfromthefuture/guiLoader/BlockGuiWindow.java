@@ -45,7 +45,6 @@ public class BlockGuiWindow extends GuiInfoContainer {
 		String name = this.uwu.hasCustomInventoryName() ? this.uwu.getInventoryName() : I18n.format(this.uwu.getInventoryName());
 		GL11.glPushMatrix();
 		GL11.glPopMatrix();
-		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 108 + 4, 0xffffff);
 		this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6, 4210752);
 	}
 }

@@ -75,7 +75,7 @@ public class RadiationSavedData extends WorldSavedData{
                     rad = 0;
                 }
 
-                if(rad > Nukesfromthefuture.fogRad && worldObj != null && worldObj.rand.nextInt(10) == 0 && worldObj.getChunkFromChunkCoords(struct.getKey().chunkXPos, struct.getKey().chunkZPos).isChunkLoaded) {
+                if(rad > Nukesfromthefuture.fogRad && worldObj != null && worldObj.rand.nextInt(20) == 0 && worldObj.getChunkFromChunkCoords(struct.getKey().chunkXPos, struct.getKey().chunkZPos).isChunkLoaded) {
 
                     int x = struct.getKey().chunkXPos * 16 + worldObj.rand.nextInt(16);
                     int z = struct.getKey().chunkZPos * 16 + worldObj.rand.nextInt(16);

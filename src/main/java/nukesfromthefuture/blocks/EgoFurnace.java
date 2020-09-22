@@ -3,16 +3,19 @@ package nukesfromthefuture.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import nukesfromthefuture.tileentity.TileEgoFurnace;
 
-public class EgoFurnace extends Block{
+public class EgoFurnace extends BlockContainer{
 	public EgoFurnace(Material UwU) {
 		super(UwU);
 	}
@@ -54,6 +57,36 @@ public class EgoFurnace extends Block{
     {
         super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
         this.func_149930_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+    }
+    private void setDefaultDirection(World world, int x, int y, int z) {
+        if(!world.isRemote)
+        {
+            Block block1 = world.getBlock(x, y, z - 1);
+            Block block2 = world.getBlock(x, y, z + 1);
+            Block block3 = world.getBlock(x - 1, y, z);
+            Block block4 = world.getBlock(x + 1, y, z);
+
+            byte b0 = 3;
+
+            if(block1.func_149730_j() && !block2.func_149730_j())
+            {
+                b0 = 3;
+            }
+            if(block2.func_149730_j() && !block1.func_149730_j())
+            {
+                b0 = 2;
+            }
+            if(block3.func_149730_j() && !block4.func_149730_j())
+            {
+                b0 = 5;
+            }
+            if(block4.func_149730_j() && !block3.func_149730_j())
+            {
+                b0 = 4;
+            }
+
+            world.setBlockMetadataWithNotify(x, y, z, b0, 2);
+        }
     }
 	private void func_149930_e(World p_149930_1_, int p_149930_2_, int p_149930_3_, int p_149930_4_)
     {
@@ -117,4 +150,10 @@ public class EgoFurnace extends Block{
             ((TileEntityFurnace)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_145951_a(p_149689_6_.getDisplayName());
         }
     }
+
+    @Override
+    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+        return new TileEgoFurnace();
+    }
+
 }

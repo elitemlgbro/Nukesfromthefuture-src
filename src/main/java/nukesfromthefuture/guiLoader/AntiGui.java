@@ -1,6 +1,7 @@
 package nukesfromthefuture.guiLoader;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -8,6 +9,7 @@ import nukesfromthefuture.container.AntiContainer;
 import nukesfromthefuture.tileentity.explosion.TileAntitime;
 
 public class AntiGui extends GuiInfoContainer{
+	TileAntitime aa;
 	public ResourceLocation texture = new ResourceLocation("nff:textures/gui/AntiTime.png");
 	String[] lol = new String[] {"IT'S NOT A CLOCK"
 			, " BECAUSE IT'S ANTITIME!!!!"};
@@ -15,6 +17,7 @@ public class AntiGui extends GuiInfoContainer{
 	int ySize = 165;
 	public AntiGui(InventoryPlayer UmU, TileAntitime UwU) {
 		super(new AntiContainer(UmU, UwU));
+		aa = UwU;
 		// TODO Auto-generated constructor stub
 	}
 	@Override
@@ -32,4 +35,10 @@ public class AntiGui extends GuiInfoContainer{
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
 
+	@Override
+	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
+		String name = aa.hasCustomInventoryName() ? aa.getInventoryName() : I18n.format(aa.getInventoryName());
+		fontRendererObj.drawString(name, xSize / 2 - fontRendererObj.getStringWidth(name) / 2, 3, 4210752);
+	}
 }

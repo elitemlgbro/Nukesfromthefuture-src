@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import nukesfromthefuture.Lib;
+import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.interfaces.IBatteryItem;
 
 import java.util.List;
@@ -35,6 +36,11 @@ public class Battery extends Item implements IBatteryItem{
 
         list.add("Charge rate: " + Lib.getShortNumber(chargeRate) + "HE/t");
         list.add("Discharge rate: " + Lib.getShortNumber(dischargeRate) + "HE/t");
+        if(this == Nukesfromthefuture.battery){
+            list.add("");
+            list.add("Trust is power.");
+            list.add("pls don't sue me duracell");
+        }
     }
 
     @Override

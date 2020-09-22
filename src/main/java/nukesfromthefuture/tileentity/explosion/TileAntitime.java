@@ -129,7 +129,7 @@ public class TileAntitime extends TileEntity implements ISidedInventory{
 	@Override
 	public String getInventoryName() {
 		// TODO Auto-generated method stub
-		return this.hasCustomInventoryName() ? this.customName : "container.nukeFleija";
+		return this.hasCustomInventoryName() ? this.customName : "container.antiTime";
 	}
 	public void setCustomName(String name) {
 		this.customName = name;

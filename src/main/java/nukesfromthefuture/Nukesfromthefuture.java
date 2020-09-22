@@ -11,7 +11,6 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -20,7 +19,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockReed;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -59,8 +57,7 @@ import nukesfromthefuture.items.*;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.potion.NftfPotion;
 import nukesfromthefuture.proxy.CommonProxy;
-import sun.misc.JavaLangAccess;
-import sun.util.locale.provider.AvailableLanguageTags;
+
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.version, canBeDeactivated = true, guiFactory = Reference.GUIFACT)
 public class Nukesfromthefuture{
@@ -263,8 +260,8 @@ public class Nukesfromthefuture{
 		config.save();
 		//uhhhhhhh
 		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1).setTextureName("nff:batinf");
-		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines).setTextureName("nff:batr");
-		donut = new ItemFood(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
+		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines).setTextureName("nff:batr").setMaxStackSize(1);
+		donut = new Donut(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
 		detonator = new Detonator().setUnlocalizedName("detonator").setCreativeTab(machines).setTextureName("nff:detonator");
 		nether_reactor2 = new NetherReact(Material.iron).setBlockName("nether_reactor2").setBlockUnbreakable().setBlockTextureName("nff:nrc2");
@@ -293,13 +290,13 @@ public class Nukesfromthefuture{
 		fire_gun = new FireGun().setUnlocalizedName("flamethrower").setCreativeTab(nffreee).setTextureName("nff:fireGun");
 		the_flood = new TheFlood().setBlockName("the_flood").setCreativeTab(nffreee);
 		coppa = new Coppa().setUnlocalizedName("coppa").setCreativeTab(resources).setTextureName("nff:coppea");
-		the_beta = new TheBeta(Material.iron).setBlockName("The_Beta").setCreativeTab(nffreee);
+		the_beta = new TheBeta(Material.iron).setBlockName("The_Beta").setCreativeTab(nffreee).setBlockTextureName("nff:beta").setHardness(3.0F);
 		plutoniuml = new PlutoL().setUnlocalizedName("Liquified_plutonoim").setTextureName("nff:plutia").setCreativeTab(resources);
 		antimatter = new AntiMatter().setUnlocalizedName("AntiMat").setCreativeTab(resources).setTextureName("nff:antimatter");
 		light = new Light().setUnlocalizedName("Light").setCreativeTab(nffreee).setTextureName("nff:light");
 		lightning = new Lightning().setBlockName("Lightning_summoner").setCreativeTab(machines).setBlockTextureName("nff:lightlol");
 		creep_cape = new ArmorModel(ArmorMaterial.DIAMOND, 3, 1).setUnlocalizedName("creep_cape").setCreativeTab(uselessStuff).setTextureName("nff:v");
-		waste = new Waste(Material.grass, true).setBlockName("waste").setCreativeTab(resources);
+		waste = new Waste(Material.grass, true).setBlockName("waste").setCreativeTab(resources).setStepSound(Block.soundTypeGrass);
 		tut_block = new TutBlock(Material.clay).setBlockName("Wtut_block").setCreativeTab(bloks).setHardness(5.0F);
 		coord_transporteer = new CoordTrans(Material.iron).setBlockName("Coord_transporter").setBlockTextureName("nff:coord_transport").setCreativeTab(machines);
 		obese_man = new Itemobese_man().setUnlocalizedName("obese_man").setTextureName("nff:obese_man").setCreativeTab(uselessStuff);
@@ -338,12 +335,12 @@ public class Nukesfromthefuture{
 		fluid_barrel_full = new ItemFluidTank().setUnlocalizedName("fluid_barrel_full").setContainerItem(fluid_barrel_empty).setCreativeTab(resources).setTextureName("nff:fluid_barrel");
 		black_hole = new Blak_whole().setUnlocalizedName("black_hole").setCreativeTab(nffreee).setTextureName("nff:black_hole");
 		marsinum_ore = new Mars().setBlockName("Marsinum_ore").setCreativeTab(resources).setHardness(25).setBlockTextureName("nff:marsinum");
-		ego_block = new EgoBlock(Material.iron).setBlockName("Ego_block").setCreativeTab(resources).setBlockTextureName("nff:ego_block");
+		ego_block = new EgoBlock(Material.iron).setBlockName("Ego_block").setCreativeTab(resources).setBlockTextureName("nff:ego_block").setHardness(5.0F);
 		unstable_plutonium_ingot = new UnstableIngot().setUnlocalizedName("Unstable_plutonium_ingot").setCreativeTab(resources).setTextureName("nff:unstable");
 		plutonium_ingot = new PlutoniumIngot().setUnlocalizedName("plutonium_ingot").setCreativeTab(resources).setTextureName("nff:pluto");
 		copper_wire = new CopperWire().setUnlocalizedName("copper_wire").setCreativeTab(resources).setTextureName("nff:coppa");
 		copper_ingot = new CopperIngot().setUnlocalizedName("Copper_ingot").setCreativeTab(resources).setTextureName("nff:copper_ingot");
-		copper_ore = new Copperore(Material.iron).setBlockName("CopperOre").setBlockTextureName("nff:copper").setCreativeTab(resources);
+		copper_ore = new Copperore(Material.iron).setBlockName("CopperOre").setBlockTextureName("nff:copper").setCreativeTab(resources).setHardness(3.0F);
 		ego_ore = new Blockego_ore().setBlockName("ego_ore").setBlockTextureName("nff:element_not_on_p_table_ore").setCreativeTab(resources);
 		ego_ingot = new ItemEgo_ingot().setUnlocalizedName("ego_ingot").setTextureName("nff:ego_ingot").setCreativeTab(resources);
 		plutonium_ore = new PlutoniumOre(Material.iron).setBlockName("PlutoniumOre").setBlockTextureName("nff:pluto_ore").setCreativeTab(resources);

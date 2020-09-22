@@ -72,7 +72,7 @@ private ItemStack slots[];
 
 	@Override
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? this.customName : "container.fluidtank";
+		return this.hasCustomInventoryName() ? this.customName : "container.supervolcano";
 	}
 
 	@Override

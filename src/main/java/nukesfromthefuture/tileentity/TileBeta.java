@@ -73,13 +73,13 @@ public class TileBeta extends TileEntity implements ISidedInventory{
 	@Override
 	public String getInventoryName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "container.Beta";
 	}
 	
 	@Override
 	public boolean hasCustomInventoryName() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

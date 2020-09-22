@@ -1,5 +1,6 @@
 package nukesfromthefuture.guiLoader;
 
+import net.minecraft.client.resources.I18n;
 import nukesfromthefuture.Spaghetti;
 import org.lwjgl.opengl.GL11;
 
@@ -47,4 +48,10 @@ public class VolcanoGui extends GuiInfoContainer{
 
 	}
 
+	@Override
+	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
+		String name = ono.hasCustomInventoryName() ? ono.getInventoryName() : I18n.format(ono.getInventoryName());
+		fontRendererObj.drawString(name, (xSize / 2 - fontRendererObj.getStringWidth(name) / 2) - 40, 4, 4210752);
+	}
 }

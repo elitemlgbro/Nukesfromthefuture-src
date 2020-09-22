@@ -25,7 +25,6 @@ public class NetherReact extends BlockContainer {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         TileNReactor entity = (TileNReactor) world.getTileEntity(x, y, z);
-
             if (!player.isSneaking()) {
                 if (!entity.isValid()) {
                     if(world.isRemote) {
@@ -43,9 +42,10 @@ public class NetherReact extends BlockContainer {
                         player.addChatComponentMessage(new ChatComponentText("It's already been activated bruh"));
                     }
                 }
+                return true;
             }
 
-        return super.onBlockActivated(world, x, y, z, player, p_149727_6_, p_149727_7_, p_149727_8_, p_149727_9_);
+        return false;
     }
 
     @Override

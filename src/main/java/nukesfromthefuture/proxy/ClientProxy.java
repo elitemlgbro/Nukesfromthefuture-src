@@ -32,6 +32,7 @@ public class ClientProxy extends CommonProxy{
         GameRegistry.registerTileEntity(TileReactor.class, "tileRee");
         RenderingRegistry.registerEntityRenderingHandler(FalloutRain.class, new RenderFallout());
         ClientRegistry.bindTileEntitySpecialRenderer(TileReactor.class, new RenderReee());
+        GameRegistry.registerTileEntity(TileEgoFurnace.class, "furnaces_ego");
         RenderingRegistry.registerEntityRenderingHandler(EntityPizzaCreeper.class, new RenderPizzaCreeper());
         GameRegistry.registerTileEntity(TileAntitime.class, "tileAntiTime");
 		NetworkRegistry.INSTANCE.registerGuiHandler(Nukesfromthefuture.instance, new Guihandle());

@@ -125,7 +125,7 @@ public class TileEntityEgo_nuke extends TileEntity implements ISidedInventory{
 	@Override
 	public boolean hasCustomInventoryName() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

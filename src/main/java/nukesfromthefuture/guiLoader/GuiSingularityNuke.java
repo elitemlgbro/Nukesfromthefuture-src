@@ -27,7 +27,7 @@ public class GuiSingularityNuke extends GuiInfoContainer {
 	@Override
 	public void drawGuiContainerBackgroundLayer(float p_146976_1_, int x, int y) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.drawInfoPanel(guiLeft - 16, guiTop + 36 + 16, 16, 16, 7);
+
 
 		mc = Minecraft.getMinecraft();
 		
@@ -55,11 +55,6 @@ public class GuiSingularityNuke extends GuiInfoContainer {
 		super.drawScreen(x, y, f);
 		ono.tank.renderTankInfo(this, x, y, guiLeft + 147, guiTop + 53 - 48, 16, 48);
 
-		String[] OwO = new String[] {"This slot isn't available for use yet"
-				, "It will be avaiable in nff 1.7.10A1.5", 
-				"sowwy for the inconvenience"};
-		this.drawCustomInfoStat(x, y, guiLeft + 147, guiTop + 58, 16, 16, guiLeft + 147 + 16, guiTop + 58 + (16 * 2), OwO);
-		String[] Uwm = new String[] {"Fluid coming soon"};
-		this.drawCustomInfoStat(x, y, guiLeft - 16, guiTop + 36 + 16, 16, 16,guiLeft - 8 , guiTop + 36 + 16, Uwm);
+
 	}
 }

@@ -2,6 +2,7 @@ package nukesfromthefuture.blocks;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.RadiationSavedData;
 import nukesfromthefuture.entity.Blast;
 import nukesfromthefuture.entity.EntityColliderBlast;
 import nukesfromthefuture.entity.EntityEgoBlast;
@@ -55,7 +57,7 @@ public class BlockSingularityNuke extends BlockContainer implements IBomb {
 			 if(!player.isSneaking() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Nukesfromthefuture.componetTeleporter) {
 				 TileEntitySingularityNuke UmU = (TileEntitySingularityNuke) world.getTileEntity(x, y, z);
 				 if(UmU != null) {
-			 player.openGui(Nukesfromthefuture.instance, Nukesfromthefuture.QwQ, world, x, y, z);
+			 FMLNetworkHandler.openGui(player, Nukesfromthefuture.instance, Nukesfromthefuture.QwQ, world, x, y, z);
 			 return true;
 				 }
 			 }
@@ -78,7 +80,6 @@ public class BlockSingularityNuke extends BlockContainer implements IBomb {
 	private boolean igniteBomb(World world, int x, int y, int z, int colliderStrength) {
 		if(!world.isRemote) {
 			/**REEEEEEEEEE*/
-
 			world.spawnEntityInWorld(Blast.statFac(world, Nukesfromthefuture.Boystrength, x, y, z));
 			NukeMushroom cloud = new NukeMushroom(world, colliderStrength);
 			cloud.posX = x;

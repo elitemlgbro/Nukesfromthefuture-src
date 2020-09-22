@@ -72,12 +72,13 @@ public class TileBigBoy extends TileEntity implements ISidedInventory {
 
 	@Override
 	public String getInventoryName() {
-		return null;
+		return "container.BigBoy";
+
 	}
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return false;
+		return true;
 	}
 
 	@Override

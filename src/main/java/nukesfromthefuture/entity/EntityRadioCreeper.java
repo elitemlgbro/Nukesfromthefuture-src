@@ -27,21 +27,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import nukesfromthefuture.NffDamageSource;
 import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.util.RadUtil;
 
 public class EntityRadioCreeper extends EntityMob{
-
-	/**
-     * Time when this creeper was last in an active state (Messed up code here, probably causes creeper animation to go
-     * weird)
-     */
     private int lastActiveTime;
-    /** The amount of time since the creeper was close enough to the player to ignite */
     private int timeSinceIgnited;
     private int fuseTime = 75;
-    /** Explosion radius for this creeper. */
     private int explosionRadius = 20;
-    private static final String __OBFID = "CL_00001684";
 
     public EntityRadioCreeper(World p_i1733_1_)
     {
@@ -58,43 +52,38 @@ public class EntityRadioCreeper extends EntityMob{
     }
 
     @Override
-	protected void applyEntityAttributes()
+    protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3D);
     }
-    
-    @Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-    	
-  
-		return super.attackEntityFrom(source, amount);
-	}
 
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
     @Override
-	public boolean isAIEnabled()
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+
+        if(source == NffDamageSource.radiation_sickness) {
+            this.heal(amount);
+            return false;
+        }
+
+        return super.attackEntityFrom(source, amount);
+    }
+
+    @Override
+    public boolean isAIEnabled()
     {
         return true;
     }
 
-    /**
-     * The number of iterations PathFinder.getSafePoint will execute before giving up.
-     */
     @Override
-	public int getMaxSafePointTries()
+    public int getMaxSafePointTries()
     {
         return this.getAttackTarget() == null ? 3 : 3 + (int)(this.getHealth() - 1.0F);
     }
 
-    /**
-     * Called when the mob is falling. Calculates and applies fall damage.
-     */
     @Override
-	protected void fall(float p_70069_1_)
+    protected void fall(float p_70069_1_)
     {
         super.fall(p_70069_1_);
         this.timeSinceIgnited = (int)(this.timeSinceIgnited + p_70069_1_ * 1.5F);
@@ -106,7 +95,7 @@ public class EntityRadioCreeper extends EntityMob{
     }
 
     @Override
-	protected void entityInit()
+    protected void entityInit()
     {
         super.entityInit();
         this.dataWatcher.addObject(16, Byte.valueOf((byte) - 1));
@@ -114,11 +103,8 @@ public class EntityRadioCreeper extends EntityMob{
         this.dataWatcher.addObject(18, Byte.valueOf((byte)0));
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     @Override
-	public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
     {
         super.writeEntityToNBT(p_70014_1_);
 
@@ -132,11 +118,8 @@ public class EntityRadioCreeper extends EntityMob{
         p_70014_1_.setBoolean("ignited", this.func_146078_ca());
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     @Override
-	public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
     {
         super.readEntityFromNBT(p_70037_1_);
         this.dataWatcher.updateObject(17, Byte.valueOf((byte)(p_70037_1_.getBoolean("powered") ? 1 : 0)));
@@ -157,66 +140,84 @@ public class EntityRadioCreeper extends EntityMob{
         }
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
-    
-	
-        
-    
-
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
     @Override
-	protected String getHurtSound()
+    public void onUpdate()
     {
-        return "mob.creeper.say";
-    }
-
-    /**
-     * Returns the sound this mob makes on death.
-     */
-    @Override
-	protected String getDeathSound()
-    {
-        return "mob.creeper.death";
-    }
-
-    /**
-     * Called when the mob's health reaches 0.
-     */
-    @Override
-	public void onDeath(DamageSource p_70645_1_)
-    {
-        super.onDeath(p_70645_1_);
-
-        if (p_70645_1_.getEntity() instanceof EntitySkeleton || (p_70645_1_.isProjectile() && p_70645_1_.getEntity() instanceof EntityArrow && ((EntityArrow)(p_70645_1_.getEntity())).shootingEntity == null))
+        if(this.isDead)
         {
-        	int i = rand.nextInt(11);
-        	int j = rand.nextInt(3);
-        	if(i == 0)
-        		this.dropItem(Nukesfromthefuture.obese_man, j);
+            this.isDead = false;
+            this.heal(10.0F);
+        }
+
+        if (this.isEntityAlive())
+        {
+            this.lastActiveTime = this.timeSinceIgnited;
+
+            if (this.func_146078_ca())
+            {
+                this.setCreeperState(1);
+            }
+
+            int i = this.getCreeperState();
+
+            if (i > 0 && this.timeSinceIgnited == 0)
+            {
+                this.playSound("creeper.primed", 1.0F * 30 / 75, 0.5F);
+            }
+
+            this.timeSinceIgnited += i;
+
+            if (this.timeSinceIgnited < 0)
+            {
+                this.timeSinceIgnited = 0;
+            }
+
+            if (this.timeSinceIgnited >= this.fuseTime)
+            {
+                this.timeSinceIgnited = this.fuseTime;
+                this.func_146077_cc();
+            }
+        }
+
+        List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(posX - 2, posY - 2, posZ - 2, posX + 2, posY + 2, posZ + 2));
+
+        for(Entity e : list)
+            if(!(e instanceof EntityRadioCreeper))
+                RadUtil.applyRadData(e, 0.25F);
+
+        super.onUpdate();
+
+        if(this.getHealth() < this.getMaxHealth() && this.ticksExisted % 10 == 0)
+        {
+            this.heal(1.0F);
         }
     }
 
     @Override
-	public boolean attackEntityAsMob(Entity p_70652_1_)
+    protected String getHurtSound()
+    {
+        return "mob.creeper.say";
+    }
+
+    @Override
+    protected String getDeathSound()
+    {
+        return "mob.creeper.death";
+    }
+
+
+
+    @Override
+    public boolean attackEntityAsMob(Entity p_70652_1_)
     {
         return true;
     }
 
-    /**
-     * Returns true if the creeper is powered by a lightning bolt.
-     */
     public boolean getPowered()
     {
         return this.dataWatcher.getWatchableObjectByte(17) == 1;
     }
 
-    /**
-     * Params: (Float)Render tick. Returns the intensity of the creeper's flash when it is ignited.
-     */
     @SideOnly(Side.CLIENT)
     public float getCreeperFlashIntensity(float p_70831_1_)
     {
@@ -224,42 +225,30 @@ public class EntityRadioCreeper extends EntityMob{
     }
 
     @Override
-	protected Item getDropItem()
+    protected Item getDropItem()
     {
-        return Nukesfromthefuture.real_radioactive_pizza;
+        return Item.getItemFromBlock(Blocks.tnt);
     }
 
-    /**
-     * Returns the current state of creeper, -1 is idle, 1 is 'in fuse'
-     */
     public int getCreeperState()
     {
         return this.dataWatcher.getWatchableObjectByte(16);
     }
 
-    /**
-     * Sets the state of creeper, -1 to idle and 1 to be 'in fuse'
-     */
     public void setCreeperState(int p_70829_1_)
     {
         this.dataWatcher.updateObject(16, Byte.valueOf((byte)p_70829_1_));
     }
 
-    /**
-     * Called when a lightning bolt hits the entity.
-     */
     @Override
-	public void onStruckByLightning(EntityLightningBolt p_70077_1_)
+    public void onStruckByLightning(EntityLightningBolt p_70077_1_)
     {
         super.onStruckByLightning(p_70077_1_);
         this.dataWatcher.updateObject(17, Byte.valueOf((byte)1));
     }
 
-    /**
-     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-     */
     @Override
-	protected boolean interact(EntityPlayer p_70085_1_)
+    protected boolean interact(EntityPlayer p_70085_1_)
     {
         ItemStack itemstack = p_70085_1_.inventory.getCurrentItem();
 
@@ -279,7 +268,28 @@ public class EntityRadioCreeper extends EntityMob{
         return super.interact(p_70085_1_);
     }
 
-    
+    private void func_146077_cc()
+    {
+        if (!this.worldObj.isRemote)
+        {
+            boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
+
+            if (this.getPowered())
+            {
+                this.explosionRadius *= 3;
+            }
+
+            if(flag)
+                worldObj.spawnEntityInWorld(Blast.statFac(worldObj, explosionRadius, posX, posY, posZ));
+            else
+                worldObj.createExplosion(this, posX, posY, posZ, explosionRadius, false);
+
+
+            }
+
+            this.setDead();
+
+    }
 
     public boolean func_146078_ca()
     {
@@ -290,9 +300,8 @@ public class EntityRadioCreeper extends EntityMob{
     {
         this.dataWatcher.updateObject(18, Byte.valueOf((byte)1));
     }
-    
+
     public void setPowered(int power) {
         this.dataWatcher.updateObject(17, power);
     }
-
 }

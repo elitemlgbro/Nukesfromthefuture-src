@@ -89,6 +89,11 @@ if(entity != null ) {
 			return new TransmutateContainer(player.inventory, (TileTransMutate) entity);
 		}
 		return null;
+	}case 12:{
+		if(entity instanceof TileEntitySkinnyMan){
+			return new ManContainer(player.inventory, (TileEntitySkinnyMan) entity);
+		}
+		return null;
 	}
 		
 
@@ -180,6 +185,11 @@ if(entity != null ) {
 			}case 11:{
 				if(entity instanceof TileTransMutate){
 					return new TransmutantGui(player.inventory, (TileTransMutate) entity);
+				}
+				return null;
+			}case 12:{
+				if(entity instanceof TileEntitySkinnyMan){
+					return new ManGui(player.inventory, (TileEntitySkinnyMan) entity);
 				}
 				return null;
 			}

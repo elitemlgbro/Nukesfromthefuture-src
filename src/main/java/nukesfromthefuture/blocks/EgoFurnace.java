@@ -1,63 +1,75 @@
 package nukesfromthefuture.blocks;
 
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.Reference;
 import nukesfromthefuture.tileentity.TileEgoFurnace;
 
+import java.util.Random;
+
 public class EgoFurnace extends BlockContainer{
-	public EgoFurnace(Material UwU) {
-		super(UwU);
-	}
-	@SideOnly(Side.CLIENT)
-	IIcon front;
-	@SideOnly(Side.CLIENT)
-	IIcon back;
-	@SideOnly(Side.CLIENT)
-	IIcon side;
-	@SideOnly(Side.CLIENT)
-	IIcon top;
-	@SideOnly(Side.CLIENT)
-	IIcon bottom;
-	@Override
+    private final Random field_149933_a = new Random();
+    private Random rand;
+    private final boolean isActive;
+    private static boolean keepInventory;
 
-	public void registerBlockIcons(IIconRegister UmU) {
-		// TODO Auto-generated method stub
-		this.front = UmU.registerIcon("nff:furnace_front_off");
-		this.bottom = UmU.registerIcon("nff:furnace_top");
-		this.top = UmU.registerIcon("nff:furnace_top");
+    @SideOnly(Side.CLIENT)
+    private IIcon iconFront;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconTop;
 
-		blockIcon = UmU.registerIcon("nff:furnace_side");
-	
-	}
-	@Override
-	public IIcon getIcon(int side, int p_149691_2_) {
-		// TODO Auto-generated method stub
-		if(side == 0)
-			return bottom;
-		if(side == 3)
-			return front;
-		if(side == 1)
-			return top;
-		if(side == 5|| side == 2 || side == 4)
-			return blockIcon;
-		return null;
-	}
-	public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
-    {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
-        this.func_149930_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+    public EgoFurnace(boolean blockState) {
+        super(Material.iron);
+        rand = new Random();
+        isActive = blockState;
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        this.iconTop = iconRegister.registerIcon(Reference.MOD_ID + ":furnace_top");
+        this.iconFront = iconRegister.registerIcon(Reference.MOD_ID + (this.isActive ? ":furnace_front_on" : ":furnace_front_off"));
+        this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":furnace_side");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int metadata) {
+        //Reactivate in case of emergency
+        //return metadata == 0 && side == 3 ? this.iconFront : (side == metadata ? this.iconFront : this.iconTop);
+        return metadata == 0 && side == 3 ? this.iconFront : (side == metadata ? this.iconFront : (side == 1 ? this.iconTop : this.blockIcon));
+    }
+
+    @Override
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    {
+        return Item.getItemFromBlock(Nukesfromthefuture.ego_furnace);
+    }
+
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z) {
+        super.onBlockAdded(world, x, y, z);
+        this.setDefaultDirection(world, x, y, z);
+    }
+
     private void setDefaultDirection(World world, int x, int y, int z) {
         if(!world.isRemote)
         {
@@ -88,72 +100,177 @@ public class EgoFurnace extends BlockContainer{
             world.setBlockMetadataWithNotify(x, y, z, b0, 2);
         }
     }
-	private void func_149930_e(World p_149930_1_, int p_149930_2_, int p_149930_3_, int p_149930_4_)
-    {
-        if (!p_149930_1_.isRemote)
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemStack) {
+        int i = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+
+        if(i == 0)
         {
-            Block block = p_149930_1_.getBlock(p_149930_2_, p_149930_3_, p_149930_4_ - 1);
-            Block block1 = p_149930_1_.getBlock(p_149930_2_, p_149930_3_, p_149930_4_ + 1);
-            Block block2 = p_149930_1_.getBlock(p_149930_2_ - 1, p_149930_3_, p_149930_4_);
-            Block block3 = p_149930_1_.getBlock(p_149930_2_ + 1, p_149930_3_, p_149930_4_);
-            byte b0 = 3;
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
+        if(i == 1)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 5, 2);
+        }
+        if(i == 2)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
+        if(i == 3)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+        }
 
-            if (block.func_149730_j() && !block1.func_149730_j())
-            {
-                b0 = 3;
-            }
-
-            if (block1.func_149730_j() && !block.func_149730_j())
-            {
-                b0 = 2;
-            }
-
-            if (block2.func_149730_j() && !block3.func_149730_j())
-            {
-                b0 = 5;
-            }
-
-            if (block3.func_149730_j() && !block2.func_149730_j())
-            {
-                b0 = 4;
-            }
-
-            p_149930_1_.setBlockMetadataWithNotify(p_149930_2_, p_149930_3_, p_149930_4_, b0, 2);
+        if(itemStack.hasDisplayName())
+        {
+            ((TileEgoFurnace)world.getTileEntity(x, y, z)).setCustomName(itemStack.getDisplayName());
         }
     }
-	public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
-    {
-        int l = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
-        if (l == 0)
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        if(world.isRemote)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2, 2);
-        }
-
-        if (l == 1)
+            return true;
+        } else if(!player.isSneaking())
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 5, 2);
-        }
-
-        if (l == 2)
-        {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 3, 2);
-        }
-
-        if (l == 3)
-        {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 4, 2);
-        }
-
-        if (p_149689_6_.hasDisplayName())
-        {
-            ((TileEntityFurnace)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_145951_a(p_149689_6_.getDisplayName());
+            TileEgoFurnace entity = (TileEgoFurnace) world.getTileEntity(x, y, z);
+            if(entity != null)
+            {
+                FMLNetworkHandler.openGui(player, Nukesfromthefuture.instance, 13, world, x, y, z);
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         return new TileEgoFurnace();
+    }
+
+    public static void updateBlockState(boolean isProcessing, World world, int x, int y, int z) {
+        int i = world.getBlockMetadata(x, y, z);
+        TileEntity entity = world.getTileEntity(x, y, z);
+        keepInventory = true;
+
+        if(isProcessing)
+        {
+            world.setBlock(x, y, z, Nukesfromthefuture.ego_furnace_on);
+        }else{
+            world.setBlock(x, y, z, Nukesfromthefuture.ego_furnace);
+        }
+
+        keepInventory = false;
+        world.setBlockMetadataWithNotify(x, y, z, i, 2);
+
+        if(entity != null) {
+            entity.validate();
+            world.setTileEntity(x, y, z, entity);
+        }
+    }
+
+    @Override
+    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    {
+        if (!keepInventory)
+        {
+            TileEgoFurnace tileentityfurnace = (TileEgoFurnace)p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+
+            if (tileentityfurnace != null)
+            {
+                for (int i1 = 0; i1 < tileentityfurnace.getSizeInventory(); ++i1)
+                {
+                    ItemStack itemstack = tileentityfurnace.getStackInSlot(i1);
+
+                    if (itemstack != null)
+                    {
+                        float f = this.field_149933_a.nextFloat() * 0.8F + 0.1F;
+                        float f1 = this.field_149933_a.nextFloat() * 0.8F + 0.1F;
+                        float f2 = this.field_149933_a.nextFloat() * 0.8F + 0.1F;
+
+                        while (itemstack.stackSize > 0)
+                        {
+                            int j1 = this.field_149933_a.nextInt(21) + 10;
+
+                            if (j1 > itemstack.stackSize)
+                            {
+                                j1 = itemstack.stackSize;
+                            }
+
+                            itemstack.stackSize -= j1;
+                            EntityItem entityitem = new EntityItem(p_149749_1_, p_149749_2_ + f, p_149749_3_ + f1, p_149749_4_ + f2, new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+
+                            if (itemstack.hasTagCompound())
+                            {
+                                entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+                            }
+
+                            float f3 = 0.05F;
+                            entityitem.motionX = (float)this.field_149933_a.nextGaussian() * f3;
+                            entityitem.motionY = (float)this.field_149933_a.nextGaussian() * f3 + 0.2F;
+                            entityitem.motionZ = (float)this.field_149933_a.nextGaussian() * f3;
+                            p_149749_1_.spawnEntityInWorld(entityitem);
+                        }
+                    }
+                }
+
+                p_149749_1_.func_147453_f(p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_);
+            }
+        }
+
+        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World p_149734_1_, int x, int y, int z, Random rand)
+    {
+        if (isActive)
+        {
+            int l = p_149734_1_.getBlockMetadata(x, y, z);
+            float f = x + 0.5F;
+            float f1 = y + 0.25F + rand.nextFloat() * 6.0F / 16.0F;
+            float f2 = z + 0.5F;
+            float f3 = 0.52F;
+            float f4 = rand.nextFloat() * 0.5F - 0.25F;
+            float f5 = rand.nextFloat() * 0.75F + 0.125F;
+            float f6 = rand.nextFloat() * 0.75F + 0.125F;
+
+            if (l == 4)
+            {
+                p_149734_1_.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
+                //p_149734_1_.spawnParticle("flame", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0D, 0.0D, 0.0D);
+                p_149734_1_.spawnParticle("smoke", x + f5, (double)y + 1, z + f6, 0.0D, 0.0D, 0.0D);
+            }
+            else if (l == 5)
+            {
+                p_149734_1_.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
+                //p_149734_1_.spawnParticle("flame", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0D, 0.0D, 0.0D);
+                p_149734_1_.spawnParticle("smoke", x + f5, (double)y + 1, z + f6, 0.0D, 0.0D, 0.0D);
+            }
+            else if (l == 2)
+            {
+                p_149734_1_.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
+                //p_149734_1_.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0D, 0.0D, 0.0D)
+                p_149734_1_.spawnParticle("smoke", x + f5, (double)y + 1, z + f6, 0.0D, 0.0D, 0.0D);
+            }
+            else if (l == 3)
+            {
+                p_149734_1_.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
+                //p_149734_1_.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0D, 0.0D, 0.0D);
+                p_149734_1_.spawnParticle("smoke", x + f5, (double)y + 1, z + f6, 0.0D, 0.0D, 0.0D);
+            }
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    {
+        return Item.getItemFromBlock(Nukesfromthefuture.ego_furnace);
     }
 
 }

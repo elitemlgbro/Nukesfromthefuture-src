@@ -94,6 +94,11 @@ if(entity != null ) {
 			return new ManContainer(player.inventory, (TileEntitySkinnyMan) entity);
 		}
 		return null;
+	}case 13:{
+		if(entity instanceof TileEgoFurnace){
+			return new EgoFurnaceContainer((TileEgoFurnace) entity, player.inventory);
+		}
+		return null;
 	}
 		
 
@@ -190,6 +195,11 @@ if(entity != null ) {
 			}case 12:{
 				if(entity instanceof TileEntitySkinnyMan){
 					return new ManGui(player.inventory, (TileEntitySkinnyMan) entity);
+				}
+				return null;
+			}case 13:{
+				if(entity instanceof TileEgoFurnace){
+					return new EgoFurnaceGui((TileEgoFurnace) entity, player.inventory);
 				}
 				return null;
 			}

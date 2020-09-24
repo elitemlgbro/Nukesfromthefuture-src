@@ -80,6 +80,7 @@ public class Nukesfromthefuture{
 	public static Item radioCake;
 	public static Block the_beta;
 	public static Block unrefinary;
+	public static Block ego_furnace_on;
 	public static Item poorly_drawn_fuse;
 	public static Item my_ego;
 	public static final int guiID_nuke_boy = 0;
@@ -280,7 +281,8 @@ public class Nukesfromthefuture{
 		anti_time_ingot = new Item().setUnlocalizedName("antitime_ingot").setCreativeTab(resources).setTextureName("nff:anti_time");
 		singularity_magnet = new Magnet().setUnlocalizedName("singularity_magnet").setCreativeTab(machines).setTextureName("nff:magnet");
 		energy_extractor = new EnergyExtractor().setUnlocalizedName("energy_extractor").setCreativeTab(machines).setTextureName("nff:energy_extractor");
-		ego_furnace = new EgoFurnace(Material.iron).setBlockName("egonium_furnace").setCreativeTab(machines).setStepSound(Block.soundTypeStone);
+		ego_furnace = new EgoFurnace(false).setBlockName("egonium_furnace").setCreativeTab(machines).setStepSound(Block.soundTypeStone);
+		ego_furnace_on = new EgoFurnace(true).setBlockName("egonium_furnace_on").setHardness(2.0F).setStepSound(Block.soundTypeStone);
 		opposite_o_succ = new ExplosionGun().setUnlocalizedName("explosion_gun").setCreativeTab(nffreee);
 		canned_radiation = new CannedRad(5, 10, false).setUnlocalizedName("canned_radiation").setCreativeTab(food).setTextureName("nff:canned_radiation");
 		anime_nuke = new AniNuke().setBlockName("Anime_nuke").setCreativeTab(nffreee).setHardness(100);
@@ -416,6 +418,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(empty_rod, empty_rod.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(rod, rod.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(ego_furnace, ego_furnace.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(ego_furnace_on, ego_furnace_on.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(light, light.getUnlocalizedName());
 		GameRegistry.registerBlock(curse_portal, curse_portal.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(nether_reactor, nether_reactor.getUnlocalizedName().substring(5));

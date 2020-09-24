@@ -11,7 +11,8 @@ public class FluidTypeHandler {
 		BLACK_HOLE_FUEL(0xA10000, 1, 2, 1, 0, 40, 40, EnumSymbol.NONE, "elitefluid.bhf"),
 		LAVA(0xC93806, 3, 1, 1, 0, 0, 0, EnumSymbol.NONE, "elitefluid.lava"),
 		ANTITIME(0x38E8E5, 14, 2, 1, 0, 50, 100, EnumSymbol.NONE, "elitefluid.antitime"),
-		TROL_FLUID(0x888888, 15, 1, 1, 50, 50, 50, EnumSymbol.NONE, "elitefluid.trol");
+		TROL_FLUID(0x888888, 15, 1, 1, 50, 50, 50, EnumSymbol.NONE, "elitefluid.trol"),
+		egonium(0xD82BFF, 12, 1, 1, 0, 60, 100, EnumSymbol.NONE, "elitefluid.egonium");
 		
 		//Approximate HEX Color of the fluid, used for pipe rendering
 				private int color;

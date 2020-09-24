@@ -13,13 +13,14 @@ import nukesfromthefuture.container.VolcanoContainer;
 import nukesfromthefuture.tileentity.TileVolcano;
 @Spaghetti(value = "aaaaaaaaa")
 public class VolcanoGui extends GuiInfoContainer{
-	int xSize = 176;
-	int ySize = 187;
+
 	public TileVolcano ono;
 	public ResourceLocation texture = new ResourceLocation("nff:textures/gui/volcano.png");
 	public VolcanoGui(InventoryPlayer playa, TileVolcano te) {
 		super(new VolcanoContainer(playa, te));
 		ono = te;
+		xSize = 176;
+		ySize = 187;
 	}
 	@Override
 	public void drawScreen(int x, int y, float p_73863_3_) {
@@ -34,8 +35,8 @@ public class VolcanoGui extends GuiInfoContainer{
 		// TODO Auto-generated method stub
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(texture);
-		int x = (width - xSize)/2;
-		int y = (height - ySize)/2;
+		int x = (width - xSize) / 2;
+		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		if(ono.isReady()) {
 			this.drawTexturedModalRect(guiLeft + 68, guiTop + 36, 181, 29, 32, 11);

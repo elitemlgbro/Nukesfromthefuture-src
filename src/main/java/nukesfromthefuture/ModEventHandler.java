@@ -51,7 +51,7 @@ public class ModEventHandler {
 	}
 
 	@SubscribeEvent
-	public void onTick(WorldTickEvent event){
+	public void worldTick(WorldTickEvent event){
 		if(event.world != null && !event.world.isRemote && Nukesfromthefuture.enableRad) {
 
 			int thunder = AuxSavedData.getThunder(event.world);

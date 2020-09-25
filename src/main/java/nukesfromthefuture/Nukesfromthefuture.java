@@ -224,11 +224,11 @@ public class Nukesfromthefuture{
 		config = new Configuration(UmU);
 		config.load();
 		
-		FMLCommonHandler.instance().bus().register(ModEventHandler.class);
+		FMLCommonHandler.instance().bus().register(new ModEventHandler());
 		rain = config.get("explosionsize", "aaaaa", 0).getInt();
 		hellrad = config.get("explosionsize", "hellrad", 10).getInt() * 0.1F;
 		cont = config.get("explosionsize", "cont", 0).getInt();
-		enableRad = config.get("explosionsize", "enableRad", true).getBoolean();
+		enableRad = config.get("explosionsize", "enableRad", true).getBoolean(true);
 		fogRad = config.get("explosionsize", "fogRad", 200).getInt();
 		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false).getBoolean(false);
 		flood_strength = config.get("explosionsize", "flood_Strength", 100).getInt();
@@ -399,7 +399,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(unrefinary, unrefinary.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coppa, coppa.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coord_cache, coord_cache.getUnlocalizedName().substring(5));
-		BombBalls.registr();
+		EntityRegistry.registerModEntity(BombBalls.class, "bomb balls", EntityRegistry.findGlobalUniqueEntityId(), this, 1000000000, 100, true);
 		GameRegistry.registerItem(opposite_o_succ, opposite_o_succ.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_empty, fluid_barrel_empty.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_full, fluid_barrel_full.getUnlocalizedName().substring(5));

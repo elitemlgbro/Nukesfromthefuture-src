@@ -10,12 +10,13 @@ import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.entity.Flood;
 import nukesfromthefuture.entity.LavaBlast;
 import nukesfromthefuture.entity.NukeMushroom;
+import nukesfromthefuture.interfaces.IBomb;
 import nukesfromthefuture.tileentity.TileEntitySingularityNuke;
 import nukesfromthefuture.tileentity.TileVolcano;
 import nukesfromthefuture.tileentity.explosion.FloodExplosion;
 import nukesfromthefuture.tileentity.explosion.Supervolcano;
 
-public class SuperEE extends BlockContainer {
+public class SuperEE extends BlockContainer implements IBomb{
 	public SuperEE(Material UwU) {
 		super(UwU);
 	}
@@ -71,5 +72,17 @@ public class SuperEE extends BlockContainer {
 			world.spawnEntityInWorld(cloud);
 		}
 		return false;
+	}
+
+	@Override
+	public void explode(World world, int x, int y, int z) {
+		if(!world.isRemote){
+			TileVolcano entity = (TileVolcano) world.getTileEntity(x, y, z);
+			if(entity.isReady()) {
+				ignite_boob(world, x, y, z, Nukesfromthefuture.Volcano_strength);
+				world.setBlockToAir(x, y, z);
+				this.onBlockDestroyedByPlayer(world, x, y, z, 1);
+			}
+		}
 	}
 }

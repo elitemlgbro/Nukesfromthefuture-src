@@ -103,15 +103,7 @@ public class FalloutRain extends Entity{
                 worldObj.setBlock(x, y, z, Blocks.air);
             }
 
-            else if(b == Blocks.stone) {
-
-                depth++;
-                worldObj.setBlock(x, y, z, Nukesfromthefuture.UwU);
-
-                if(depth > 2)
-                    return;
-
-            }else if(b == Blocks.grass) {
+          else if(b == Blocks.grass) {
                 worldObj.setBlock(x, y, z, Nukesfromthefuture.waste);
                 return;
 
@@ -154,6 +146,11 @@ public class FalloutRain extends Entity{
                     worldObj.setBlock(x, y, z, Nukesfromthefuture.waste_wood);
                 } else {
                     worldObj.setBlock(x, y, z, Blocks.air,0,2);
+                }
+            }else if(b == Nukesfromthefuture.ego_ore){
+                int ran = rand.nextInt(150);
+                if(ran < 20){
+                    worldObj.setBlock(x, y, z, Nukesfromthefuture.Deathinum_ore);
                 }
             }
 

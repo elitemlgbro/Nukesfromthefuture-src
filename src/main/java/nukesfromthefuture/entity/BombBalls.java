@@ -1,14 +1,18 @@
 package nukesfromthefuture.entity;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
 
@@ -34,15 +38,28 @@ BombBalls extends EntityThrowable {
             Uwu.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 5.0F);
         }
 
-		if(worldObj.isRemote) {
-			worldObj.createExplosion(player, posX, posY, posZ, 10F, true);
-		}
+
 		if(worldObj.isRemote){
 			this.setDead();
 		}
 	}
-	public static void registr() {
-		EntityRegistry.registerModEntity(BombBalls.class, "bomb balls", EntityRegistry.findGlobalUniqueEntityId(), Nukesfromthefuture.instance, 1000000000, 100, true);
-	}
 
+
+	@Override
+	public void onUpdate() {
+		this.lastTickPosX = this.prevPosX = posX;
+		this.lastTickPosY = this.prevPosY = posY;
+		this.lastTickPosZ = this.prevPosZ = posZ;
+		this.setPosition(posX + this.motionX, posY + this.motionY, posZ + this.motionZ);
+		this.motionX *= 0.99;
+		this.motionZ *= 0.99;
+		this.motionY -= 0.05D;
+		Block block = worldObj.getBlock((int)posX, (int)posY, (int)posZ);
+		if(this.inGround){
+		if(!worldObj.isRemote) {
+			worldObj.createExplosion(this, posX, posY, posZ, 10, true);
+		}
+		}
+		super.onUpdate();
+	}
 }

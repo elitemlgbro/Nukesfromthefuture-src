@@ -48,7 +48,8 @@ public class TileNReactor extends TileEntity{
                     world.setBlock(x - 6, (y - 2) + i, (z - 5) + j, Blocks.netherrack);
                     world.setBlock((x - 5) + j, (y - 2) + i, z + 6, Blocks.netherrack);
                     world.setBlock((x - 5) + j, y + 26, z + 6, Blocks.nether_brick_fence);
-                    world.setBlock((x + 5) + j, y + 26, z + 6, Blocks.nether_brick_fence);
+                    world.setBlock(x + 6, y + 26, (z - 6) + j, Blocks.nether_brick_fence);
+                    world.setBlock(x + 6, y + 26, (z + 6) + j, Blocks.nether_brick_fence);
                     world.setBlock((x - 5) + j, (y - 2) + i, z - 6, Blocks.netherrack);
                     for(int l = 0; l < 13; l++) {
                         for (int k = 0; k < 13; k++) {

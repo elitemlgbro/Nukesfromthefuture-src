@@ -5,5 +5,5 @@ import net.minecraft.util.DamageSource;
 public class NffDamageSource {
 	public static final DamageSource nuclearblast = new DamageSource("nuclearBlast");
 	public static final DamageSource POTATOKill = new DamageSource("POTATOKill");
-	public static final DamageSource radiation_sickness = (new DamageSource("radiation_be_good")).setDamageBypassesArmor();
+	public static final DamageSource radiation_sickness = new DamageSource("radiation_be_good");
 }

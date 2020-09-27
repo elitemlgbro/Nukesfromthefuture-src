@@ -1,6 +1,7 @@
 package nukesfromthefuture;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.entity.Entity;
@@ -21,10 +22,9 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import nukesfromthefuture.blocks.Blockego_nuke;
-import nukesfromthefuture.entity.AuxSavedData;
-import nukesfromthefuture.entity.EntityEgoBlast;
-import nukesfromthefuture.entity.EntityPizzaCreeper;
+import nukesfromthefuture.entity.*;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.packet.RadSurveyPacket;
 import nukesfromthefuture.tileentity.TileEntityEgo_nuke;
@@ -112,7 +112,7 @@ public class ModEventHandler {
 						if(entity instanceof EntityPizzaCreeper && eRad >= 200 && entity.getHealth() > 0) {
 
 							if(event.world.rand.nextInt(3) == 0 ) {
-								EntityPizzaCreeper creep = new EntityPizzaCreeper(event.world);
+								EntityRadioCreeper creep = new EntityRadioCreeper(event.world);
 								creep.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
 
 								if(!entity.isDead)
@@ -158,7 +158,9 @@ public class ModEventHandler {
 							if(entity.attackEntityFrom(NffDamageSource.radiation_sickness, entity.getMaxHealth() * 100)) {
 								entity.getEntityData().setFloat("hfr_radiation", 0);
 
-
+							if(entity instanceof EntityPlayer){
+								((EntityPlayer)entity).triggerAchievement(Nukesfromthefuture.uDed);
+							}
 							}
 
 							//.attackEntityFrom ensures the recentlyHit var is set to enable drops.

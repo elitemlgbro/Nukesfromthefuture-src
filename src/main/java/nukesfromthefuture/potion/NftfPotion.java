@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 public class NftfPotion extends Potion {
     public static NftfPotion contamination;
     public static NftfPotion mutation;
+    public static NftfPotion lead_poisioning;
     public NftfPotion(int id, boolean isBad, int color) {
         super(id, isBad, color);
     }
@@ -24,6 +25,7 @@ public class NftfPotion extends Potion {
     public static void init(){
         contamination = registerPotion(80, true, 0x16FF22, "potion.radiation", 1, 0);
         mutation = registerPotion(81, false, 0x000000, "potion.mutation", 3, 1);
+        lead_poisioning = registerPotion(82, true, 0x404040, "potion.lead_poision", 0, 0);
     }
     public static NftfPotion registerPotion(int id, boolean isBad, int color, String name, int x, int y) {
 
@@ -64,12 +66,16 @@ public class NftfPotion extends Potion {
     public void performEffect(EntityLivingBase entity, int level){
         if(this == contamination){
             RadUtil.applyRadData(entity, (float)(level + 1F) * 0.05F);
+        } else if(this == lead_poisioning){
+            entity.attackEntityFrom(NffDamageSource.lead_poisioning, 1);
         }
     }
 
     @Override
     public boolean isReady(int i, int j) {
         if(this == contamination){
+            return true;
+        }else if(this == lead_poisioning){
             return true;
         }
         return false;

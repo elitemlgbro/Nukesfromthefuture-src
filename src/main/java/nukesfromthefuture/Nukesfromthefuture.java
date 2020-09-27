@@ -168,6 +168,7 @@ public class Nukesfromthefuture{
 	public static Item liquid_radiation;
 	public static Block waste_wood;
 	public static int antitimebuff;
+	public static Achievement uDed;
 	public static Block red_obsidian;
 	public static int flood_strength;
 	public static int antitimespeed;
@@ -192,6 +193,7 @@ public class Nukesfromthefuture{
 	public static int Boyspeed;
 	public static float hellrad;
 	public static Item fluid_icon;
+	public static Item lead_food;
 	public static Item donut;
 	public static Item mentos_fo_lava;
 	public static boolean POTATOtofries;
@@ -260,6 +262,7 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		lead_food = new LeadFood(2, 1.0F, false).setUnlocalizedName("lead_nugget").setCreativeTab(food).setTextureName("nff:nugget");
 		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1).setTextureName("nff:batinf");
 		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines).setTextureName("nff:batr").setMaxStackSize(1);
 		donut = new Donut(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
@@ -328,7 +331,7 @@ public class Nukesfromthefuture{
 		craterCoverer = new CraterCoverer().setBlockName("craterCoverer").setBlockTextureName("nff:craterCove");
 		antiTime = new Antitime().setBlockName("AntiTimeNuke").setCreativeTab(nffreee).setBlockTextureName("nff:AntiTime");  
 		//........0-0 more wot
-		EntityRegistry.registerModEntity(EntityLight.class, "LightningSummon", EntityRegistry.findGlobalUniqueEntityId(), this, 100000, 1000000000, true);
+		EntityRegistry.registerModEntity(EntityLight.class, "LightningSummon", 50, this, 100000, 1000000000, true);
 		ego_nuke = new Blockego_nuke(Material.anvil, guiID_nuke_boy).setBlockName("ego_nuke").setBlockTextureName("nff:blimp").setCreativeTab(nffreee);
 		//resources
 		rod = new ItemRod().setUnlocalizedName("fuel_rod").setCreativeTab(resources).setContainerItem(empty_rod).setTextureName("nff:rod_empty");
@@ -372,7 +375,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(POTATO, POTATO.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(plutoniuml, plutoniuml.getUnlocalizedName());
 		BiomeRegistry.register();
-		EntityRegistry.registerModEntity(FalloutRain.class, "fallout", EntityRegistry.findGlobalUniqueEntityId(), this, 10000, 1000, true);
+		EntityRegistry.registerModEntity(FalloutRain.class, "fallout", 53, this, 10000, 1, true);
 		GameRegistry.registerItem(mentos_fo_lava, mentos_fo_lava.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(componetTeleporter, componetTeleporter.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(red_obsidian, red_obsidian.getUnlocalizedName().substring(5));
@@ -388,6 +391,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(atom_knife, atom_knife.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(deathinum_ingot, deathinum_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(donut, donut.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(lead_food, lead_food.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_identifier, fluid_identifier.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(time_fissure_log, time_fissure_log.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(liquifier, liquifier.getUnlocalizedName().substring(5));
@@ -399,7 +403,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(unrefinary, unrefinary.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coppa, coppa.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coord_cache, coord_cache.getUnlocalizedName().substring(5));
-		EntityRegistry.registerModEntity(BombBalls.class, "bomb balls", EntityRegistry.findGlobalUniqueEntityId(), this, 1000000000, 100, true);
+		EntityRegistry.registerModEntity(BombBalls.class, "bomb balls", 51, this, 1000000000, 100, true);
 		GameRegistry.registerItem(opposite_o_succ, opposite_o_succ.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_empty, fluid_barrel_empty.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_full, fluid_barrel_full.getUnlocalizedName().substring(5));
@@ -448,7 +452,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(radioactive_pizza, radioactive_pizza.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(big_boy, big_boy.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(copper_wire, copper_wire.getUnlocalizedName().substring(5));
-		GameRegistry.registerBlock(the_beta,BlockLore.class, the_beta.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(the_beta, BlockLore.class, the_beta.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(time_fissures, time_fissures.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(unstable_plutonium_ingot, unstable_plutonium_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(test_blok, test_blok.getUnlocalizedName().substring(5));
@@ -470,7 +474,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(manual_detonator, manual_detonator.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(detonator, detonator.getUnlocalizedName().substring(5));
 		EntityRegistry.registerModEntity(EntityPOTATO.class, "EPOTATO", 0 , this, 100000, 1, true);
-
+		EntityRegistry.registerModEntity(NukeMushroom.class, "nooclear_mushroom", 54, this, 1000000, 1, true);
 		EntityRegistry.addSpawn(EntityPizzaCreeper.class, 100, 1, 15, EnumCreatureType.monster, BiomeGenBase.plains, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills,
 				BiomeGenBase.desert, BiomeGenBase.beach, BiomeGenBase.forest, BiomeGenBase.jungle, BiomeGenBase.swampland);
 		EntityRegistry.addSpawn(EntityPizzaCreeper.class, 100000, 10, 40, EnumCreatureType.monster, BiomeGenBase.hell);
@@ -511,8 +515,10 @@ public class Nukesfromthefuture{
 				                                                              "crc",
 				                                                              "   ", 'r', Items.redstone, 'c', copper_wire});					
 		POTATOKill = new Achievement("achievement.POTATOKill", "POTATOKill", 0, 0, POTATO, null).registerStat().initIndependentStat().setSpecial();
+		yay_rad = new Achievement("achievement.radiation", "achievement.radiation", 2, 0, canned_radiation, null).initIndependentStat().registerStat();
+		uDed = new Achievement("achievement.ouch_radiation", "axhievement.ouchRadiation", 2, 2, Items.skull, yay_rad).setSpecial().registerStat();
 		ego_explod = new Achievement("achievement.ego_armed", "You arm the ego nuke OwO", 0, 2, ego_nuke, null).registerStat().initIndependentStat().setSpecial();
-		AchievementPage.registerAchievementPage(new AchievementPage("Future Nukes", new Achievement[] {POTATOKill, ego_explod}));
+		AchievementPage.registerAchievementPage(new AchievementPage("Future Nukes", new Achievement[] {POTATOKill, ego_explod, yay_rad, uDed}));
 	}
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {

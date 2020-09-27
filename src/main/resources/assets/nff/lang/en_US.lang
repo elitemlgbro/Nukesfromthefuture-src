@@ -1,6 +1,5 @@
 item.obese_man.name=obesifier
 item.POTATO.name=POTATO
-item.Cooked_POTATO.name=Cooked POTATO
 item.componet_teleporter.name=Short range componet teleporter
 item.Pizza.name=Pizza
 item.manual_detonator.name=manual detonator
@@ -42,6 +41,7 @@ tile.waste.name=Ded Grass
 item.RadCake.name=[DON'T PLACE DOWN] radioactive cake
 tile.unrefinary.name=Unrefinery
 tile.egonium_furnace.name=Egonium Furnace
+death.attack.licked_lead=%1$s licked lead
 tile.nether_reactor.name=Nether Reactor
 container.Transmutator=Transmutator
 tile.Coord_transporter=Coord Transporter
@@ -64,7 +64,6 @@ item.donut.name=static-y donut
 item.uranium-atom.name=Uranium atom
 tile.deathinum_Ore.name=Deathinum Ore
 item.canned_radiation.name=Canned Radiation
-item.fluid_barrel_empty.name=Fluid Barrel Empty
 item.antitime_ingot.name=Antitime Ingot
 item.deathinum_ingot.name=Deathinum Ingot
 elitefluid.lava=Lava
@@ -86,7 +85,7 @@ tile.Radioactive_cake.name=Radioactive cake that levels insides
 tile.ego_nuke.name=Ego Nuke
 tile.trololo.name=Trolololololololololo
 tile.ego_ore.name=Ego Ore
-tile.craterCoverer.name=Crater Coverer® Nuke
+tile.craterCoverer.name=Crater Covererï¿½ Nuke
 tile.singularity_nuke.name=Singularity Nuke
 tile.AntiTimeNuke.name=AntiTime Nuke
 tile.CopperOre.name=Copper Ore
@@ -107,4 +106,4 @@ itemGroup.machines=nff machines
 
 entity.PizzaCreeper.name=pizza creeper
 
-death.attack.nuclearBlast=NUKED!!!!!!!!!!
+death.attack.nuclearBlast=%1$s got NUKED!!!!!!!!!!

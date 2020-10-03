@@ -94,6 +94,7 @@ tile.Ego_block.name=Block Of Egonium
 container.antiTime=AntiTime Nuke
 container.TrolNuke=Trol Nuke
 container.supervolcano=Supervolcano
+item.lead_nugget.name=Lead Nugget
 container.BigBoy=Big Boy
 container.Beta=The Beta
 container.Skinny_Man=Skinny Man

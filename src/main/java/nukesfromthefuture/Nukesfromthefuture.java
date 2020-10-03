@@ -403,7 +403,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(unrefinary, unrefinary.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coppa, coppa.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coord_cache, coord_cache.getUnlocalizedName().substring(5));
-		EntityRegistry.registerModEntity(BombBalls.class, "bomb balls", 51, this, 1000000000, 100, true);
+		EntityRegistry.registerModEntity(BombBalls.class, "bomb_balls", 51, this, 1000000000, 1, true);
 		GameRegistry.registerItem(opposite_o_succ, opposite_o_succ.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_empty, fluid_barrel_empty.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_full, fluid_barrel_full.getUnlocalizedName().substring(5));

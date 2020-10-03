@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import nukesfromthefuture.ModelLoaders.QwQ;
 import nukesfromthefuture.Nukesfromthefuture;
 
 public class
@@ -37,29 +39,14 @@ BombBalls extends EntityThrowable {
         {
             Uwu.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 5.0F);
         }
-
-
-		if(worldObj.isRemote){
+		if(!worldObj.isRemote){
+			worldObj.createExplosion(this, posX, posY, posZ, 10.0F, true);
 			this.setDead();
 		}
+
+
 	}
 
 
-	@Override
-	public void onUpdate() {
-		this.lastTickPosX = this.prevPosX = posX;
-		this.lastTickPosY = this.prevPosY = posY;
-		this.lastTickPosZ = this.prevPosZ = posZ;
-		this.setPosition(posX + this.motionX, posY + this.motionY, posZ + this.motionZ);
-		this.motionX *= 0.99;
-		this.motionZ *= 0.99;
-		this.motionY -= 0.05D;
-		Block block = worldObj.getBlock((int)posX, (int)posY, (int)posZ);
-		if(this.inGround){
-		if(!worldObj.isRemote) {
-			worldObj.createExplosion(this, posX, posY, posZ, 10, true);
-		}
-		}
-		super.onUpdate();
-	}
+
 }

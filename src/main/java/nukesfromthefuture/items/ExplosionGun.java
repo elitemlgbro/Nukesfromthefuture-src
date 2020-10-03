@@ -13,12 +13,12 @@ public class ExplosionGun extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if(!player.isSneaking()) {
-			if(world.isRemote) {
+			if(!world.isRemote) {
 		world.spawnEntityInWorld(new BombBalls(world, player));
 			}
 		}
-		if(player.isSneaking()) {
-		player.openGui(Nukesfromthefuture.instance,4, world, (int)player.posX,(int) player.posY,(int) player.posZ);
+		if(player.isSneaking() && world.isRemote) {
+		player.openGui(Nukesfromthefuture.instance,4, world, 0, 0, 0);
 		}
 		return stack;
 	}

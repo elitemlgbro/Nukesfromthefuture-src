@@ -4,7 +4,9 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraftforge.client.MinecraftForgeClient;
 import nukesfromthefuture.ModelLoaders.*;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.Reference;
@@ -46,6 +48,7 @@ public class ClientProxy extends CommonProxy{
         GameRegistry.registerTileEntity(TileCoord.class, "TileCoord");    
         ClientRegistry.bindTileEntitySpecialRenderer(TileBigBoy.class, new BigBoyLoader());
         GameRegistry.registerTileEntity(TileEntitySkinnyMan.class, "TileSkinnyMan");
+        MinecraftForgeClient.registerItemRenderer(Nukesfromthefuture.opposite_o_succ, new RenderExplosionGun());
         GameRegistry.registerTileEntity(TileBeta.class, "TileBeta");
         RenderingRegistry.registerEntityRenderingHandler(FireUwU.class, new RenderSnowball(Nukesfromthefuture.fire));
         ClientRegistry.bindTileEntitySpecialRenderer(TileBeta.class, new BetaLoader());

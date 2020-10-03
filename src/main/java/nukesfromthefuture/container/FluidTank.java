@@ -104,7 +104,28 @@ public class FluidTank {
 	
 	//Fills canisters from tank
 	public void unloadTank(int in, int out, ItemStack[] slots) {
+		ItemStack full = null;
+		if(slots[in] != null) {
+			full = FluidContainerRegistry.getFullContainer(slots[in], type);
+		}
+		if(full == null)
+			return;
 
+		if(slots[in] != null && fluid - FluidContainerRegistry.getFluidContent(full, type) >= 0) {
+			if(slots[out] == null) {
+				fluid -= FluidContainerRegistry.getFluidContent(full, type);
+				slots[out] = full.copy();
+				slots[in].stackSize--;
+				if(slots[in].stackSize <= 0)
+					slots[in] = null;
+			} else if(slots[out] != null && slots[out].getItem() == FluidContainerRegistry.getFullContainer(slots[in], type).getItem() && slots[out].stackSize < slots[out].getMaxStackSize()) {
+				fluid -= FluidContainerRegistry.getFluidContent(full, type);
+				slots[in].stackSize--;
+				if(slots[in].stackSize <= 0)
+					slots[in] = null;
+				slots[out].stackSize++;
+			}
+		}
 		
 			
 			

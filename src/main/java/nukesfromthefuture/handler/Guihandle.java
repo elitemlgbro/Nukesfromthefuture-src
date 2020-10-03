@@ -141,14 +141,7 @@ if(entity != null ) {
 				}
 				return null;
 			}
-			case 4:
-			{
-				if(entity instanceof TileEntityUnrefinery)
-				{
-					return new QwQ();
-				}
-				return null;
-			}case Nukesfromthefuture.UvU:
+			case Nukesfromthefuture.UvU:
 			{
 				if(entity instanceof TilePOTATO)
 				{
@@ -206,7 +199,13 @@ if(entity != null ) {
 		
 				}
 			
+			} else {
+			switch (ID) {
+				case 4:
+						return new QwQ(player);
+
 			}
+		}
 		return null;
 		}
 }

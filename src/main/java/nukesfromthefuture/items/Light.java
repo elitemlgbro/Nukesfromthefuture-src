@@ -11,8 +11,10 @@ public class Light extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		if (!world.isRemote) {
-		world.spawnEntityInWorld(new EntityLight(world, player));
+		if(!player.isSneaking()) {
+			if (!world.isRemote) {
+				world.spawnEntityInWorld(new EntityLight(world, player));
+			}
 		}
 		return stack;
     

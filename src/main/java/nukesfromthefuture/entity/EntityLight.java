@@ -29,14 +29,17 @@ public class EntityLight extends EntityThrowable{
 	public void onImpact(MovingObjectPosition p_70184_1_) {
 		// TODO Auto-generated method stub
 		World world = worldObj;
-				
-		world.spawnEntityInWorld(new EntityLightningBolt(worldObj, posX, posY, posZ));
-		if (p_70184_1_.entityHit != null)
-        {
-			world.spawnEntityInWorld(new EntityLightningBolt(worldObj, x, y, x));
-            p_70184_1_.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 10.0F);
-        }
-		
+		if (p_70184_1_.entityHit != null) {
+			p_70184_1_.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 10.0F);
+
+
+
+		}
+		worldObj.spawnEntityInWorld(new EntityLightningBolt(worldObj, posX, posY, posZ));
+		if(!worldObj.isRemote) {
+			this.setDead();
+
+		}
 	}
 	public static void RegisterEntity(boolean uhh) {
 		EntityRegistry.registerModEntity(EntityPOTATO.class, "POTATO", 0, new Nukesfromthefuture(), 2, 35, uhh = true);

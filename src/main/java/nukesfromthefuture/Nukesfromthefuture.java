@@ -3,7 +3,6 @@ package nukesfromthefuture;
 
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -57,6 +56,8 @@ import nukesfromthefuture.items.*;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.potion.NftfPotion;
 import nukesfromthefuture.proxy.CommonProxy;
+import org.apache.logging.log4j.Logger;
+
 
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.version, canBeDeactivated = true, guiFactory = Reference.GUIFACT)
@@ -150,6 +151,7 @@ public class Nukesfromthefuture{
 	public static Item copper_ingot;
 	public static final int UvU = 5;
 	public static Item atom_knife;
+	public static Item energizer;
 	public static Block copper_ore;
 	public static Block clickable_bomb;
 	public static Item anti_time_ingot;
@@ -264,6 +266,7 @@ public class Nukesfromthefuture{
 		//uhhhhhhh
 		lead_food = new LeadFood(2, 1.0F, false).setUnlocalizedName("lead_nugget").setCreativeTab(food).setTextureName("nff:nugget");
 		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1).setTextureName("nff:batinf");
+		energizer = new Battery(100, 100, 10).setUnlocalizedName("benergizer").setCreativeTab(machines).setTextureName("nff:energizer");
 		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines).setTextureName("nff:batr").setMaxStackSize(1);
 		donut = new Donut(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
@@ -397,6 +400,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(liquifier, liquifier.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(schrabidium_cape, schrabidium_cape.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(trololo_nuke, trololo_nuke.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(energizer, energizer.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(battery, battery.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(infinite_battery, infinite_battery.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ego_ingot, ego_ingot.getUnlocalizedName().substring(5));

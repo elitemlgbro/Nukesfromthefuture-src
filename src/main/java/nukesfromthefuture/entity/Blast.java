@@ -8,8 +8,8 @@ import nukesfromthefuture.RadiationSavedData;
 import nukesfromthefuture.tileentity.explosion.Advanced;
 import nukesfromthefuture.tileentity.explosion.ExplosionRay;
 import nukesfromthefuture.tileentity.explosion.Generic;
+import org.apache.logging.log4j.Level;
 
-import java.util.logging.Level;
 
 public class Blast extends Entity{
 	//Strength of the blast

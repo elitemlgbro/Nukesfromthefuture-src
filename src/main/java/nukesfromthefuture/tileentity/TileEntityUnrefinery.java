@@ -3,20 +3,25 @@ package nukesfromthefuture.tileentity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import nukesfromthefuture.Lib;
 import nukesfromthefuture.container.FluidTank;
 import nukesfromthefuture.handler.FluidTypeHandler;
 import nukesfromthefuture.interfaces.IFluidAcceptor;
 import nukesfromthefuture.interfaces.IFluidContainer;
 import nukesfromthefuture.interfaces.IFluidSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityUnrefinery extends TileEntity implements ISidedInventory, IFluidContainer, IFluidAcceptor, IFluidSource{
 	public ItemStack slots[];
-	public static FluidTank tanks[];
+	public FluidTank[] tanks;
 	public TileEntityUnrefinery(){
 		slots = new ItemStack[4];
+		tanks = new FluidTank[4];
 		tanks[0] = new FluidTank(FluidTypeHandler.FluidType.unstable_plutonium, 256000, 0);
 		tanks[1] = new FluidTank(FluidTypeHandler.FluidType.BLACK_HOLE_FUEL, 32000, 1);
 		tanks[2] = new FluidTank(FluidTypeHandler.FluidType.ANTITIME, 32000, 2);
@@ -35,21 +40,49 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 	}
 
 	@Override
-	public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_) {
+	public ItemStack decrStackSize(int i, int j) {
 		// TODO Auto-generated method stub
-		return null;
+        if(slots[i] != null)
+        {
+            if(slots[i].stackSize <= j)
+            {
+                ItemStack itemStack = slots[i];
+                slots[i] = null;
+                return itemStack;
+            }
+            ItemStack itemStack1 = slots[i].splitStack(j);
+            if (slots[i].stackSize == 0)
+            {
+                slots[i] = null;
+            }
+
+            return itemStack1;
+        } else {
+            return null;
+        }
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
+	public ItemStack getStackInSlotOnClosing(int i) {
 		// TODO Auto-generated method stub
-		return null;
+        if(slots[i] != null)
+        {
+            ItemStack itemStack = slots[i];
+            slots[i] = null;
+            return itemStack;
+        } else {
+            return null;
+        }
 	}
 
 	@Override
-	public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
+	public void setInventorySlotContents(int i, ItemStack itemStack) {
 		// TODO Auto-generated method stub
-		
+        slots[i] = itemStack;
+        if(itemStack != null && itemStack.stackSize > getInventoryStackLimit())
+        {
+            itemStack.stackSize = getInventoryStackLimit();
+        }
 	}
 
 	@Override
@@ -107,34 +140,87 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 	}
 
 	@Override
+	public void writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+		tanks[0].writeToNBT(tag, "unstable");
+		tanks[1].writeToNBT(tag, "UwU");
+		tanks[2].writeToNBT(tag, "OwO");
+		tanks[3].writeToNBT(tag, "QwQ");
+		NBTTagList list = new NBTTagList();
+		for(int i = 0; i < tanks.length; i++){
+			if(slots[i] != null){
+				NBTTagCompound nbt1 = new NBTTagCompound();
+				nbt1.setByte("slots", (byte)i);
+				slots[i].writeToNBT(nbt1);
+				list.appendTag(nbt1);
+			}
+		}
+		tag.setTag("items", list);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		NBTTagList list = tag.getTagList("items", 10);
+		tanks[0].readFromNBT(tag, "unstable");
+		tanks[1].readFromNBT(tag, "UwU");
+		tanks[2].readFromNBT(tag, "OwO");
+		tanks[3].readFromNBT(tag, "QwQ");
+		slots = new ItemStack[getSizeInventory()];
+		for(int i = 0; i < list.tagCount(); i++){
+			NBTTagCompound tag1 = list.getCompoundTagAt(i);
+			slots[i].readFromNBT(tag1);
+
+
+		}
+	}
+
+	@Override
 	public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getMaxFluidFill(FluidTypeHandler.FluidType type) {
-		return 0;
+		if(type.getName().equals(tanks[0].getTankType().getName())){
+		    return tanks[0].getMaxFill();
+        } else if (type.getName().equals(tanks[1].getTankType().getName())){
+		    return tanks[1].getMaxFill();
+        }else if(type.getName().equals(tanks[2].getTankType().getName())){
+		    return tanks[2].getMaxFill();
+        }else if(type.getName().equals(tanks[3].getTankType().getName())){
+		    return tanks[3].getMaxFill();
+        } else{
+		    return 0;
+        }
 	}
 
 	@Override
 	public void fillFluidInit(FluidTypeHandler.FluidType type) {
+		fillFluid(xCoord + 1, yCoord, zCoord, getTact(), type);
+		fillFluid(xCoord, yCoord, zCoord + 1, getTact(), type);
+		fillFluid(xCoord, yCoord - 1, zCoord, getTact(), type);
+		fillFluid(xCoord, yCoord + 1, zCoord, getTact(), type);
+		fillFluid(xCoord - 1, yCoord, zCoord, getTact(), type);
+		fillFluid(xCoord, yCoord, zCoord - 1, getTact(), type);
 
 	}
 
 	@Override
 	public void fillFluid(int x, int y, int z, boolean newTact, FluidTypeHandler.FluidType type) {
-
+		Lib.transmitFluid(x, y, z, newTact, this, worldObj, type);
 	}
 
 	@Override
 	public boolean getTact() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public List<IFluidAcceptor> getFluidList(FluidTypeHandler.FluidType type) {
-		return null;
+		List<IFluidAcceptor> list = new ArrayList();
+		return list;
 	}
 
 	@Override
@@ -144,26 +230,53 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 
 	@Override
 	public void setFillstate(int fill, int index) {
-
+		if(index < 4 && tanks[index] != null){
+			tanks[index].setFill(fill);
+		}
 	}
 
 	@Override
 	public void setFluidFill(int fill, FluidTypeHandler.FluidType type) {
-
+		if(type.getName().equals(tanks[0].getTankType().getName())){
+			tanks[0].setFill(fill);
+		} else if(type.getName().equals(tanks[1].getTankType().getName())){
+			tanks[1].setFill(fill);
+		}else if(type.getName().equals(tanks[2].getTankType().getName())){
+			tanks[2].setFill(fill);
+		}else if(type.getName().equals(tanks[3].getTankType().getName())){
+			tanks[3].setFill(fill);
+		}
 	}
 
 	@Override
 	public void setType(FluidTypeHandler.FluidType type, int index) {
-
+        if(index < 4 && tanks[index] != null){
+            tanks[index].setTankType(type);
+        }
 	}
 
 	@Override
 	public List<FluidTank> getTanks() {
-		return null;
+	    List<FluidTank> list = new ArrayList();
+	    list.add(tanks[0]);
+	    list.add(tanks[1]);
+	    list.add(tanks[2]);
+	    list.add(tanks[3]);
+		return list;
 	}
 
 	@Override
 	public int getFluidFill(FluidTypeHandler.FluidType type) {
-		return 0;
+		if(type.getName().equals(tanks[0].getTankType().getName())){
+		    return tanks[0].getFill();
+        } else if(type.getName().equals(tanks[1].getTankType().getName())){
+		    return tanks[1].getFill();
+        }else if(type.getName().equals(tanks[2].getTankType().getName())){
+		    return tanks[2].getFill();
+        }else if(type.getName().equals(tanks[3].getTankType().getName())){
+		    return tanks[3].getFill();
+        }else{
+		    return 0;
+        }
 	}
 }

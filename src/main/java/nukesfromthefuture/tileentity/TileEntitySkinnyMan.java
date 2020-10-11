@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 
 public class TileEntitySkinnyMan extends TileEntity implements ISidedInventory{
 	public ItemStack slots[];
@@ -37,6 +38,13 @@ public class TileEntitySkinnyMan extends TileEntity implements ISidedInventory{
 		return slots.length;
 	}
 
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return TileEntity.INFINITE_EXTENT_AABB;
+	}
+	public double getMaxRenderDistanceSquared(){
+		return 6500D;
+	}
 	@Override
 	public ItemStack getStackInSlot(int i) {
 		return slots[i];

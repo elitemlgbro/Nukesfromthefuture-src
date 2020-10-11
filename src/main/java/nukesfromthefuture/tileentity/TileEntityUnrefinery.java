@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import nukesfromthefuture.Lib;
 import nukesfromthefuture.container.FluidTank;
 import nukesfromthefuture.handler.FluidTypeHandler;
@@ -127,7 +128,17 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 		return false;
 	}
 
-	@Override
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return TileEntity.INFINITE_EXTENT_AABB;
+    }
+
+    @Override
+    public double getMaxRenderDistanceSquared() {
+        return 1650D;
+    }
+
+    @Override
 	public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
 		// TODO Auto-generated method stub
 		return null;

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import nukesfromthefuture.Nukesfromthefuture;
 
 public class TileAntitime extends TileEntity implements ISidedInventory{
@@ -21,6 +22,16 @@ public class TileAntitime extends TileEntity implements ISidedInventory{
 			return true;
 		return false;
 		}
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return TileEntity.INFINITE_EXTENT_AABB;
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return 6050D;
+	}
 
 	@Override
 	public int getSizeInventory() {

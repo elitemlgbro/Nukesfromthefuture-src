@@ -1,5 +1,6 @@
 package nukesfromthefuture;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -14,6 +15,7 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
@@ -21,10 +23,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import nukesfromthefuture.blocks.Blockego_nuke;
 import nukesfromthefuture.entity.*;
+import nukesfromthefuture.items.NuclearTaco;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.packet.RadSurveyPacket;
 import nukesfromthefuture.tileentity.TileEntityEgo_nuke;
@@ -223,7 +229,24 @@ public class ModEventHandler {
 			RadiationWorldHandler.handleWorldDestruction(event.world);
 		}
 	}
+	@SubscribeEvent
+	public void playerDoesStuff(LivingHurtEvent event){
+		EntityLivingBase e = event.entityLiving;
+		if(e instanceof EntityPlayer && event.source == NffDamageSource.nuke_diarrhea){
+			for(Object o : event.entity.worldObj.playerEntities){
+				EntityPlayer player = (EntityPlayer)o;
+				player.triggerAchievement(Nukesfromthefuture.nuclear_diarrhea);
+			}
+		}
 
+
+	}
+	@SubscribeEvent
+	public void onCfgChange(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if(event.modID.equalsIgnoreCase(Reference.MOD_ID)) {
+			Nukesfromthefuture.config.save();
+		}
+	}
 
 	
 }

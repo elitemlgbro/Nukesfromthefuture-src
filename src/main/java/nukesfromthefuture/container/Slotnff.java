@@ -21,7 +21,7 @@ public class Slotnff extends Slot{
 	 *soooo, I have a message to items that don't belong in the slot
 	 * GO AWAY SCRUBS, UR NOT ALLOWED IN DIS SLOT
 	 * @param maxStacks the item stack size limit
-	 * @param only this will allow only a specific item in a slot*
+	 * @param item this will allow only a specific item in a slot*
 	  **/
 	
 	public Slotnff(IInventory inv, int id, int x, int y, int maxStacks,Item item) {

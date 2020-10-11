@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.items.RodTypeHandler.RodType;
 
@@ -45,6 +46,16 @@ public class TileBeta extends TileEntity implements ISidedInventory{
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return TileEntity.INFINITE_EXTENT_AABB;
+	}
+
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return 6500D;
 	}
 
 	@Override

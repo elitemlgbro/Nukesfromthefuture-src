@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import nukesfromthefuture.Nukesfromthefuture;
 
 public class TilePOTATO extends TileEntity implements ISidedInventory {
@@ -26,6 +27,13 @@ public class TilePOTATO extends TileEntity implements ISidedInventory {
 		return false;
 	}
 
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return TileEntity.INFINITE_EXTENT_AABB;
+	}
+	public double getMaxRenderDistanceSquared(){
+		return 6500D;
+	}
 	@Override
 	public int getSizeInventory() {
 		// TODO Auto-generated method stub

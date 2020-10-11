@@ -85,6 +85,7 @@ public class Nukesfromthefuture{
 	public static Item poorly_drawn_fuse;
 	public static Item my_ego;
 	public static final int guiID_nuke_boy = 0;
+	public static Achievement nuclear_diarrhea;
 	public static final int QwQ = 1;
 	public static Block antiTime;
 	public static Block singularity_nuke;
@@ -129,6 +130,7 @@ public class Nukesfromthefuture{
 	public static Block trololo_nuke;
 	public static Item uranium_atom;
 	public static Item canned_radiation;
+	public static Item taco;
 	public static Achievement ego_explod;
 	public static Block coord_transporteer;
 	public static Block ego_block;
@@ -151,7 +153,7 @@ public class Nukesfromthefuture{
 	public static Item copper_ingot;
 	public static final int UvU = 5;
 	public static Item atom_knife;
-	public static Item energizer;
+	public static Item battery_energizer;
 	public static Block copper_ore;
 	public static Block clickable_bomb;
 	public static Item anti_time_ingot;
@@ -170,7 +172,9 @@ public class Nukesfromthefuture{
 	public static Item liquid_radiation;
 	public static Block waste_wood;
 	public static int antitimebuff;
+	public static Item icon;
 	public static Achievement uDed;
+	public static Block unnamed_reactor;
 	public static Block red_obsidian;
 	public static int flood_strength;
 	public static int antitimespeed;
@@ -264,9 +268,12 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		icon = new Item().setUnlocalizedName("nothing").setTextureName("nff:hidden");
+		taco = new NuclearTaco(1, 5F, false).setCreativeTab(food).setUnlocalizedName("nuke_taco").setTextureName("nff:TACO");
+		unnamed_reactor = new UnnamedReactor(Material.iron).setBlockName("i_dont_has_name").setCreativeTab(machines).setHardness(10F).setBlockTextureName("nff:unnamed");
 		lead_food = new LeadFood(2, 1.0F, false).setUnlocalizedName("lead_nugget").setCreativeTab(food).setTextureName("nff:nugget");
 		infinite_battery = new Item().setUnlocalizedName("battery_creative").setCreativeTab(machines).setMaxStackSize(1).setTextureName("nff:batinf");
-		energizer = new Battery(100, 100, 10).setUnlocalizedName("benergizer").setCreativeTab(machines).setTextureName("nff:energizer");
+		battery_energizer = new Battery(100, 100, 10).setUnlocalizedName("battery_energizer").setCreativeTab(machines).setTextureName("nff:energizer").setMaxStackSize(1);
 		battery = new Battery(10000, 1000, 100).setUnlocalizedName("battery").setCreativeTab(machines).setTextureName("nff:batr").setMaxStackSize(1);
 		donut = new Donut(10, 5, false).setUnlocalizedName("donut").setTextureName("nff:donut").setCreativeTab(food);
         reactor_burnt_out = new BurntOut(Material.iron).setBlockName("burnt_out_reactor").setBlockUnbreakable().setBlockTextureName("nff:nrc3");
@@ -391,6 +398,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(copper_ore, copper_ore.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(energy_extractor, energy_extractor.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(anti_time_ingot, anti_time_ingot.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(taco, taco.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(atom_knife, atom_knife.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(deathinum_ingot, deathinum_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(donut, donut.getUnlocalizedName().substring(5));
@@ -400,7 +408,9 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(liquifier, liquifier.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(schrabidium_cape, schrabidium_cape.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(trololo_nuke, trololo_nuke.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(energizer, energizer.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(battery_energizer, battery_energizer.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(icon, icon.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(unnamed_reactor, unnamed_reactor.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(battery, battery.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(infinite_battery, infinite_battery.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ego_ingot, ego_ingot.getUnlocalizedName().substring(5));
@@ -522,7 +532,8 @@ public class Nukesfromthefuture{
 		yay_rad = new Achievement("achievement.radiation", "achievement.radiation", 2, 0, canned_radiation, null).initIndependentStat().registerStat();
 		uDed = new Achievement("achievement.ouch_radiation", "axhievement.ouchRadiation", 2, 2, Items.skull, yay_rad).setSpecial().registerStat();
 		ego_explod = new Achievement("achievement.ego_armed", "You arm the ego nuke OwO", 0, 2, ego_nuke, null).registerStat().initIndependentStat().setSpecial();
-		AchievementPage.registerAchievementPage(new AchievementPage("Future Nukes", new Achievement[] {POTATOKill, ego_explod, yay_rad, uDed}));
+		nuclear_diarrhea = new Achievement("acheivement.nuke_diarrhea?", "acheivement.nuke_diarrhea?", 4, 0, icon, null).setSpecial().registerStat();
+		AchievementPage.registerAchievementPage(new AchievementPage("Future Nukes", new Achievement[] {POTATOKill, ego_explod, yay_rad, uDed, nuclear_diarrhea}));
 	}
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
@@ -539,12 +550,7 @@ public class Nukesfromthefuture{
 	public static Configuration getConfig() {
 		return config;
 	}
-	@SubscribeEvent
-	public void onCfgChange(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if(event.modID.equalsIgnoreCase(Reference.MOD_ID)) {
-			config.save();
-		}
-	}
+
 	public static CreativeTabs uselessStuff = new UselessStuff("UselessStuff");
 	public static CreativeTabs nffreee = new WeaponsnReee("weapons");
 	public static CreativeTabs resources = new Resources("resources");

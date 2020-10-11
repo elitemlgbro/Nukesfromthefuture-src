@@ -41,6 +41,8 @@ public class ClientProxy extends CommonProxy{
 		if(Nukesfromthefuture.old_ego == true) {
 			ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEgo_nuke.class, new RenderOlNook());
 		}
+		GameRegistry.registerTileEntity(TileUnnamed.class, "tileUnnamed");
+		ClientRegistry.bindTileEntitySpecialRenderer(TileUnnamed.class, new UnnamedLoader());
 		GameRegistry.registerTileEntity(TileNReactor.class, "tileReact");
 		RenderingRegistry.registerEntityRenderingHandler(RadioactiveSpider.class, new RenderSpiderRad());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAntitime.class, new RenderAntitime());

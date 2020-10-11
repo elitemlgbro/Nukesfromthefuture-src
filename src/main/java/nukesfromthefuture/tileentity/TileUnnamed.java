@@ -3,7 +3,7 @@ package nukesfromthefuture.tileentity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
-public class TileAgriessor extends TileEntity {
+public class TileUnnamed extends TileEntity{
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return TileEntity.INFINITE_EXTENT_AABB;
@@ -11,6 +11,6 @@ public class TileAgriessor extends TileEntity {
 
     @Override
     public double getMaxRenderDistanceSquared() {
-        return 6500D;
+        return 6550D;
     }
 }

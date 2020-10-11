@@ -40,7 +40,7 @@ public class Battery extends Item implements IBatteryItem{
             list.add("");
             list.add("Trust is power.");
             list.add("pls don't sue me duracell");
-        } else if(this == Nukesfromthefuture.energizer){
+        } else if(this == Nukesfromthefuture.battery_energizer){
             list.add("I'm just your poor quality battery that has short battery life");
         }
     }

@@ -73,6 +73,7 @@ eliterods.nuclear=Nuclear
 eliterods.egonium=Egonium
 item.fluid_barrel_full.name=Fluid Barrel
 item.fluid_barrel_empty.name=Empty Fluid Barrel
+item.nuke_taco.name=Nacho Cheese Supreme
 elitefluid.antitime=Antitime
 elitefluid.trol=Trol
 elitefluid.bhf=Black Hole Fuel

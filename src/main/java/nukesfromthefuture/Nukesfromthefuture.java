@@ -540,7 +540,6 @@ public class Nukesfromthefuture{
 		FluidContainerRegistry.registerContainer(new FluidContainer(new ItemStack(Items.lava_bucket),
 				new ItemStack(Items.bucket), FluidType.LAVA, 500));
 		for(int i = 1; i < FluidType.values().length; i++) {
-			
 			FluidContainerRegistry.registerContainer(new FluidContainer(new ItemStack(fluid_barrel_full, 1, i),
 					new ItemStack(fluid_barrel_empty), FluidType.getEnum(i), 16000));
 		}

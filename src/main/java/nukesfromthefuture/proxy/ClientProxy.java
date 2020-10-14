@@ -19,16 +19,16 @@ public class ClientProxy extends CommonProxy{
     /**bunch of rendering crap*/
 	public void registerRenders(){
 		GameRegistry.registerTileEntity(TileEntityEgo_nuke.class, "tileEgo_nuke");
-		if(Nukesfromthefuture.old_ego == false) {
+		if(!Nukesfromthefuture.old_ego) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEgo_nuke.class, new RenderEgo_nuke());
 		}
         GameRegistry.registerTileEntity(TileEntityUnrefinery.class, "tileUnrefinery");
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUnrefinery.class, new RenderUnrefinary());
         GameRegistry.registerTileEntity(TileEntitySingularityNuke.class, "tileSingularity");
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySingularityNuke.class, new RenderSingularityNuke());
         RenderingRegistry.registerEntityRenderingHandler(EntityPOTATO.class, new RenderSnowball(Nukesfromthefuture.POTATO));
         GameRegistry.registerTileEntity(TileEntityCraterCoverer.class, "tileCraterCov");
         GameRegistry.registerTileEntity(TileTransMutate.class, "tileMutate");
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUnrefinery.class, new RenderUnrefinary());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCraterCoverer.class, new RenderCraterCoverer());
         RenderingRegistry.registerEntityRenderingHandler(NukeMushroom.class, new RenderNukeMushroom());
         GameRegistry.registerTileEntity(TileReactor.class, "tileRee");
@@ -38,9 +38,11 @@ public class ClientProxy extends CommonProxy{
         RenderingRegistry.registerEntityRenderingHandler(EntityPizzaCreeper.class, new RenderPizzaCreeper());
         GameRegistry.registerTileEntity(TileAntitime.class, "tileAntiTime");
 		NetworkRegistry.INSTANCE.registerGuiHandler(Nukesfromthefuture.instance, new Guihandle());
-		if(Nukesfromthefuture.old_ego == true) {
+		if(Nukesfromthefuture.old_ego) {
 			ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEgo_nuke.class, new RenderOlNook());
 		}
+		GameRegistry.registerTileEntity(TileDeathBomb.class, "tiledeathbomb");
+		ClientRegistry.bindTileEntitySpecialRenderer(TileDeathBomb.class, new RenderDeathBomb());
 		GameRegistry.registerTileEntity(TileUnnamed.class, "tileUnnamed");
 		ClientRegistry.bindTileEntitySpecialRenderer(TileUnnamed.class, new UnnamedLoader());
 		GameRegistry.registerTileEntity(TileNReactor.class, "tileReact");

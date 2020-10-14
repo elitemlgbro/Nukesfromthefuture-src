@@ -63,4 +63,4 @@ processResources
         exclude 'mcmod.info'
     }
 }
-idea{module{inheritOutputDirs = true}}
+sourceSets { main { output.resourcesDir = output.getClassesDirs().getAsPath() } }

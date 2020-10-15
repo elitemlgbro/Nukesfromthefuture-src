@@ -67,6 +67,7 @@ item.canned_radiation.name=Canned Radiation
 item.antitime_ingot.name=Antitime Ingot
 item.deathinum_ingot.name=Deathinum Ingot
 elitefluid.lava=Lava
+tile.deathinum_bomb.name=Deathinum Bomb
 item.empty_rod.name=Empty Rod
 item.fuel_rod.name=Fuel Rod
 eliterods.nuclear=Nuclear

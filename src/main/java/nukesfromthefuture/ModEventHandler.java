@@ -2,12 +2,10 @@ package nukesfromthefuture;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityCow;
@@ -15,25 +13,15 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
-import nukesfromthefuture.blocks.Blockego_nuke;
 import nukesfromthefuture.entity.*;
-import nukesfromthefuture.items.NuclearTaco;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.packet.RadSurveyPacket;
-import nukesfromthefuture.tileentity.TileEntityEgo_nuke;
 import nukesfromthefuture.util.RadUtil;
 
 import java.util.ArrayList;
@@ -55,7 +43,7 @@ public class ModEventHandler {
 		
 		}
 	}
-
+	@Bugged("Compatibility issue with HBM Nuker tech mod")
 	@SubscribeEvent
 	public void worldTick(WorldTickEvent event){
 		if(event.world != null && !event.world.isRemote && Nukesfromthefuture.enableRad) {
@@ -67,7 +55,7 @@ public class ModEventHandler {
 
 			if(!event.world.loadedEntityList.isEmpty()) {
 
-				RadiationSavedData data = RadiationSavedData.getData(event.world);
+				RadSaveData data = RadSaveData.getData(event.world);
 
 				if(data.worldObj == null) {
 					data.worldObj = event.world;
@@ -226,7 +214,7 @@ public class ModEventHandler {
 			}
 		}
 		if(event.phase == TickEvent.Phase.START) {
-			RadiationWorldHandler.handleWorldDestruction(event.world);
+			ContaminationWorldHandler.handleWorldDestruction(event.world);
 		}
 	}
 	@SubscribeEvent

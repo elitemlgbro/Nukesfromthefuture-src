@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 
-import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.packet.AuxParticlePacket;
 import nukesfromthefuture.packet.PacketDispatcher;
 
@@ -14,20 +13,20 @@ import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.chunk.Chunk;
-
-public class RadiationSavedData extends WorldSavedData{
+@Bugged("compatibility issue with HBM Nuker tech mod")
+public class RadSaveData extends WorldSavedData{
     public HashMap<ChunkCoordIntPair, Float> contamination = new HashMap();
 
     //in order to reduce read operations
-    private static RadiationSavedData openInstance;
+    private static RadSaveData openInstance;
 
     public World worldObj;
 
-    public RadiationSavedData(String p_i2141_1_) {
+    public RadSaveData(String p_i2141_1_) {
         super(p_i2141_1_);
     }
 
-    public RadiationSavedData(World p_i1678_1_)
+    public RadSaveData(World p_i1678_1_)
     {
         super("radiation");
         this.worldObj = p_i1678_1_;
@@ -161,16 +160,16 @@ public class RadiationSavedData extends WorldSavedData{
         }
     }
 
-    public static RadiationSavedData getData(World worldObj) {
+    public static RadSaveData getData(World worldObj) {
 
         if(openInstance != null && openInstance.worldObj == worldObj)
             return openInstance;
 
-        RadiationSavedData data = (RadiationSavedData)worldObj.perWorldStorage.loadData(RadiationSavedData.class, "radiation");
+        RadSaveData data = (RadSaveData)worldObj.perWorldStorage.loadData(RadSaveData.class, "radiation");
         if(data == null) {
-            worldObj.perWorldStorage.setData("radiation", new RadiationSavedData(worldObj));
+            worldObj.perWorldStorage.setData("radiation", new RadSaveData(worldObj));
 
-            data = (RadiationSavedData)worldObj.perWorldStorage.loadData(RadiationSavedData.class, "radiation");
+            data = (RadSaveData)worldObj.perWorldStorage.loadData(RadSaveData.class, "radiation");
         }
 
         data.worldObj = worldObj;
@@ -181,7 +180,7 @@ public class RadiationSavedData extends WorldSavedData{
 
     public static void incrementRad(World worldObj, int x, int z, float rad, float maxRad) {
 
-        RadiationSavedData data = getData(worldObj);
+        RadSaveData data = getData(worldObj);
 
         Chunk chunk = worldObj.getChunkFromBlockCoords(x, z);
 
@@ -195,7 +194,7 @@ public class RadiationSavedData extends WorldSavedData{
 
     public static void decrementRad(World worldObj, int x, int z, float rad) {
 
-        RadiationSavedData data = getData(worldObj);
+        RadSaveData data = getData(worldObj);
 
         Chunk chunk = worldObj.getChunkFromBlockCoords(x, z);
 

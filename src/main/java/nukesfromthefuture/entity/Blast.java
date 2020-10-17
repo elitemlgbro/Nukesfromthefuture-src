@@ -4,8 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
-import nukesfromthefuture.RadiationSavedData;
-import nukesfromthefuture.tileentity.explosion.Advanced;
+import nukesfromthefuture.RadSaveData;
 import nukesfromthefuture.tileentity.explosion.ExplosionRay;
 import nukesfromthefuture.tileentity.explosion.Generic;
 import org.apache.logging.log4j.Level;
@@ -46,7 +45,7 @@ public class Blast extends Entity{
 		}
 
 		if(!worldObj.isRemote && fallout && explosion != null) {
-			RadiationSavedData data = RadiationSavedData.getData(worldObj);
+			RadSaveData data = RadSaveData.getData(worldObj);
 
 			//float radMax = (float) (length / 2F * Math.pow(length, 2) / 35F);
 			float radMax = Math.min((float) (length / 2F * Math.pow(length, 1.5) / 35F), 15000);
@@ -123,7 +122,6 @@ public class Blast extends Entity{
 	protected void writeEntityToNBT(NBTTagCompound nbt) { }
 
 	public static Blast statFac(World world, int r, double x, double y, double z) {
-
 
 		if(r == 0)
 			r = 25;

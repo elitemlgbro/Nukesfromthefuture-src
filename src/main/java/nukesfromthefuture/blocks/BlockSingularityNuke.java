@@ -15,16 +15,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
-import nukesfromthefuture.RadiationSavedData;
 import nukesfromthefuture.entity.Blast;
-import nukesfromthefuture.entity.EntityColliderBlast;
-import nukesfromthefuture.entity.EntityEgoBlast;
 import nukesfromthefuture.entity.NukeMushroom;
 import nukesfromthefuture.interfaces.IBomb;
-import nukesfromthefuture.tileentity.TileEntityEgo_nuke;
 import nukesfromthefuture.tileentity.TileEntitySingularityNuke;
-import nukesfromthefuture.tileentity.explosion.ColliderExplosion;
-import nukesfromthefuture.tileentity.explosion.EgoNukeExplosion;
 
 public class BlockSingularityNuke extends BlockContainer implements IBomb {
 	public int aoc = 0;

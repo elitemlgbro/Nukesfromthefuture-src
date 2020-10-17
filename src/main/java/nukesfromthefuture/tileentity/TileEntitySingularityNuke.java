@@ -14,11 +14,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import nukesfromthefuture.Lib;
 import nukesfromthefuture.Nukesfromthefuture;
-import nukesfromthefuture.RadiationSavedData;
-import nukesfromthefuture.container.FluidContainerRegistry;
+import nukesfromthefuture.RadSaveData;
 import nukesfromthefuture.container.FluidTank;
 import nukesfromthefuture.handler.FluidTypeHandler.FluidType;
-import nukesfromthefuture.interfaces.IConsumer;
 import nukesfromthefuture.interfaces.IFluidAcceptor;
 import nukesfromthefuture.interfaces.IFluidContainer;
 import nukesfromthefuture.interfaces.IFluidSource;
@@ -195,7 +193,7 @@ public class TileEntitySingularityNuke extends TileEntity implements ISidedInven
 
 		if(!worldObj.isRemote)
 		{
-			RadiationSavedData data = RadiationSavedData.getData(worldObj);
+			RadSaveData data = RadSaveData.getData(worldObj);
 			age++;
 			if(age >= 20)
 			{

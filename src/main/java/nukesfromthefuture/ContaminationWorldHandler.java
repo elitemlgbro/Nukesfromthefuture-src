@@ -8,7 +8,7 @@ import net.minecraft.world.gen.ChunkProviderServer;
 
 import java.util.Map;
 
-public class RadiationWorldHandler {
+public class ContaminationWorldHandler {
     public static void handleWorldDestruction(World world) {
 
         if(!(world instanceof WorldServer))
@@ -16,7 +16,7 @@ public class RadiationWorldHandler {
 
         WorldServer serv = (WorldServer)world;
 
-        RadiationSavedData data = RadiationSavedData.getData(serv);
+        RadSaveData data = RadSaveData.getData(serv);
         ChunkProviderServer provider = (ChunkProviderServer) serv.getChunkProvider();
 
         int count = 50;//MainRegistry.worldRad;

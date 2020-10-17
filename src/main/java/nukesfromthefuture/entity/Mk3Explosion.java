@@ -3,7 +3,7 @@ package nukesfromthefuture.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import nukesfromthefuture.RadiationSavedData;
+import nukesfromthefuture.RadSaveData;
 import nukesfromthefuture.tileentity.explosion.Advanced;
 import nukesfromthefuture.tileentity.explosion.Generic;
 
@@ -84,7 +84,7 @@ public class Mk3Explosion extends Entity{
     public void onUpdate() {
         super.onUpdate();
         if(!worldObj.isRemote && waste) {
-            RadiationSavedData data = RadiationSavedData.getData(worldObj);
+            RadSaveData data = RadSaveData.getData(worldObj);
 
             //float radMax = (float) (length / 2F * Math.pow(length, 2) / 35F);
             float radMax = Math.min((float) ((destructionRange / 2) / 2F * Math.pow(destructionRange / 2, 1.5) / 35F), 15000);

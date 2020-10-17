@@ -8,7 +8,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import nukesfromthefuture.ModelLoaders.HazmatRegistry;
-import nukesfromthefuture.RadiationSavedData;
+import nukesfromthefuture.RadSaveData;
 import nukesfromthefuture.potion.NftfPotion;
 
 public class RadUtil {
@@ -71,7 +71,7 @@ public class RadUtil {
 
         double eRad = ((int)(player.getEntityData().getFloat("hfr_radiation") * 10)) / 10D;
 
-        RadiationSavedData data = RadiationSavedData.getData(player.worldObj);
+        RadSaveData data = RadSaveData.getData(player.worldObj);
         Chunk chunk = world.getChunkFromBlockCoords((int)player.posX, (int)player.posZ);
         double rads = ((int)(data.getRadNumFromCoord(chunk.xPosition, chunk.zPosition) * 10)) / 10D;
 

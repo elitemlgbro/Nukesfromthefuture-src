@@ -158,7 +158,7 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 		tanks[2].writeToNBT(tag, "OwO");
 		tanks[3].writeToNBT(tag, "QwQ");
 		NBTTagList list = new NBTTagList();
-		for(int i = 0; i < tanks.length; i++){
+		for(int i = 0; i < slots.length; i++){
 			if(slots[i] != null){
 				NBTTagCompound nbt1 = new NBTTagCompound();
 				nbt1.setByte("slots", (byte)i);
@@ -180,8 +180,10 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 		slots = new ItemStack[getSizeInventory()];
 		for(int i = 0; i < list.tagCount(); i++){
 			NBTTagCompound tag1 = list.getCompoundTagAt(i);
-			slots[i].readFromNBT(tag1);
-
+			int j = tag1.getByte("slots");
+			if(j >= 0 && j < slots.length){
+				slots[j] = ItemStack.loadItemStackFromNBT(tag1);
+			}
 
 		}
 	}

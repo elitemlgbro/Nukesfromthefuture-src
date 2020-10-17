@@ -24,11 +24,8 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemReed;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -124,6 +121,7 @@ public class Nukesfromthefuture{
 	public static Item creep_cape;
 	public static Item light;
 	public static Item plutoniuml;
+	public static Item deathinum_core;
 	public static Block curse_portal;
 	public static Item lightning_summon;
 	public static Item energy_extractor;
@@ -163,6 +161,7 @@ public class Nukesfromthefuture{
 	public static boolean skeppy_enabled;
 	public static int egoNukeStrength;
 	public static int egoNukeSpeed;
+	public static Block deathinum_bomb;
 	public static boolean elevation = true;
 	public static Block nether_reactor;
 	public static Item battery;
@@ -184,6 +183,7 @@ public class Nukesfromthefuture{
 	public static Item infinite_battery;
 	public static Item coord_cache;
 	public static int cont;
+	public static Item microRadioBullet;
 	public static Item lighter;
 	public static int fogRad;
 	public static Achievement yay_rad;
@@ -205,6 +205,7 @@ public class Nukesfromthefuture{
 	public static boolean POTATOtofries;
 	public static int Manbuff;
 	public static boolean enableRad;
+	public static int deathinum_strength;
 	public static int POTATOSTRENGTH;
 	public static int POTATOSPEED;
 	public static int Manspeed;
@@ -236,6 +237,7 @@ public class Nukesfromthefuture{
 		rain = config.get("explosionsize", "aaaaa", 0).getInt();
 		hellrad = config.get("explosionsize", "hellrad", 10).getInt() * 0.1F;
 		cont = config.get("explosionsize", "cont", 0).getInt();
+		deathinum_strength = config.get("explosionsize", "deathinumStrength", 350).getInt();
 		enableRad = config.get("explosionsize", "enableRad", true).getBoolean(true);
 		fogRad = config.get("explosionsize", "fogRad", 200).getInt();
 		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false).getBoolean(false);
@@ -268,6 +270,9 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		microRadioBullet = new Item().setUnlocalizedName("microscophic_radioactive_bullet").setCreativeTab(resources).setTextureName("nff:microbe");
+		deathinum_core = new Item().setUnlocalizedName("deathinum_core").setCreativeTab(resources).setTextureName("nff:deathinum_core");
+		deathinum_bomb = new DeathinumBomb(Material.dragonEgg).setBlockName("deathinum_bomb").setCreativeTab(nffreee).setHardness(10F).setBlockTextureName("nff:deathbomb");
 		icon = new Item().setUnlocalizedName("nothing").setTextureName("nff:hidden");
 		taco = new NuclearTaco(1, 5F, false).setCreativeTab(food).setUnlocalizedName("nuke_taco").setTextureName("nff:TACO");
 		unnamed_reactor = new UnnamedReactor(Material.iron).setBlockName("i_dont_has_name").setCreativeTab(machines).setHardness(10F).setBlockTextureName("nff:unnamed");
@@ -325,7 +330,7 @@ public class Nukesfromthefuture{
 		Sour_cape = new ArmorModel(ArmorMaterial.DIAMOND, 0, 1).setUnlocalizedName("SourCape").setCreativeTab(uselessStuff).setTextureName("nff:cape_unknown");
 		my_cape = new ArmorModel(ArmorMaterial.DIAMOND, 1, 1).setUnlocalizedName("my_cape").setCreativeTab(uselessStuff).setTextureName("nff:cape_unknown");
 		POTATOblock = new POTATOBLOCK(Material.tnt).setBlockName("POTATOblock").setCreativeTab(uselessStuff).setBlockTextureName("nff:POTATOBLOCK");
-		radioCake = new ItemReed(radioactive_cake).setUnlocalizedName("RadCake").setTextureName("nff:radcak").setCreativeTab(food);
+		radioCake = new ItemBlockCake(radioactive_cake).setUnlocalizedName("Radioactive_cake").setTextureName("nff:radcak").setCreativeTab(food);
 		radioactive_cake = new RadioactiveCake().setBlockName("Radioactive_cake").setCreativeTab(food).setBlockTextureName("nff:radiocak").setStepSound(Block.soundTypeCloth);
 		POTATO_nuke = new POTATONook(Material.anvil).setBlockName("POTATO_Nuke").setCreativeTab(nffreee).setBlockTextureName("nff:POTATONOOK");
 		POTATO = new ItemPOTATO().setUnlocalizedName("POTATO").setTextureName("nff:POTATO").setCreativeTab(nffreee);
@@ -395,11 +400,14 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(nether_reactor2, nether_reactor2.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(antiTime, BlockLore.class, antiTime.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(uranium_atom, uranium_atom.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(microRadioBullet, microRadioBullet.getUnlocalizedNameInefficiently(new ItemStack(microRadioBullet)).substring(5));
+		GameRegistry.registerItem(deathinum_core, deathinum_core.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(copper_ore, copper_ore.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(energy_extractor, energy_extractor.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(anti_time_ingot, anti_time_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(taco, taco.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(atom_knife, atom_knife.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(deathinum_bomb, deathinum_bomb.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(deathinum_ingot, deathinum_ingot.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(donut, donut.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(lead_food, lead_food.getUnlocalizedName().substring(5));
@@ -421,7 +429,6 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(opposite_o_succ, opposite_o_succ.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_empty, fluid_barrel_empty.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_full, fluid_barrel_full.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(radioCake, radioCake.getUnlocalizedName().substring(5));
 		DimRegistry.mainRegistry();
 		GameRegistry.registerItem(canned_radiation, canned_radiation.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(UwU, UwU.getUnlocalizedName().substring(5));
@@ -461,7 +468,7 @@ public class Nukesfromthefuture{
         NftfPotion.init();
 		GameRegistry.registerItem(deathinum_sword, deathinum_sword.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(deathinum_pick, deathinum_pick.getUnlocalizedName().substring(5));
-		GameRegistry.registerBlock(radioactive_cake, radioactive_cake.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(radioactive_cake,ItemBlockCake.class, radioactive_cake.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(the_flood, the_flood.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(radioactive_pizza, radioactive_pizza.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(big_boy, big_boy.getUnlocalizedName().substring(5));

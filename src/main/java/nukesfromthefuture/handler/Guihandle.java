@@ -99,6 +99,11 @@ if(entity != null ) {
 			return new EgoFurnaceContainer((TileEgoFurnace) entity, player.inventory);
 		}
 		return null;
+	} case 14:{
+		if(entity instanceof TileDeathBomb){
+			return new DeathinumContainer(player.inventory, (TileDeathBomb) entity);
+		}
+		return null;
 	}
 		
 
@@ -193,6 +198,11 @@ if(entity != null ) {
 			}case 13:{
 				if(entity instanceof TileEgoFurnace){
 					return new EgoFurnaceGui((TileEgoFurnace) entity, player.inventory);
+				}
+				return null;
+			} case 14:{
+				if(entity instanceof TileDeathBomb){
+					return new DeathinumGui(player.inventory, (TileDeathBomb)entity);
 				}
 				return null;
 			}

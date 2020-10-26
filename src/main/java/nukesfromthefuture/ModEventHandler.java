@@ -43,7 +43,6 @@ public class ModEventHandler {
 		
 		}
 	}
-	@Bugged("Compatibility issue with HBM Nuker tech mod")
 	@SubscribeEvent
 	public void worldTick(WorldTickEvent event){
 		if(event.world != null && !event.world.isRemote && Nukesfromthefuture.enableRad) {

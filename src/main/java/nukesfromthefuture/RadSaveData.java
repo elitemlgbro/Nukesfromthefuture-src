@@ -13,7 +13,6 @@ import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.chunk.Chunk;
-@Bugged("compatibility issue with HBM Nuker tech mod")
 public class RadSaveData extends WorldSavedData{
     public HashMap<ChunkCoordIntPair, Float> contamination = new HashMap();
 
@@ -28,7 +27,7 @@ public class RadSaveData extends WorldSavedData{
 
     public RadSaveData(World p_i1678_1_)
     {
-        super("radiation");
+        super("rads");
         this.worldObj = p_i1678_1_;
         this.markDirty();
     }
@@ -165,11 +164,11 @@ public class RadSaveData extends WorldSavedData{
         if(openInstance != null && openInstance.worldObj == worldObj)
             return openInstance;
 
-        RadSaveData data = (RadSaveData)worldObj.perWorldStorage.loadData(RadSaveData.class, "radiation");
+        RadSaveData data = (RadSaveData)worldObj.perWorldStorage.loadData(RadSaveData.class, "rads");
         if(data == null) {
-            worldObj.perWorldStorage.setData("radiation", new RadSaveData(worldObj));
+            worldObj.perWorldStorage.setData("rads", new RadSaveData(worldObj));
 
-            data = (RadSaveData)worldObj.perWorldStorage.loadData(RadSaveData.class, "radiation");
+            data = (RadSaveData)worldObj.perWorldStorage.loadData(RadSaveData.class, "rads");
         }
 
         data.worldObj = worldObj;

@@ -21,8 +21,9 @@ public class BiomeRegistry {
 		cursedBiome = new CursedBiome(147).setBiomeName("cursed_biome").setColor(0xFF1139).setTemperatureRainfall(3.0F, 1F);
 	}
 	public static void register() {
-	BiomeDictionary.registerBiomeType(cursedBiome, Type.FOREST);
+	BiomeDictionary.registerBiomeType(cursedBiome, Type.END);
 	BiomeManager.addSpawnBiome(cursedBiome);
+
 	BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(cursedBiome, 1));
 	}
 }

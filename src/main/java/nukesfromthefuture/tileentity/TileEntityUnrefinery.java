@@ -21,7 +21,7 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 	public ItemStack slots[];
 	public FluidTank[] tanks;
 	public TileEntityUnrefinery(){
-		slots = new ItemStack[4];
+		slots = new ItemStack[8];
 		tanks = new FluidTank[4];
 		tanks[0] = new FluidTank(FluidTypeHandler.FluidType.unstable_plutonium, 256000, 0);
 		tanks[1] = new FluidTank(FluidTypeHandler.FluidType.BLACK_HOLE_FUEL, 32000, 1);
@@ -128,7 +128,37 @@ public class TileEntityUnrefinery extends TileEntity implements ISidedInventory,
 		return false;
 	}
 
-    @Override
+	@Override
+	public void updateEntity() {
+		super.updateEntity();
+		if(!worldObj.isRemote){
+			tanks[0].loadTank(0, 4, slots);
+			tanks[1].unloadTank(1, 5, slots);
+			tanks[2].unloadTank(2, 6, slots);
+			tanks[3].unloadTank(3, 7, slots);
+			int ho = 50;
+			int nt = 25;
+			int lo = 25;
+			int pe = 10;
+			if(tanks[0].getFill() >= 100 &&
+					tanks[1].getFill() + ho <= tanks[1].getMaxFill() &&
+					tanks[2].getFill() + nt <= tanks[2].getMaxFill() &&
+					tanks[3].getFill() + lo <= tanks[3].getMaxFill()) {
+
+				tanks[0].setFill(tanks[0].getFill() - 100);
+				tanks[1].setFill(tanks[1].getFill() + ho);
+				tanks[2].setFill(tanks[2].getFill() + nt);
+				tanks[3].setFill(tanks[3].getFill() + lo);
+
+
+			}
+			for(int i = 0; i < tanks.length; i++){
+				tanks[i].updateTank(xCoord, yCoord, zCoord, worldObj.provider.dimensionId);
+			}
+		}
+	}
+
+	@Override
     public AxisAlignedBB getRenderBoundingBox() {
         return TileEntity.INFINITE_EXTENT_AABB;
     }

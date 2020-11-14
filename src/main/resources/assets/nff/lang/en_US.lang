@@ -11,6 +11,7 @@ item.Unstable_plutonium_ingot.name=Unstable plutonium ingot
 item.copper_wire.name=Copper wire
 item.Copper_ingot.name=Copper ingot
 item.my_ego.name=My ego
+tile.nuclear_core.name=Nuclear Core
 item.ego_ingot.name=Egonium Ingot
 item.Cooked_POTATO.name=Cooked POTATO
 item.coord_cache.name=Coord Cache

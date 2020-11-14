@@ -18,5 +18,6 @@ public class CursedBiome extends BiomeGenBase{
 		this.enableRain = true;
 
 	}
+
 	
 }

@@ -52,12 +52,13 @@ public class ClientProxy extends CommonProxy{
         GameRegistry.registerTileEntity(TileCoord.class, "TileCoord");    
         ClientRegistry.bindTileEntitySpecialRenderer(TileBigBoy.class, new BigBoyLoader());
         GameRegistry.registerTileEntity(TileEntitySkinnyMan.class, "TileSkinnyMan");
-        MinecraftForgeClient.registerItemRenderer(Nukesfromthefuture.opposite_o_succ, new RenderExplosionGun());
         GameRegistry.registerTileEntity(TileBeta.class, "TileBeta");
         RenderingRegistry.registerEntityRenderingHandler(FireUwU.class, new RenderSnowball(Nukesfromthefuture.fire));
         ClientRegistry.bindTileEntitySpecialRenderer(TileBeta.class, new BetaLoader());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkinnyMan.class, new SkinnyManLoader());
         RenderingRegistry.registerEntityRenderingHandler(EntityRadioCreeper.class, new RenderRadioCreeper());
+        GameRegistry.registerTileEntity(TileCore.class, "TileCore");
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCore.class, new RenderCore());
         GameRegistry.registerTileEntity(TilePOTATO.class, "TilePOTATO");
         GameRegistry.registerTileEntity(TileAgriessor.class, "UwU");
         ClientRegistry.bindTileEntitySpecialRenderer(TileAgriessor.class, new RenderAry());
@@ -68,6 +69,7 @@ public class ClientProxy extends CommonProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileSolidifier.class, new SolidifierLoader());
         GameRegistry.registerTileEntity(TileTrol.class, "Trol");
         ClientRegistry.bindTileEntitySpecialRenderer(TileTrol.class, new TrolRender());
+        RenderingRegistry.registerEntityRenderingHandler(EntityCreeperPig.class, new RenderPigCreep());
         RenderingRegistry.registerEntityRenderingHandler(Skeppy.class, new RenderSkeppie());
         RenderingRegistry.registerEntityRenderingHandler(EntityLight.class, new RenderSnowball(Nukesfromthefuture.light));
 	}

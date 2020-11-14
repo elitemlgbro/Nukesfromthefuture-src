@@ -53,8 +53,6 @@ public class EgoFurnace extends BlockContainer{
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata) {
-        //Reactivate in case of emergency
-        //return metadata == 0 && side == 3 ? this.iconFront : (side == metadata ? this.iconFront : this.iconTop);
         return metadata == 0 && side == 3 ? this.iconFront : (side == metadata ? this.iconFront : (side == 1 ? this.iconTop : this.blockIcon));
     }
 

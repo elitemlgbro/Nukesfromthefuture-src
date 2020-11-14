@@ -10,6 +10,9 @@ import nukesfromthefuture.entity.BombBalls;
 import java.util.List;
 
 public class ExplosionGun extends Item {
+	public ExplosionGun(){
+		setFull3D();
+	}
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if(!player.isSneaking()) {

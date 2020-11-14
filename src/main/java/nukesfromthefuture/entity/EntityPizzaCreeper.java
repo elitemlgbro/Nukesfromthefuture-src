@@ -1,5 +1,6 @@
 package nukesfromthefuture.entity;
 
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -10,6 +11,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
@@ -42,13 +44,16 @@ public class EntityPizzaCreeper extends EntityMob {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
-	public IAttributeInstance getEntityAttribute(IAttribute p_110148_1_) {
-		// TODO Auto-generated method stub
-		this.experienceValue = 100000;
-		this.setAIMoveSpeed(1);
-		return super.getEntityAttribute(p_110148_1_);
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.35);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20D);
 	}
+
+
+
 	@Override
 	protected Item getDropItem() {
 		return Nukesfromthefuture.pizza;

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.items.ItemRod;
 import nukesfromthefuture.items.RodTypeHandler.RodType;
 
 public class TileBeta extends TileEntity implements ISidedInventory{
@@ -139,7 +140,7 @@ public class TileBeta extends TileEntity implements ISidedInventory{
 		return false;
 	}
 	public boolean isReady() {
-		if(slots[0] != null && slots[1] != null && slots[2] != null && slots[1].getItem() == Nukesfromthefuture.rod && slots[0].getItem() == Nukesfromthefuture.energy_extractor && slots[2].getItem() == Nukesfromthefuture.energy_extractor)return true;
+		if(slots[0] != null && slots[1] != null && slots[2] != null && slots[1].getItem() instanceof ItemRod && slots[0].getItem() == Nukesfromthefuture.energy_extractor && slots[2].getItem() == Nukesfromthefuture.energy_extractor)return true;
 		return false;
 	}
 	@Override

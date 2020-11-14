@@ -5,11 +5,14 @@ import codechicken.nei.api.IConfigureNEI;
 import net.minecraft.item.ItemStack;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.Reference;
+import nukesfromthefuture.handler.FluidRecipeHandler;
 
-public class NEIStuff implements IConfigureNEI{
+public class NEIConfig implements IConfigureNEI{
     @Override
     public void loadConfig() {
+        API.registerRecipeHandler(new FluidRecipeHandler());
         API.hideItem(new ItemStack(Nukesfromthefuture.icon));
+        API.hideItem(new ItemStack(Nukesfromthefuture.ego_furnace_on));
     }
 
     @Override

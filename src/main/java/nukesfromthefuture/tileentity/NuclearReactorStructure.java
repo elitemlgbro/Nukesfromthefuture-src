@@ -29,8 +29,72 @@ public class NuclearReactorStructure {
            world.getBlock(x, y + 3, z - 2) == Nukesfromthefuture.energy_coils &&
            world.getBlock(x, y - 3, z + 2) == Nukesfromthefuture.energy_coils &&
            world.getBlock(x, y - 3, z - 2) == Nukesfromthefuture.energy_coils &&
-           world.getBlock(x + 2, y + 2, z) == Nukesfromthefuture.energy_coils
+           world.getBlock(x + 2, y + 2, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x + 2, y + 1, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x - 2, y + 1, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x + 2, y, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x + 2, y - 1, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x + 2, y - 2, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x - 2, y + 2, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x - 2, y - 1, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x - 2, y, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x - 2, y - 1, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x - 2, y - 2, z) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y + 2, z + 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y + 1, z + 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y, z + 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y - 1, z + 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y - 2, z + 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y + 2, z - 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y + 1, z - 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y, z - 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y - 1, z - 2) == Nukesfromthefuture.energy_coils &&
+           world.getBlock(x, y - 2, z - 2) == Nukesfromthefuture.energy_coils
         ) return true;
         return false;
+    }
+    public static void setStructure(World world, int x, int y, int z){
+            if(!world.isRemote) {
+                    world.setBlock(x, y, z, Nukesfromthefuture.nuclear_core);
+                    world.setBlock(x, y - 3, z, Nukesfromthefuture.nuclear_stabilizer);
+                    world.setBlock(x, y + 3, z, Nukesfromthefuture.nuclear_stabilizer);
+                    world.setBlock(x + 1, y + 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 1, y - 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 1, y + 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 1, y - 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 3, z + 1, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 3, z - 1, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 3, z + 1, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 3, z - 1, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y + 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y + 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y - 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y - 3, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 3, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 3, z - 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 3, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 3, z - 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y + 2, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y + 1, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y + 1, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y - 1, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x + 2, y - 2, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y + 2, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y - 1, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y - 1, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x - 2, y - 2, z, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 2, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 1, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 1, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 2, z + 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 2, z - 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y + 1, z - 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y, z - 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 1, z - 2, Nukesfromthefuture.energy_coils);
+                    world.setBlock(x, y - 2, z - 2, Nukesfromthefuture.energy_coils);
+            }
     }
 }

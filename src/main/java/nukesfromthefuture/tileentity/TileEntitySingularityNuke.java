@@ -252,7 +252,9 @@ public class TileEntitySingularityNuke extends TileEntity implements ISidedInven
 	}
 
 	public void clearSlots(){
-		
+		for(int i = 0; i < slots.length; i++){
+			slots[i] = null;
+		}
 	}
 
 	

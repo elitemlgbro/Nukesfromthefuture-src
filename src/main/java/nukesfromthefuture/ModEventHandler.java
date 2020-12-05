@@ -2,6 +2,7 @@ package nukesfromthefuture;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.entity.Entity;
@@ -15,6 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -23,6 +26,8 @@ import nukesfromthefuture.entity.*;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.packet.RadSurveyPacket;
 import nukesfromthefuture.util.RadUtil;
+import nukesfromthefuture.util.UpdateChecker;
+import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,6 +239,17 @@ public class ModEventHandler {
 			Nukesfromthefuture.config.save();
 		}
 	}
-
+	@SubscribeEvent
+	public void onJoinWorld(PlayerEvent.PlayerLoggedInEvent event){
+		if(!event.player.worldObj.isRemote) {
+			event.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "Loaded with Nukes From the Future, thank you for installing " + EnumChatFormatting.RED + "my " + EnumChatFormatting.RED + "mod " + event.player.getDisplayName()));
+			if(UpdateChecker.newUpdate){
+				event.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "New version available: " + UpdateChecker.versionNumber));
+			} else if(!UpdateChecker.newUpdate){
+				event.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "Nukes from the Future is up to date!"));
+			}
+		}
+		Nukesfromthefuture.logger.log(Level.INFO, "Successfully joined world with nukes from the future mod");
+	}
 	
 }

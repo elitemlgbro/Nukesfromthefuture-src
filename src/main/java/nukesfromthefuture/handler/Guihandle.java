@@ -104,6 +104,11 @@ if(entity != null ) {
 			return new DeathinumContainer(player.inventory, (TileDeathBomb) entity);
 		}
 		return null;
+	} case 15: {
+		if(entity instanceof TileCore){
+			return new NukeReactorContainer(player.inventory, (TileCore) entity);
+		}
+		return null;
 	}
 		
 
@@ -203,6 +208,11 @@ if(entity != null ) {
 			} case 14:{
 				if(entity instanceof TileDeathBomb){
 					return new DeathinumGui(player.inventory, (TileDeathBomb)entity);
+				}
+				return null;
+			} case 15: {
+				if(entity instanceof TileCore){
+					return new ReactorGui(player.inventory, (TileCore) entity);
 				}
 				return null;
 			}

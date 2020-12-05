@@ -17,7 +17,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockReed;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -55,6 +54,8 @@ import nukesfromthefuture.items.*;
 import nukesfromthefuture.packet.PacketDispatcher;
 import nukesfromthefuture.potion.NftfPotion;
 import nukesfromthefuture.proxy.CommonProxy;
+import nukesfromthefuture.util.UpdateChecker;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 
@@ -119,7 +120,7 @@ public class Nukesfromthefuture{
 	public static Block POTATOblock;
 	public static Block UwU;
 	public static Block nuclear_core;
-	public static Block anime_nuke;
+	//public static Block anime_nuke;
 	public static Block solidifier;
 	public static Item creep_cape;
 	public static Block energy_coils;
@@ -214,6 +215,7 @@ public class Nukesfromthefuture{
 	public static boolean POTATOtofries;
 	public static int Manbuff;
 	public static boolean enableRad;
+	public static Item reactor_wand;
 	public static int deathinum_strength;
 	public static int POTATOSTRENGTH;
 	public static int POTATOSPEED;
@@ -237,7 +239,8 @@ public class Nukesfromthefuture{
 
 	public void preInit(FMLPreInitializationEvent event) {
 		if(logger == null)
-			event.getModLog();
+			logger = event.getModLog();
+		logger.log(Level.INFO, "preLoad started");
 		//-_- all that code for a config file
 		config = new Configuration(UmU);
 		config.load();
@@ -280,10 +283,11 @@ public class Nukesfromthefuture{
 		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
 		config.save();
 		//uhhhhhhh
+		reactor_wand = new ReactorWand().setUnlocalizedName("reactor_wand").setCreativeTab(machines).setTextureName("nff:reactor_wand");
 		nuclear_stabilizer = new CoreStabilizer(Material.rock).setBlockName("core_stabilizer").setCreativeTab(machines).setStepSound(Block.soundTypeMetal).setHardness(10.0F);
 		energy_coils = new Coils(Material.iron).setBlockName("energy_coils").setCreativeTab(machines).setHardness(6.0F).setStepSound(Block.soundTypeMetal).setBlockTextureName("nff:coils");
 		nuclear_core = new NuclearReactCore(Material.iron).setBlockName("nuclear_core").setHardness(4.0F).setLightOpacity(1).setBlockTextureName("nff:nuke_core").setCreativeTab(machines).setResistance(10F);
-		egonium = new Egonium("egonium").setDensity(40000).setTemperature(100000).setLuminosity(4).setUnlocalizedName("egonium").setViscosity(4000);
+		egonium = new Egonium("ego3nium").setDensity(40000).setTemperature(100000).setLuminosity(4).setUnlocalizedName("egonium").setViscosity(4000);
 		FluidRegistry.registerFluid(egonium);
 		begonium = new Begonium(egonium, Material.lava).setBlockName("egonium").setBlockTextureName("nff:egonium_still").setCreativeTab(resources);
 		cursed_diamond_grass = new CursedStuff(Material.grass).setBlockName("cursed_grass").setHardness(0.3F).setStepSound(Block.soundTypeGrass).setCreativeTab(bloks);
@@ -320,7 +324,7 @@ public class Nukesfromthefuture{
 		ego_furnace_on = new EgoFurnace(true).setBlockName("egonium_furnace_on").setHardness(2.0F).setStepSound(Block.soundTypeStone);
 		opposite_o_succ = new ExplosionGun().setUnlocalizedName("explosion_gun").setCreativeTab(nffreee).setTextureName("nff:boom").setMaxStackSize(1);
 		canned_radiation = new CannedRad(5, 10, false).setUnlocalizedName("canned_radiation").setCreativeTab(food).setTextureName("nff:canned_radiation");
-		anime_nuke = new AniNuke().setBlockName("Anime_nuke").setCreativeTab(nffreee).setHardness(100);
+		//anime_nuke = new AniNuke().setBlockName("Anime_nuke").setCreativeTab(nffreee).setHardness(100);
 		agri_essor = new Agriessor(Material.rock).setBlockName("Agri-essor").setCreativeTab(nffreee).setHardness(60F).setStepSound(Block.soundTypeAnvil);
 		UwU = new UwU(Material.clay).setBlockName("UwU").setCreativeTab(bloks);
 		fire = new Fire().setUnlocalizedName("fire").setTextureName("nff:fireUwU");
@@ -447,13 +451,13 @@ public class Nukesfromthefuture{
 		GameRegistry.registerItem(coppa, coppa.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(nuclear_stabilizer, nuclear_stabilizer.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(energy_coils, energy_coils.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(reactor_wand, reactor_wand.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coord_cache, coord_cache.getUnlocalizedName().substring(5));
 		EntityRegistry.registerModEntity(BombBalls.class, "bomb_balls", 51, this, 1000000000, 1, true);
 		GameRegistry.registerItem(opposite_o_succ, opposite_o_succ.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_empty, fluid_barrel_empty.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(fluid_barrel_full, fluid_barrel_full.getUnlocalizedName().substring(5));
 		DimRegistry.mainRegistry();
-
 		GameRegistry.registerItem(canned_radiation, canned_radiation.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(UwU, UwU.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(singularity_magnet, singularity_magnet.getUnlocalizedName().substring(5));
@@ -535,6 +539,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerWorldGenerator(new NffOreGeneration(), 0);
 		EntityRegistry.registerGlobalEntityID(EntityRadioCreeper.class, "radioactive_pizza_creeper", EntityRegistry.findGlobalUniqueEntityId(), 0x1000FF, 0x00FF19);
 		EntityRegistry.registerModEntity(FireUwU.class, "fire", EntityRegistry.findGlobalUniqueEntityId(), this, 100000, 100, true);
+		UpdateChecker.checkForUpdate();
 	}
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
@@ -548,6 +553,7 @@ public class Nukesfromthefuture{
 	}
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
+		logger.log(Level.INFO, "load started");
 		proxy.registerRenders();
 		GameRegistry.addSmelting(POTATO, new ItemStack(Cooked_POTATO), 100000000000000.0F);
 		GameRegistry.addRecipe(new ItemStack(ego_nuke), new Object[] {"www",
@@ -567,21 +573,27 @@ public class Nukesfromthefuture{
 		GameRegistry.addRecipe(new ItemStack(deathinum_pick), new Object[]{"ddd",
 		                                                                   " s ",
 				                                                           " s ", 's', Items.stick, 'd', deathinum_ingot});
+		GameRegistry.addRecipe(new ItemStack(nether_reactor), new Object[]{"idi",
+																		   "idi",
+																	       "idi", 'i', Items.iron_ingot, 'd', Items.diamond});
 		POTATOKill = new Achievement("achievement.POTATOKill", "POTATOKill", 0, 0, POTATO, null).registerStat().initIndependentStat().setSpecial();
 		yay_rad = new Achievement("achievement.radiation", "achievement.radiation", 2, 0, canned_radiation, null).initIndependentStat().registerStat();
 		uDed = new Achievement("achievement.ouch_radiation", "axhievement.ouchRadiation", 2, 2, Items.skull, yay_rad).setSpecial().registerStat();
 		ego_explod = new Achievement("achievement.ego_armed", "You arm the ego nuke OwO", 0, 2, ego_nuke, null).registerStat().initIndependentStat().setSpecial();
 		nuclear_diarrhea = new Achievement("acheivement.nuke_diarrhea?", "acheivement.nuke_diarrhea?", 4, 0, icon, null).setSpecial().registerStat();
 		AchievementPage.registerAchievementPage(new AchievementPage("Future Nukes", new Achievement[] {POTATOKill, ego_explod, yay_rad, uDed, nuclear_diarrhea}));
+
 	}
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		logger.log(Level.INFO, "post load started");
 		FluidContainerRegistry.registerContainer(new FluidContainer(new ItemStack(Items.lava_bucket),
 				new ItemStack(Items.bucket), FluidType.LAVA, 500));
 		for(int i = 1; i < FluidType.values().length; i++) {
 			FluidContainerRegistry.registerContainer(new FluidContainer(new ItemStack(fluid_barrel_full, 1, i),
 					new ItemStack(fluid_barrel_empty), FluidType.getEnum(i), 16000));
 		}
+
 	}
 	
 	
@@ -595,5 +607,5 @@ public class Nukesfromthefuture{
 	public static CreativeTabs food = new Food("nff foods");
 	public static CreativeTabs machines = new Machines("machines");
 	public static CreativeTabs bloks = new Bloks("blocks");
-	
+
 }

@@ -3,9 +3,13 @@ package nukesfromthefuture.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.RadSaveData;
 import nukesfromthefuture.tileentity.explosion.Advanced;
 import nukesfromthefuture.tileentity.explosion.Generic;
+import org.apache.logging.log4j.Level;
+
+import java.util.logging.Logger;
 
 public class Mk3Explosion extends Entity{
     public int age = 0;
@@ -83,6 +87,9 @@ public class Mk3Explosion extends Entity{
     @Override
     public void onUpdate() {
         super.onUpdate();
+        if(!worldObj.isRemote && age == 1){
+            Nukesfromthefuture.logger.log(Level.INFO, "Beta nuclear explosion has been done successfully at: " + posX + ", " + posY + ", " + posZ + "." + " With a strength of:" + destructionRange );
+        }
         if(!worldObj.isRemote && waste) {
             RadSaveData data = RadSaveData.getData(worldObj);
 

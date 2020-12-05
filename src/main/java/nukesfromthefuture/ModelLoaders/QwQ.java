@@ -26,6 +26,7 @@ public class QwQ extends GuiScreen{
 	@Override
 	public void initGui() {
 		super.initGui();
+		list.add(new GuiButton(0, guiLeft, guiTop, "+"));
 		org.lwjgl.input.Keyboard.enableRepeatEvents(true);
 		explosionSize = new GuiTextField(fontRendererObj, guiLeft + 50, guiTop + 50, 20, 20);
 		explosionSize.setTextColor(1);
@@ -42,7 +43,9 @@ public class QwQ extends GuiScreen{
 		super.updateScreen();
 	}
 
-
+	@Override
+	protected void actionPerformed(GuiButton p_146284_1_) {
+	}
 
 	@Override
 	public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {

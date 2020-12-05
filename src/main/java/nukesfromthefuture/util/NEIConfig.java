@@ -13,6 +13,9 @@ public class NEIConfig implements IConfigureNEI{
         API.registerRecipeHandler(new FluidRecipeHandler());
         API.hideItem(new ItemStack(Nukesfromthefuture.icon));
         API.hideItem(new ItemStack(Nukesfromthefuture.ego_furnace_on));
+        API.hideItem(new ItemStack(Nukesfromthefuture.nether_reactor2));
+        API.hideItem(new ItemStack(Nukesfromthefuture.reactor_burnt_out));
+
     }
 
     @Override

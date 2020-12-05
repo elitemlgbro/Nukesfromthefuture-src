@@ -19,14 +19,18 @@ public class RenderCore extends TileEntitySpecialRenderer {
         TileCore te2 = (TileCore) te;
         bindTexture(texture);
         GL11.glPushMatrix();
+        GL11.glColor4f(te2.red, te2.green, te2.blue, 1.0F);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glTranslated(x + 0.5, y, z + 0.5);
         GL11.glRotated(te2.prevRot + (te2.rotation - te2.prevRot) * f, 0, 1, 0);
-        GL11.glColor3ub((byte)((0xFF0000) >> 16), (byte)((0x00FF00) >> 8), (byte)((0x0000FF) >> 0));
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         model.renderAll();
         GL11.glShadeModel(GL11.GL_FLAT);
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glPopMatrix();
     }
 }

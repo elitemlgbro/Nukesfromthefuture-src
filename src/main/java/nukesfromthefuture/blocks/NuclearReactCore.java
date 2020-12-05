@@ -1,5 +1,6 @@
 package nukesfromthefuture.blocks;
 
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -7,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.tileentity.TileCore;
 
 public class NuclearReactCore extends BlockContainer {
@@ -28,9 +30,7 @@ public class NuclearReactCore extends BlockContainer {
         TileCore core = (TileCore) world.getTileEntity(x, y, z);
         if(!player.isSneaking()){
             if(core.isStructureCorrect()){
-                if(world.isRemote){
-                    player.addChatComponentMessage(new ChatComponentText("test. Structure success"));
-                }
+                FMLNetworkHandler.openGui(player, Nukesfromthefuture.instance, 15, world, x, y, z);
             }else if(!core.isStructureCorrect()){
                 if(world.isRemote){
                     player.addChatComponentMessage(new ChatComponentText("Structure incorrect"));

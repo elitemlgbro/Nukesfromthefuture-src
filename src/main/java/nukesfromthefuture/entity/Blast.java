@@ -122,7 +122,8 @@ public class Blast extends Entity{
 	protected void writeEntityToNBT(NBTTagCompound nbt) { }
 
 	public static Blast statFac(World world, int r, double x, double y, double z) {
-
+		if(!world.isRemote)
+		Nukesfromthefuture.logger.log(Level.INFO, "[NUKE] Initialized nuclear explosion at " + x + " / " + y + " / " + z + " with strength " + r + "!");
 		if(r == 0)
 			r = 25;
 

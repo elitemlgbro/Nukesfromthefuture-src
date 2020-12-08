@@ -3,13 +3,15 @@ package nukesfromthefuture.packet;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import nukesfromthefuture.interfaces.IColorIndicator;
-import nukesfromthefuture.tileentity.TileCore;
 
 public class ColorPacket implements IMessage {
+    //Version two of the color packet
     public int x;
     public int y;
     public int z;
@@ -49,6 +51,7 @@ public class ColorPacket implements IMessage {
     public static class Handler implements IMessageHandler<ColorPacket, IMessage>{
 
         @Override
+        @SideOnly(Side.CLIENT)
         public IMessage onMessage(ColorPacket m, MessageContext ctx) {
 
             TileEntity te = Minecraft.getMinecraft().theWorld.getTileEntity(m.x, m.y, m.z);

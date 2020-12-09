@@ -4,14 +4,13 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.MinecraftForge;
 import nukesfromthefuture.Lib;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.RadSaveData;
@@ -19,16 +18,14 @@ import nukesfromthefuture.container.FluidTank;
 import nukesfromthefuture.entity.Mk3Explosion;
 import nukesfromthefuture.handler.FluidTypeHandler.*;
 import nukesfromthefuture.interfaces.*;
-import nukesfromthefuture.items.Battery;
 import nukesfromthefuture.items.ItemFluidTank;
 import nukesfromthefuture.packet.ColorPacket;
-import nukesfromthefuture.packet.IDKWhat;
 import nukesfromthefuture.packet.PacketDispatcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileCore extends TileEntity implements ISidedInventory, ISource, IFluidContainer, IFluidAcceptor {
+public class TileCore extends TileEntity implements ISidedInventory, ISource, IFluidContainer, IFluidAcceptor, IColorIndicator {
     public float prevRot;
     public float rotation;
     public float rise;
@@ -72,14 +69,12 @@ public class TileCore extends TileEntity implements ISidedInventory, ISource, IF
                 tanks[i].updateTank(xCoord, yCoord, zCoord, worldObj.provider.dimensionId);
             }
             if(tanks[0].getFill() > 32000 && tanks[1].getFill() >= 20000 && isActive()){
-                age = 0;
                 red = 0.2F;
                 blue = 0.1F;
                 green = 1.0F;
             }
 
             if(tanks[0].getFill() <= 32000 && tanks[1].getFill() >= 20000 && isActive()){
-                age = 0;
                 red = 1.0F;
                 green = 0.8F;
                 blue = 0.1F;
@@ -89,7 +84,7 @@ public class TileCore extends TileEntity implements ISidedInventory, ISource, IF
                 red = 1.0F;
                 green = 0.1F;
                 blue = 0.1F;
-                if(age ==1)
+                if(age == 1)
                 Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.BOLD + "" + EnumChatFormatting.RED + "[Warning]" + EnumChatFormatting.RESET + "Reactor is unstable! Explosion Iminate!!"));
             }
             if(tanks[0].getFill() < 16000 && tanks[1].getFill() >= 20000 && isActive()){
@@ -115,9 +110,8 @@ public class TileCore extends TileEntity implements ISidedInventory, ISource, IF
 
             power = Lib.chargeItemsFromTE(slots, 6, power, maxPower);
             PacketDispatcher.wrapper.sendToAllAround(new AuxElectricityPacket(xCoord, yCoord, zCoord, power), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 100));
-            PacketDispatcher.wrapper.sendToAllAround(new ColorPacket(xCoord, yCoord, zCoord, 0, (int)red), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 50));
-            PacketDispatcher.wrapper.sendToAllAround(new ColorPacket(xCoord, yCoord, zCoord, 1, (int)blue), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 50));
-            PacketDispatcher.wrapper.sendToAllAround(new ColorPacket(xCoord, yCoord, zCoord, 2, (int)green), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 50));
+            //I don't know if these are neccecary and I don't care
+            PacketDispatcher.wrapper.sendToAllAround(new ColorPacket(xCoord, yCoord, zCoord, red, blue, green), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 50));
         }
         if(tanks[0].getFill() > 32000 && tanks[1].getFill() >= 20000 && isActive()){
             red = 0.2F;
@@ -263,15 +257,41 @@ public class TileCore extends TileEntity implements ISidedInventory, ISource, IF
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        NBTTagList list = nbt.getTagList("items", 0);
+        slots = new ItemStack[getSizeInventory()];
             tanks[0].readFromNBT(nbt, "contents");
             tanks[1].readFromNBT(nbt, "contentss");
+        power = nbt.getLong("power");
+        red = nbt.getFloat("red");
+        blue = nbt.getFloat("blue");
+        green = nbt.getFloat("green");
+        for(int i = 0; i < list.tagCount(); i++){
+            NBTTagCompound nbt1 = list.getCompoundTagAt(i);
+            byte b0 = nbt1.getByte("slots");
+            if(b0 >= 0 && b0 < slots.length){
+                slots[b0] = ItemStack.loadItemStackFromNBT(nbt1);
+            }
+        }
     }
     @Override
     public void writeToNBT(NBTTagCompound nbt){
         super.writeToNBT(nbt);
+        NBTTagList list = new NBTTagList();
             tanks[0].writeToNBT(nbt, "contents");
             tanks[1].writeToNBT(nbt, "contentss");
-
+        nbt.setLong("power", power);
+        nbt.setFloat("red", red);
+        nbt.setFloat("blue", blue);
+        nbt.setFloat("green", green);
+        for(int i = 0; i < slots.length; i++){
+            if(slots[i] != null){
+                NBTTagCompound nbt1 = new NBTTagCompound();
+                nbt1.setByte("slots", (byte)i);
+                slots[i].writeToNBT(nbt1);
+                list.appendTag(nbt1);
+            }
+        }
+        nbt.setTag("items", list);
     }
 
     @Override
@@ -375,5 +395,35 @@ public class TileCore extends TileEntity implements ISidedInventory, ISource, IF
         }
             return 0;
 
+    }
+
+    @Override
+    public float getRed() {
+        return red;
+    }
+
+    @Override
+    public float getBlue() {
+        return blue;
+    }
+
+    @Override
+    public float getGreen() {
+        return green;
+    }
+
+    @Override
+    public void setRed(float i) {
+        red = i;
+    }
+
+    @Override
+    public void setBlue(float i) {
+        blue = i;
+    }
+
+    @Override
+    public void setGreen(float i) {
+        green = i;
     }
 }

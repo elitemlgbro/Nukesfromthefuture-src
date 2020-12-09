@@ -20,5 +20,6 @@ public class PacketDispatcher {
 			wrapper.registerMessage(AuxGaugePacket.Handler.class, AuxGaugePacket.class, i++, Side.CLIENT);
 			wrapper.registerMessage(IDKWhat.IDKWhatHandler.class, IDKWhat.class, i++, Side.CLIENT);
 			wrapper.registerMessage(ColorPacket.Handler.class, ColorPacket.class, i++, Side.CLIENT);
+			wrapper.registerMessage(NoTEGuiPacket.Handler.class, NoTEGuiPacket.class, i++, Side.SERVER);
 		}
 }

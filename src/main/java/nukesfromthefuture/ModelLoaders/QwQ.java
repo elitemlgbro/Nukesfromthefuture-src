@@ -1,10 +1,15 @@
 package nukesfromthefuture.ModelLoaders;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import nukesfromthefuture.packet.NoTEGuiPacket;
+import nukesfromthefuture.packet.PacketDispatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +17,21 @@ import java.util.List;
 public class QwQ extends GuiScreen{
 	int xSize = 172;
 	int ySize = 165;
-	public static GuiTextField explosionSize;
+	public static int explosionSize;
 	public int guiLeft;
 	public int guiTop;
 	List<GuiButton> list = new ArrayList<GuiButton>();
 	private final EntityPlayer player;
 	public ResourceLocation texture = new ResourceLocation("nff:textures/gui/QwQ.png");
 	public QwQ(EntityPlayer playera){
-		player = playera;
-		this.allowUserInput = true;
+		this.player = playera;
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
-		list.add(new GuiButton(0, guiLeft, guiTop, "+"));
-		org.lwjgl.input.Keyboard.enableRepeatEvents(true);
-		explosionSize = new GuiTextField(fontRendererObj, guiLeft + 50, guiTop + 50, 20, 20);
-		explosionSize.setTextColor(1);
-		explosionSize.setDisabledTextColour(0);
-		explosionSize.setEnableBackgroundDrawing(false);
-		explosionSize.setEnabled(true);
+		list.clear();
+		list.add(new GuiButton(0, guiLeft + 131, guiTop + 76, 16, 16, "+"));
 		guiLeft = (this.width - xSize) / 2;
 		guiTop = (this.height - ySize) / 2;
 
@@ -43,9 +42,8 @@ public class QwQ extends GuiScreen{
 		super.updateScreen();
 	}
 
-	@Override
-	protected void actionPerformed(GuiButton p_146284_1_) {
-	}
+
+
 
 	@Override
 	public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {
@@ -59,6 +57,18 @@ public class QwQ extends GuiScreen{
 		this.drawDefaultBackground();
 		mc.getMinecraft().getTextureManager().bindTexture(texture);
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-		explosionSize.drawTextBox();
+		fontRendererObj.drawString("Strength: " + explosionSize, guiLeft + 101, guiTop + 76, 0x000000);
+		for(GuiButton o : list){
+			o.drawButton(Minecraft.getMinecraft(), i, j);
+		}
+	}
+	@Override
+	protected void actionPerformed(GuiButton button) {
+		if(button.id == 0) {
+			mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+			explosionSize += 5;
+			PacketDispatcher.wrapper.sendToServer(new NoTEGuiPacket(1, explosionSize));
+		}
+		super.actionPerformed(button);
 	}
 }

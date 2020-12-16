@@ -3,13 +3,16 @@ package nukesfromthefuture.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nukesfromthefuture.Nukesfromthefuture;
 import nukesfromthefuture.potion.NftfPotion;
@@ -78,4 +81,31 @@ public class Waste extends Block {
 
 	}
 
+	@Override
+	public void updateTick(World world, int x, int y, int z, Random p_149674_5_) {
+		for(int i = 0; i < 10; i++) {
+			if (world.getBlock(x, y + i, z) == Blocks.log || world.getBlock(x, y + i, z) == Blocks.log2){
+				world.setBlock(x, y + i, z, Nukesfromthefuture.waste_wood);
+			}
+
+		}
+		for(int i = 0; i < 14; i++) {
+			if (world.getBlock(x, y + i, z) == Blocks.leaves2 || world.getBlock(x, y + i, z) == Blocks.leaves) {
+				world.setBlockToAir(x, y + i, z);
+
+			}
+		}
+	}
+
+	@Override
+	public boolean isWood(IBlockAccess world, int x, int y, int z) {
+		if(this == Nukesfromthefuture.waste_wood)
+			return true;
+		return false;
+	}
+	//what the hell is this!?
+	@Override
+	public boolean isFertile(World world, int x, int y, int z) {
+		return this == Nukesfromthefuture.waste ? true : false;
+	}
 }

@@ -9,18 +9,19 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderFlat;
 import net.minecraft.world.gen.ChunkProviderGenerate;
 import net.minecraft.world.gen.ChunkProviderHell;
+import nukesfromthefuture.boime.BiomeRegistry;
 
 public class WorldProviderCursed extends WorldProvider{
 	@Override
 	protected void registerWorldChunkManager() {
 		// TODO Auto-generated method stub
-		this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.forest, dimensionId);
+		this.worldChunkMgr = new WorldChunkManagerHell(BiomeRegistry.cursedBiome, dimensionId);
 		this.dimensionId = DimRegistry.DimID;
 	}
 	@Override
 	public IChunkProvider createChunkGenerator() {
 		// TODO Auto-generated method stub
-		return new ChunkProviderCursed(worldObj, this.worldObj.getSeed(), true);
+		return new ChunkProviderCursed(worldObj, true);
 	}
 	@Override
 	public String getDimensionName() {

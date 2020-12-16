@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import nukesfromthefuture.Nukesfromthefuture;
+import nukesfromthefuture.boime.BiomeRegistry;
 
 public class NffOreGeneration implements IWorldGenerator{
 
@@ -31,6 +32,12 @@ public class NffOreGeneration implements IWorldGenerator{
 			
 		}
 		public void generateOverworld(World woorld, Random rrand, int x, int z) {
+		if(woorld.getWorldChunkManager().getBiomeGenAt(x * 16, z * 16) == BiomeRegistry.cursedBiome && rrand.nextInt(60) == 0) {
+			int x1 = (x * 16) + rrand.nextInt(16);
+			int z1 = (z * 16) + rrand.nextInt(16);
+			int y = woorld.getHeightValue(x1, z1);
+			new WorldGenInactiveReactor().generate(woorld, rrand, x1, y, z1);
+		}
 			generateOre(Nukesfromthefuture.copper_ore, woorld, rrand, x, z, 2, 7, 11, 0, 50, Blocks.stone);
 			generateOre(Nukesfromthefuture.ego_ore, woorld, rrand, x, z, 1, 5, 10, 0, 70, Blocks.stone);
 			generateOre(Nukesfromthefuture.plutonium_ore, woorld, rrand, x, z, 1, 5, 10, 0, 40, Blocks.stone);

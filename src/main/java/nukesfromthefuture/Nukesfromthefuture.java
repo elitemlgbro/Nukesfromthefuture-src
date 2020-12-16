@@ -5,6 +5,7 @@ package nukesfromthefuture;
 import java.io.File;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,11 +18,13 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -48,6 +51,7 @@ import nukesfromthefuture.creativeTabs.UselessStuff;
 import nukesfromthefuture.creativeTabs.WeaponsnReee;
 import nukesfromthefuture.dimensions.DimRegistry;
 import nukesfromthefuture.entity.*;
+import nukesfromthefuture.gen.DedTreeGen;
 import nukesfromthefuture.gen.NffOreGeneration;
 import nukesfromthefuture.handler.FluidTypeHandler.FluidType;
 import nukesfromthefuture.items.*;
@@ -118,6 +122,7 @@ public class Nukesfromthefuture{
 	public static Item schrabidium_cape;
 	public static Block agri_essor;
 	public static Block POTATOblock;
+	public static Block verti_slab;
 	public static Block UwU;
 	public static Block nuclear_core;
 	//public static Block anime_nuke;
@@ -216,6 +221,7 @@ public class Nukesfromthefuture{
 	public static int Manbuff;
 	public static boolean enableRad;
 	public static Item reactor_wand;
+	public static boolean developer_mode;
 	public static int deathinum_strength;
 	public static int POTATOSTRENGTH;
 	public static int POTATOSPEED;
@@ -240,6 +246,8 @@ public class Nukesfromthefuture{
 	public void preInit(FMLPreInitializationEvent event) {
 		if(logger == null)
 			logger = event.getModLog();
+
+
 		logger.log(Level.INFO, "preLoad started");
 		//-_- all that code for a config file
 		config = new Configuration(UmU);
@@ -252,6 +260,7 @@ public class Nukesfromthefuture{
 		deathinum_strength = config.get("explosionsize", "deathinumStrength", 350).getInt();
 		enableRad = config.get("explosionsize", "enableRad", true).getBoolean(true);
 		fogRad = config.get("explosionsize", "fogRad", 200).getInt();
+		developer_mode = config.get("modes", "developer_mode", false).getBoolean();
 		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false).getBoolean(false);
 		flood_strength = config.get("explosionsize", "flood_Strength", 100).getInt();
 		beta_strength = config.get("explosionsize", "betastrength", 230).getInt();
@@ -312,6 +321,7 @@ public class Nukesfromthefuture{
 		deathinum_sword = new DeathinumSword(deathinumTools).setUnlocalizedName("Deathinum_sword").setCreativeTab(nffreee).setTextureName("nff:deathinum_sword");
 		deathinum_ingot = new Item().setUnlocalizedName("deathinum_ingot").setCreativeTab(resources).setTextureName("nff:deathinum");
 		uranium_atom = new Item().setUnlocalizedName("uranium-atom").setCreativeTab(resources).setTextureName("nff:atom");
+		verti_slab = new VertiSlab(Material.rock).setBlockName("verti_slab").setHardness(0.4F).setCreativeTab(uselessStuff);
 		atom_knife = new Item().setUnlocalizedName("atom_knife").setCreativeTab(machines).setTextureName("nff:splitter");
 		lighter = new Item().setUnlocalizedName("lighter").setCreativeTab(machines).setTextureName("nff:lighter");
 		mentos_fo_lava = new Item().setUnlocalizedName("mentos_fo_lava").setCreativeTab(food);
@@ -337,7 +347,7 @@ public class Nukesfromthefuture{
 		light = new Light().setUnlocalizedName("Light").setCreativeTab(nffreee).setTextureName("nff:light");
 		lightning = new Lightning().setBlockName("Lightning_summoner").setCreativeTab(machines).setBlockTextureName("nff:lightlol");
 		creep_cape = new ArmorModel(ArmorMaterial.DIAMOND, 3, 1).setUnlocalizedName("creep_cape").setCreativeTab(uselessStuff).setTextureName("nff:v");
-		waste = new Waste(Material.grass, true).setBlockName("waste").setCreativeTab(bloks).setStepSound(Block.soundTypeGrass);
+		waste = new Waste(Material.ground, true).setBlockName("waste").setCreativeTab(bloks).setStepSound(Block.soundTypeGrass);
 		tut_block = new TutBlock(Material.clay).setBlockName("Wtut_block").setCreativeTab(bloks).setHardness(5.0F);
 		coord_transporteer = new CoordTrans(Material.iron).setBlockName("Coord_transporter").setBlockTextureName("nff:coord_transport").setCreativeTab(machines);
 		obese_man = new Itemobese_man().setUnlocalizedName("obese_man").setTextureName("nff:obese_man").setCreativeTab(uselessStuff);
@@ -387,7 +397,6 @@ public class Nukesfromthefuture{
 		ego_ingot = new ItemEgo_ingot().setUnlocalizedName("ego_ingot").setTextureName("nff:ego_ingot").setCreativeTab(resources);
 		plutonium_ore = new PlutoniumOre(Material.iron).setBlockName("PlutoniumOre").setBlockTextureName("nff:pluto_ore").setCreativeTab(resources);
 		//machines
-		BiomeRegistry.init();
 		superVolcano = new SuperEE(Material.iron).setBlockName("Super_volcano").setHardness(50F).setCreativeTab(nffreee).setBlockTextureName("nff:volcano");
 		solidifier = new Solidifier(Material.iron).setBlockName("Solidifier").setCreativeTab(machines).setBlockTextureName("nff:unclassified");
 		liquifier = new Liquifier(Material.rock).setBlockName("liquifier").setCreativeTab(machines).setBlockTextureName("nff:liquifier");
@@ -411,7 +420,6 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(trololo, trololo.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(POTATO, POTATO.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(plutoniuml, plutoniuml.getUnlocalizedName());
-		BiomeRegistry.register();
 		EntityRegistry.registerModEntity(FalloutRain.class, "fallout", 53, this, 10000, 1, true);
 		GameRegistry.registerItem(mentos_fo_lava, mentos_fo_lava.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(componetTeleporter, componetTeleporter.getUnlocalizedName().substring(5));
@@ -450,6 +458,7 @@ public class Nukesfromthefuture{
 		GameRegistry.registerBlock(unrefinary, unrefinary.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coppa, coppa.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(nuclear_stabilizer, nuclear_stabilizer.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(verti_slab, verti_slab.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(energy_coils, energy_coils.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(reactor_wand, reactor_wand.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(coord_cache, coord_cache.getUnlocalizedName().substring(5));
@@ -535,11 +544,12 @@ public class Nukesfromthefuture{
 		OreDictionary.registerOre("PlutoniumOre", plutonium_ore);
 		GameRegistry.registerItem(lighter, lighter.getUnlocalizedName().substring(5));
 		OreDictionary.registerOre("copper_ore", copper_ore);
-		EntityRegistry.registerGlobalEntityID(EntityCreeperPig.class, "pig_creeper", EntityRegistry.findGlobalUniqueEntityId(), 0x00FF15, 0xFF00CB);
-		GameRegistry.registerWorldGenerator(new NffOreGeneration(), 0);
 		EntityRegistry.registerGlobalEntityID(EntityRadioCreeper.class, "radioactive_pizza_creeper", EntityRegistry.findGlobalUniqueEntityId(), 0x1000FF, 0x00FF19);
+		EntityRegistry.registerGlobalEntityID(EntityCreeperPig.class, "pig_creeper", EntityRegistry.findGlobalUniqueEntityId(), 0x00FF15, 0xFF00CB);
 		EntityRegistry.registerModEntity(FireUwU.class, "fire", EntityRegistry.findGlobalUniqueEntityId(), this, 100000, 100, true);
 		UpdateChecker.checkForUpdate();
+		BiomeRegistry.mainRegistry();
+		GameRegistry.registerWorldGenerator(new NffOreGeneration(), 1);
 	}
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)

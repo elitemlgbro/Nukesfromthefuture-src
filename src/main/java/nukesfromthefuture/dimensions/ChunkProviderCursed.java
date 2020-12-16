@@ -1,58 +1,33 @@
 package nukesfromthefuture.dimensions;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.NoiseGenerator;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.ChunkProviderEvent;
-import net.minecraftforge.event.terraingen.TerrainGen;
 import nukesfromthefuture.Nukesfromthefuture;
-import nukesfromthefuture.boime.BiomeRegistry;
-import nukesfromthefuture.boime.CursedBiome;
-import nukesfromthefuture.entity.EntityPizzaCreeper;
 
 public class ChunkProviderCursed implements IChunkProvider{
-	World world;
-	private final boolean mapFeaturesOn;
-	public static BiomeGenBase biomesForGeneration;
-	public ChunkProviderCursed(World worldObj, long seed, boolean b) {
-		world = worldObj;
-		mapFeaturesOn = b;
+
+	public ChunkProviderCursed(World worldObj, boolean b) {
 	}
 
 	@Override
 	public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
 		return false;
-
 	}
-
 	@Override
 	public Chunk provideChunk(int p_73154_1_, int p_73154_2_) {
-		 Chunk a = new Chunk(world, new Block[]{Nukesfromthefuture.trololo}, p_73154_1_, p_73154_2_);
-
-		return a;
+		return null;
 	}
 
 	@Override
 	public Chunk loadChunk(int p_73158_1_, int p_73158_2_) {
-
 		return null;
 	}
 

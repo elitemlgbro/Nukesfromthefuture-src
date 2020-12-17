@@ -33,6 +33,7 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.util.EnumHelper;
@@ -254,17 +255,17 @@ public class Nukesfromthefuture{
 		config.load();
 		
 		FMLCommonHandler.instance().bus().register(new ModEventHandler());
-		rain = config.get("explosionsize", "aaaaa", 0).getInt();
+		rain = config.get("explosionsize", "aaaaa", 0, "another placeholder").getInt();
 		hellrad = config.get("explosionsize", "hellrad", 10).getInt() * 0.1F;
 		cont = config.get("explosionsize", "cont", 0).getInt();
 		deathinum_strength = config.get("explosionsize", "deathinumStrength", 350).getInt();
 		enableRad = config.get("explosionsize", "enableRad", true).getBoolean(true);
 		fogRad = config.get("explosionsize", "fogRad", 200).getInt();
-		developer_mode = config.get("modes", "developer_mode", false).getBoolean();
-		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false).getBoolean(false);
-		flood_strength = config.get("explosionsize", "flood_Strength", 100).getInt();
-		beta_strength = config.get("explosionsize", "betastrength", 230).getInt();
-		skeppy_enabled = config.getBoolean("skeppy_enabled", "hiddenblocks", false, "eeeeeeeeeeee");
+		developer_mode = config.get("modes", "developer_mode", false, "Developer mode doesn't really do much other than enable extensive logging that I use to determine if something is working").getBoolean();
+		old_ego = config.get("hiddenblocks", "oldEgoNukeEnabled", false, "yes... this was the design of the ego nuke b4 this mod was published").getBoolean(false);
+		flood_strength = config.get("explosionsize", "flood_Strength", 100, "the speed of the flood which is the nuke that I am too lazy and unmotivated to add a model and texture to").getInt();
+		beta_strength = config.get("explosionsize", "betastrength", 230, "it sounds like a nuke still in beta phase in mod development.... but it is not").getInt();
+		skeppy_enabled = config.getBoolean("skeppy_enabled", "hiddenblocks", false, "For some reason, some people get offended at everything, so before you enable this feature, be advised that the skin of the skeppy is the communist USSR flag. If you get mad at me, I'm not gonna do anything because the default of this config option is false but you chose to enable it and this comment(or tooltip if you are changing the config from the GUI) had given you a clear warning.");
 		trol_speed = config.getInt("TrollSpeed", "explosionsize", 12, 0, 1000000000, "The speed of the trololo nuke explosion");
 		trol_strength = config.getInt("TrollStrength", "explosionsize", 100, 0, 100000000, "The strength of the troolololo nuke");
 		egoNukeStrength = config.get("explosionsize", "egoNukeStrength", 300).getInt();
@@ -275,10 +276,9 @@ public class Nukesfromthefuture{
 		Manbuff = config.get("explosionsize", "manbuff", 100).getInt();
 		POTATOSTRENGTH = config.getInt("Ps", "explosionsize", 250, 0, 10000, "POTATO");
 		POTATOSPEED = config.get("explosionsize", "PSS", 12).getInt();
-		Property propFalloutRange = config.get(CATEGORY_NUKE, "6.02_blastSpeedNew", 1024);
+		Property propFalloutRange = config.get(CATEGORY_NUKE, "6.02_blastSpeedNew", 1024, "a placeholder I'm too lazy to delete");
 		mk4 = propFalloutRange.getInt();    
 		config.setCategoryComment("hiddenblocks", "uhhhhh u didn't see anything");
-
 		Manspeed = config.get("explosionsize", "manspeed", 12).getInt();
 		colliderStrength = config.get("explosionsize", "colliderStrength", 150).getInt();
 		colliderSpeed = config.get("explosionsize", "colliderSpeed", 12).getInt();
@@ -289,8 +289,11 @@ public class Nukesfromthefuture{
 		Volcano_strength = config.get("explosionsize", "VolcanoStrength", 150).getInt();
 		Boyspeed = config.get("explosionsize", "Boyspeed", 12).getInt();
 		antitimespeed = config.get("explosionsize", "antitimespeed", 30).getInt();
-		coverExposed = config.get("hiddenblocks", "crasherExposed", false).getBoolean(false);
+		coverExposed = config.get("hiddenblocks", "crasherExposed", false, "A test nuke that I used when I was adding nukes. Will crash ur game lol").getBoolean(false);
 		config.save();
+		GuiCon.element.add(new ConfigElement(Nukesfromthefuture.config.getCategory("explosionsize")));
+		GuiCon.element.add(new ConfigElement(Nukesfromthefuture.config.getCategory("modes")));
+		GuiCon.element.add(new ConfigElement(Nukesfromthefuture.config.getCategory("hiddenblocks")));
 		//uhhhhhhh
 		reactor_wand = new ReactorWand().setUnlocalizedName("reactor_wand").setCreativeTab(machines).setTextureName("nff:reactor_wand");
 		nuclear_stabilizer = new CoreStabilizer(Material.rock).setBlockName("core_stabilizer").setCreativeTab(machines).setStepSound(Block.soundTypeMetal).setHardness(10.0F);
